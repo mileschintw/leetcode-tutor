@@ -28,7 +28,7 @@ jobs:
         run: python -m unittest discover -s tests -v
 
       - name: Skill metadata check
-        run: python -m practice_log build
+        run: python skills/leetcode-tutor/scripts/practice_log build
 
   plugin:
     name: Plugin manifests
