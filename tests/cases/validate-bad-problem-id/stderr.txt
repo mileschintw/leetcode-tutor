@@ -1,0 +1,4 @@
+problems/leetcode/alien-dictionary/notes.md: id 'alien-dictionary' must be '<source>:<slug>', each part lowercase ASCII letters, digits and single hyphens
+problems/leetcode/two-sum/notes.md: id 'LeetCode:Two Sum' must be '<source>:<slug>', each part lowercase ASCII letters, digits and single hyphens
+problems/neetcode/foreign-dictionary/notes.md: id 'leetcode:foreign-dictionary' does not match its folder (expected 'neetcode:foreign-dictionary')
+validate: failed (3 errors)

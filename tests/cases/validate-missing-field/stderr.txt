@@ -1,0 +1,5 @@
+problems/custom/lru-cache/notes.md: missing required field 'need_review_reason' (need_review is true)
+problems/leetcode/alien-dictionary/notes.md: attempt 1 (2025-03-02 topological sort): missing required field 'outcome'
+problems/leetcode/two-sum/notes.md: missing required field 'title'
+problems/neetcode/foreign-dictionary/notes.md: attempt 1 (2026-10-02 bfs topological sort): missing required field 'language'
+validate: failed (4 errors)

@@ -1,0 +1,6 @@
+practice-log.json: expected an object with "version": 1
+problems/custom/empty-folder: missing notes.md
+problems/custom/lru-cache/notes.md: frontmatter line 6: duplicate field 'tags'
+problems/leetcode/alien-dictionary/notes.md: missing frontmatter (the file must start with a '---' line)
+problems/neetcode/foreign-dictionary/notes.md: frontmatter line 7: unterminated list
+validate: failed (5 errors)

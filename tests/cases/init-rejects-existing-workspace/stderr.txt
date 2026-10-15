@@ -1,0 +1,1 @@
+init: practice is already a Practice Workspace (practice-log.json exists)
