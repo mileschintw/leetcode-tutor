@@ -1,0 +1,1 @@
+build: no skills found (expected skills/<name>/SKILL.md)

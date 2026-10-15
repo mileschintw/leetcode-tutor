@@ -1,0 +1,4 @@
+skills/block-scalar/SKILL.md: frontmatter line 3: block scalars are not supported, keep the value on one line
+skills/no-frontmatter/SKILL.md: missing frontmatter (the file must start with a '---' line)
+skills/unterminated/SKILL.md: unterminated frontmatter (no closing '---' line)
+build: metadata check failed (3 problems)

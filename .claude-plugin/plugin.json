@@ -1,0 +1,12 @@
+{
+  "name": "leetcode-tutor",
+  "description": "A Socratic coding-interview tutor for LeetCode, NeetCode and self-authored problems.",
+  "author": {
+    "name": "mileschintw",
+    "url": "https://github.com/mileschintw"
+  },
+  "homepage": "https://github.com/mileschintw/leetcode-tutor",
+  "repository": "https://github.com/mileschintw/leetcode-tutor",
+  "license": "MIT",
+  "keywords": ["leetcode", "neetcode", "coding-interview", "tutor", "socratic"]
+}
