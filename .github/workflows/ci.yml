@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests and build (${{ matrix.os }})
+    # Windows too: console codepages and CRLF checkouts are where the CLI's encoding bugs show up.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Seam 1 tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Skill metadata check
+        run: python -m practice_log build
+
+  plugin:
+    name: Plugin manifests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code@2.1.300
+
+      - name: Validate plugin and marketplace
+        run: claude plugin validate .
