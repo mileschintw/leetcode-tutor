@@ -1,6 +1,6 @@
 # Practice Log schema
 
-The format of the learner's Practice Log inside their Practice Workspace. `validate` (see [practice-workspace.md](practice-workspace.md)) checks every rule below.
+The format of the learner's Practice Log inside their Practice Workspace. `validate` (see [practice-workspace.md](practice-workspace.md)) checks the fields, values and code files below; follow the naming and heading conventions yourself.
 
 ## Contents
 
@@ -38,7 +38,7 @@ The same exercise on two sites is two Problem IDs. Before creating a folder, loo
 
 `notes.md` has YAML frontmatter holding the Problem fields, then two sections in this order:
 
-1. `## Key Takeaway`: the Problem's One-Sentence Key Takeaway, updated when a later Attempt sharpens it.
+1. `## Key Takeaway`: the Problem's Key Takeaway, updated when a later Attempt sharpens it.
 2. `## Attempts`: the Attempt log, oldest first, one `###` heading per Attempt.
 
 ## Problem fields

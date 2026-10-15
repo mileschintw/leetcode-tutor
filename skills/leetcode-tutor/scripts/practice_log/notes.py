@@ -27,7 +27,10 @@ class Attempt:
 
 def read_notes(path):
     """Return (frontmatter fields, list of Attempts) for one notes file."""
-    lines = path.read_text(encoding="utf-8-sig").splitlines()
+    try:
+        lines = path.read_text(encoding="utf-8-sig").splitlines()
+    except UnicodeDecodeError as error:
+        raise NotesError(f"not valid UTF-8 (byte {error.start}); save the file as UTF-8") from None
     if not lines or lines[0].strip() != "---":
         raise NotesError("missing frontmatter (the file must start with a '---' line)")
     try:

@@ -46,7 +46,7 @@ def read_tree(root):
     if not root.exists():
         return {}
     return {
-        path.relative_to(root).as_posix(): path.read_bytes().decode("utf-8").replace("\r\n", "\n")
+        path.relative_to(root).as_posix(): path.read_bytes().decode("utf-8", errors="backslashreplace").replace("\r\n", "\n")
         for path in sorted(root.rglob("*"))
         if path.is_file()
     }

@@ -79,7 +79,9 @@ def check_config(config):
         data = json.loads(config.read_text(encoding="utf-8-sig"))
     except ValueError as error:
         return [f"{CONFIG_FILE}: not valid JSON ({error})"]
-    if not isinstance(data, dict) or data.get("version") != 1:
+    version = data.get("version") if isinstance(data, dict) else None
+    # bool is an int subclass and 1.0 == 1, so `true` and `1.0` would otherwise pass.
+    if type(version) is not int or version != 1:
         return [f"{CONFIG_FILE}: expected an object with \"version\": 1"]
     return []
 
@@ -121,7 +123,10 @@ def check_attempt(attempt, folder):
     problems += check_enum("mode", fields.get("mode"), MODES)
     problems += check_enum("outcome", fields.get("outcome"), OUTCOMES)
     code = fields.get("code")
-    if code and not (folder / code).is_file():
+    if code and ("/" in code or "\\" in code or code in (".", "..")):
+        problems.append(f"code '{code}' must be a file name in the Problem's folder, not a path")
+    # Compare names exactly: is_file() ignores case on Windows and macOS but not on Linux.
+    elif code and code not in {path.name for path in folder.iterdir() if path.is_file()}:
         problems.append(f"code file '{code}' not found in {folder.name}/")
     return problems
 

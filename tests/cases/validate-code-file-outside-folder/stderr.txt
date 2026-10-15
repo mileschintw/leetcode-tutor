@@ -1,0 +1,4 @@
+problems/leetcode/alien-dictionary/notes.md: attempt 1 (2025-03-02 topological sort): code '/tmp/2025-03-02-topological-sort.py' must be a file name in the Problem's folder, not a path
+problems/leetcode/two-sum/notes.md: attempt 1 (2026-09-01 brute force): code '../../../practice-log.json' must be a file name in the Problem's folder, not a path
+problems/neetcode/foreign-dictionary/notes.md: attempt 1 (2026-10-02 bfs topological sort): code file '2026-10-02-BFS-topological-sort.java' not found in foreign-dictionary/
+validate: failed (3 errors)
