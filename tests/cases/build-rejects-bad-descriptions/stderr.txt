@@ -1,0 +1,6 @@
+skills/empty-description/SKILL.md: description must not be empty
+skills/long-description/SKILL.md: description is 201 characters, the limit is 200 (claude.ai)
+skills/map-description/SKILL.md: description must be a single line of text
+skills/no-description/SKILL.md: missing required field 'description'
+skills/xml-description/SKILL.md: description must not contain XML tags
+build: metadata check failed (5 problems)

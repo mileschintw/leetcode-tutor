@@ -1,0 +1,15 @@
+{
+  "name": "leetcode-tutor",
+  "description": "LeetCode Tutor: a Socratic coding-interview tutor packaged as agent skills.",
+  "owner": {
+    "name": "mileschintw",
+    "url": "https://github.com/mileschintw"
+  },
+  "plugins": [
+    {
+      "name": "leetcode-tutor",
+      "source": "./",
+      "description": "A Socratic coding-interview tutor for LeetCode, NeetCode and self-authored problems."
+    }
+  ]
+}

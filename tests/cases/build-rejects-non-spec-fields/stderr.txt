@@ -1,0 +1,3 @@
+skills/tutor/SKILL.md: field 'argument-hint' is not one of the six open-spec fields (name, description, license, compatibility, metadata, allowed-tools)
+skills/tutor/SKILL.md: field 'when_to_use' is not one of the six open-spec fields (name, description, license, compatibility, metadata, allowed-tools)
+build: metadata check failed (2 problems)

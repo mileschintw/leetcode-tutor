@@ -1,0 +1,8 @@
+skills/Tutor-Bot/SKILL.md: name 'Tutor-Bot' must be 1-64 lowercase ASCII letters, digits and single hyphens, with no hyphen at either end
+skills/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SKILL.md: name 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' must be 1-64 lowercase ASCII letters, digits and single hyphens, with no hyphen at either end
+skills/claude-tutor/SKILL.md: name 'claude-tutor' contains the reserved word 'claude'
+skills/no-name/SKILL.md: missing required field 'name'
+skills/tutor--x/SKILL.md: name 'tutor--x' must be 1-64 lowercase ASCII letters, digits and single hyphens, with no hyphen at either end
+skills/tutor/SKILL.md: name 'tutor-coach' does not match its folder 'tutor'
+skills/tütor/SKILL.md: name 'tütor' must be 1-64 lowercase ASCII letters, digits and single hyphens, with no hyphen at either end
+build: metadata check failed (7 problems)
