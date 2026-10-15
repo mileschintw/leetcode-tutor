@@ -1,6 +1,6 @@
 # LeetCode Tutor
 
-> **Work in progress: v3 is being built.** The tutor skill installs in Claude Code today. The Practice Log, Import and Notion Mirror are still to come.
+> **Work in progress: v3 is being built.** The tutor skill installs in Claude Code today and records each Session in your Practice Log. Review Sheets, Import and the Notion Mirror are still to come.
 
 A Socratic coding-interview tutor, packaged as agent skills, that keeps a practice log you own.
 v3 succeeds the copy-paste prompt in [leetcode-tutor-prompt](https://github.com/mileschintw/leetcode-tutor-prompt) (v2).
@@ -21,6 +21,8 @@ On older versions, add the marketplace first:
 ```
 
 Then name a Problem, for example "Let's do LeetCode 1. Two Sum". The tutor starts with a structured overview, then guides you with questions instead of answers. You write and run your code on LeetCode or NeetCode. Write in any language: the tutor replies in the language you use.
+
+The tutor keeps your practice in a Practice Workspace, a git repository you own with one folder per Problem. If you start a Session outside one, it offers to create one for you. At the end of each Session it saves the Attempt (outcome, approach, the mistakes it saw, your code) and the Key Takeaway there.
 
 ## Project docs
 
