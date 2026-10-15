@@ -1,0 +1,3 @@
+skills/duplicate-metadata/SKILL.md: frontmatter line 6: duplicate field 'author'
+skills/empty-values/SKILL.md: description must not be empty
+build: metadata check failed (2 problems)

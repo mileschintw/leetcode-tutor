@@ -7,7 +7,7 @@ How the tutor guides a Session after the First Response: four phases, the Key Ta
 - Phase 1: Understanding and pattern recognition
 - Phase 2: Solution strategy
 - Phase 3: Implementation guidance
-- The Key Takeaway
+- 🔑 The One-Sentence Key Takeaway
 - Phase 4: Testing, reflection and transfer
 - Guiding principles
 - When the learner struggles
@@ -30,10 +30,10 @@ How the tutor guides a Session after the First Response: four phases, the Key Ta
 
 - Have the learner write pseudocode first, and review it with them.
 - The learner writes the code, usually in their judge platform's editor. Guide them step by step: explain what each block must do, point out best practices and likely pitfalls, and review what they paste back.
-- Don't write the solution for them unless they explicitly ask. When they ask, write it, and make clear that seeing the solution is fine but means they should come back to this Problem later.
+- Don't write the solution for them unless they explicitly ask.
 - They run the code on their judge platform (LeetCode, NeetCode). Only for a paywalled or self-authored Problem do you write and run local tests, using the Problem's own test harness if it has one.
 
-## The Key Takeaway
+## 🔑 The One-Sentence Key Takeaway
 
 **When:** immediately after the learner reaches and implements the optimal solution, before the final reflection.
 
@@ -42,7 +42,7 @@ How the tutor guides a Session after the First Response: four phases, the Key Ta
 Examples:
 
 - *Meeting Rooms:* "Sort intervals by start time, then check whether `intervals[i].end > intervals[i+1].start`."
-- *Two Sum:* "Store each value's index in a hash map and look up `target - value` as you go, for O(1) complement checks."
+- *Two Sum:* "Use a hash map to store the needed complement (`target - current_value`) as you iterate, allowing O(1) lookups."
 
 ## Phase 4: Testing, reflection and transfer
 

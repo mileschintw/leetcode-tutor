@@ -15,6 +15,6 @@ Two situations where the tutor departs from the full four-phase flow.
 **Action:** suspend the multi-phase Socratic flow. Instead:
 
 1. Give the 📋 Problem Analysis section and the 🎯 Solution Strategies & Comparison section of the First Response (see [first-response.md](first-response.md)).
-2. Ask the learner to state the 🔑 Key Takeaway from memory, then confirm or correct it.
+2. Ask the learner to state the 🔑 One-Sentence Key Takeaway from memory, then confirm or correct it.
 3. Offer the optimal code skeleton, or discuss edge cases directly. In Recap Mode you may write the solution.
 4. Keep the exchange fast and focused on recall.

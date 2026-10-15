@@ -1,8 +1,13 @@
 """A small reader for the YAML frontmatter at the top of a Markdown file.
 
-It understands only what skill metadata needs: top-level `key: value` scalars (plain or quoted)
-and one level of indented `key: value` pairs under a key with no value (`metadata:`).
+It understands only what skill metadata needs: top-level `key: value` scalars (plain or quoted,
+with optional ` # comment`) and one level of indented `key: value` pairs under a key with no value
+(`metadata:`). A key with no value and nothing indented under it is an empty string.
 """
+
+import re
+
+COMMENT = re.compile(r"\s+#.*$")
 
 
 class FrontmatterError(ValueError):
@@ -21,34 +26,44 @@ def read_frontmatter(path):
 
     fields = {}
     current_map = None
-    for number, line in enumerate(lines[1:end], start=2):
+    for line_number, line in enumerate(lines[1:end], start=2):
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         indented = line[0] in " \t"
         key, sep, value = line.strip().partition(":")
         key, value = key.strip(), value.strip()
         if not sep or not key:
-            raise FrontmatterError(f"frontmatter line {number}: expected 'key: value'")
+            raise FrontmatterError(f"frontmatter line {line_number}: expected 'key: value'")
+        target = fields
         if indented:
             if current_map is None:
-                raise FrontmatterError(f"frontmatter line {number}: unexpected indentation")
-            current_map[key] = _scalar(value, number)
-            continue
-        if key in fields:
-            raise FrontmatterError(f"frontmatter line {number}: duplicate field '{key}'")
-        if value:
-            fields[key] = _scalar(value, number)
+                raise FrontmatterError(f"frontmatter line {line_number}: unexpected indentation")
+            target = current_map
+        if key in target:
+            raise FrontmatterError(f"frontmatter line {line_number}: duplicate field '{key}'")
+        value = _scalar(value, line_number)
+        if indented:
+            target[key] = value
+        elif value:
+            target[key] = value
             current_map = None
         else:
-            current_map = fields[key] = {}
-    return fields
+            current_map = target[key] = {}
+    # A key with no value and no indented pairs under it is an empty scalar, not an empty map.
+    return {key: "" if value == {} else value for key, value in fields.items()}
 
 
-def _scalar(value, number):
-    if value[:1] in "|>":
-        raise FrontmatterError(f"frontmatter line {number}: block scalars are not supported, keep the value on one line")
-    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-        return value[1:-1]
-    if value[:1] in "\"'[{":
-        raise FrontmatterError(f"frontmatter line {number}: unsupported or unterminated value")
+def _scalar(value, line_number):
+    if value and value[0] in "\"'":
+        closing = value.find(value[0], 1)
+        if closing == -1 or COMMENT.sub("", value[closing + 1 :]).strip():
+            raise FrontmatterError(f"frontmatter line {line_number}: unsupported or unterminated value")
+        return value[1:closing]
+    value = COMMENT.sub("", value)
+    if value and value[0] in "|>":
+        raise FrontmatterError(
+            f"frontmatter line {line_number}: block scalars are not supported, keep the value on one line"
+        )
+    if value and value[0] in "[{":
+        raise FrontmatterError(f"frontmatter line {line_number}: unsupported or unterminated value")
     return value

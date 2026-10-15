@@ -20,5 +20,5 @@ Single-context: `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/
 
 - Layout: `skills/<name>/SKILL.md` (the skills; `references/` holds what loads on demand), `.claude-plugin/` (Claude Code plugin and marketplace), `practice_log/` (the `practice-log` CLI, Python standard library only), `tests/` (Seam 1), `evals/` (Seam 2).
 - Seam 1 tests: `python -m unittest discover -s tests`. Each `tests/cases/<case>/` holds `case.json`, an `input/` fixture and golden `expected/`, `stdout.txt` and `stderr.txt`; `UPDATE_GOLDEN=1` rewrites the goldens. Tests run the CLI as a subprocess only, never import it.
-- Metadata check: `python -m practice_log build`. Skill frontmatter may use only the six open-spec fields, with an ASCII `name` matching its folder and a `description` of at most 200 characters.
+- Metadata check: `python -m practice_log build`. Skill frontmatter may use only the six open-spec fields, with an ASCII `name` matching its folder and a `description` of at most 200 characters. Following `docs/research/agent-skills-platform-support.md`, it also rejects names over 64 characters or containing `anthropic`/`claude`, and XML tags in descriptions, which claude.ai refuses.
 - Seam 2 evals: `claude plugin eval . --trust-plugin --no-publish`. It runs full Claude sessions, so it costs tokens.

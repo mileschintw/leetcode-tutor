@@ -34,11 +34,14 @@ def run(root):
     if problems:
         for problem in problems:
             print(problem, file=sys.stderr)
-        print(f"build: metadata check failed ({len(problems)} problem{'s' if len(problems) != 1 else ''})", file=sys.stderr)
+        print(f"build: metadata check failed ({plural(len(problems), 'problem')})", file=sys.stderr)
         return 1
-    count = len(skill_files)
-    print(f"build: {count} skill{'s' if count != 1 else ''} checked, metadata ok")
+    print(f"build: {plural(len(skill_files), 'skill')} checked, metadata ok")
     return 0
+
+
+def plural(count, noun):
+    return f"{count} {noun}{'' if count == 1 else 's'}"
 
 
 def check_metadata(fields, folder):

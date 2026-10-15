@@ -26,8 +26,9 @@ UPDATE_GOLDEN = os.environ.get("UPDATE_GOLDEN") == "1"
 
 def run_cli(args, cwd):
     """The single place that invokes the CLI."""
-    env = dict(os.environ, PYTHONPATH=str(REPO_ROOT), PYTHONUTF8="1")
-    return subprocess.run(
+    env = dict(os.environ, PYTHONPATH=str(REPO_ROOT))
+    env.pop("PYTHONUTF8", None)  # the CLI must write UTF-8 on its own, whatever the console codepage
+    result = subprocess.run(
         [sys.executable, "-m", "practice_log", *args],
         cwd=cwd,
         env=env,
@@ -35,6 +36,9 @@ def run_cli(args, cwd):
         text=True,
         encoding="utf-8",
     )
+    result.stdout = result.stdout.replace("\r\n", "\n")
+    result.stderr = result.stderr.replace("\r\n", "\n")
+    return result
 
 
 def read_tree(root):
@@ -70,27 +74,25 @@ class CliGoldenTest(unittest.TestCase):
                 self.check_case(case)
 
     def check_case(self, case):
-        spec = json.loads((case / "case.json").read_text(encoding="utf-8"))
+        case_config = json.loads((case / "case.json").read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory() as tmp:
             work = Path(tmp) / "work"
             if (case / "input").exists():
                 shutil.copytree(case / "input", work)
             else:
                 work.mkdir()
-            result = run_cli(spec["args"], work)
-            stdout = result.stdout.replace("\r\n", "\n")
-            stderr = result.stderr.replace("\r\n", "\n")
+            result = run_cli(case_config["args"], work)
+            self.assertEqual(result.returncode, case_config["exit_code"], f"exit code\nstderr:\n{result.stderr}")
 
             if UPDATE_GOLDEN:
                 shutil.rmtree(case / "expected", ignore_errors=True)
                 shutil.copytree(work, case / "expected")
-                write_golden(case / "stdout.txt", stdout)
-                write_golden(case / "stderr.txt", stderr)
+                write_golden(case / "stdout.txt", result.stdout)
+                write_golden(case / "stderr.txt", result.stderr)
                 return
 
-            self.assertEqual(result.returncode, spec["exit_code"], f"exit code\nstderr:\n{stderr}")
-            self.assertEqual(stdout, read_golden(case / "stdout.txt"), "stdout")
-            self.assertEqual(stderr, read_golden(case / "stderr.txt"), "stderr")
+            self.assertEqual(result.stdout, read_golden(case / "stdout.txt"), "stdout")
+            self.assertEqual(result.stderr, read_golden(case / "stderr.txt"), "stderr")
             self.assertEqual(read_tree(work), read_tree(case / "expected"), "resulting files")
 
 
