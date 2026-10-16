@@ -1,0 +1,5 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "leetcode-tutor",
+  "description": "A Socratic coding-interview tutor for LeetCode, NeetCode and self-authored problems."
+}

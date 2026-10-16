@@ -1,0 +1,17 @@
+{
+  "name": "two-sum-tutor",
+  "plugins": [
+    {
+      "name": "two-sum-tutor",
+      "source": {
+        "source": "url",
+        "url": "https://example.com/two-sum-tutor.git"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

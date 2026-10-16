@@ -27,8 +27,8 @@ jobs:
       - name: Seam 1 tests
         run: python -m unittest discover -s tests -v
 
-      - name: Skill metadata check
-        run: python skills/leetcode-tutor/scripts/practice_log build
+      - name: Skill metadata check and generated files up to date
+        run: python skills/leetcode-tutor/scripts/practice_log build --check
 
   plugin:
     name: Plugin manifests

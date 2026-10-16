@@ -1,0 +1,3 @@
+.cursor-plugin/plugin.json: missing
+prompts/two-sum-coach.md: out of date
+build: generated files are stale, run `python skills/leetcode-tutor/scripts/practice_log build` and commit

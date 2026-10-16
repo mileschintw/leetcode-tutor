@@ -17,9 +17,12 @@ def main(argv=None):
     subcommands = parser.add_subparsers(dest="command", required=True)
 
     build_parser = subcommands.add_parser(
-        "build", help="maintainer-only: check skill metadata"
+        "build", help="maintainer-only: check skill metadata and generate release artefacts"
     )
     build_parser.add_argument("--root", type=Path, default=Path("."), help="repository root (default: .)")
+    build_parser.add_argument(
+        "--check", action="store_true", help="only verify the committed generated files are up to date"
+    )
 
     init_parser = subcommands.add_parser("init", help="create a Practice Workspace in a new or empty folder")
     init_parser.add_argument("path", type=Path, nargs="?", default=Path("."), help="folder to create it in (default: .)")
@@ -29,7 +32,7 @@ def main(argv=None):
 
     args = parser.parse_args(argv)
     if args.command == "build":
-        return build.run(args.root)
+        return build.run(args.root, check=args.check)
     if args.command == "init":
         return workspace.run(args.path)
     if args.command == "validate":

@@ -7,6 +7,8 @@ Each directory under tests/cases/ is one case:
 - expected/: the golden tree the working directory must match afterwards
 - stdout.txt, stderr.txt: golden output (an absent file means empty output)
 
+A .zip file is compared by its member names and their contents, not its bytes.
+
 Set UPDATE_GOLDEN=1 to rewrite expected/, stdout.txt and stderr.txt from the actual results.
 """
 
@@ -17,6 +19,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -46,10 +49,20 @@ def read_tree(root):
     if not root.exists():
         return {}
     return {
-        path.relative_to(root).as_posix(): path.read_bytes().decode("utf-8", errors="backslashreplace").replace("\r\n", "\n")
+        path.relative_to(root).as_posix(): read_zip(path) if path.suffix == ".zip" else read_text(path.read_bytes())
         for path in sorted(root.rglob("*"))
         if path.is_file()
     }
+
+
+def read_text(data):
+    return data.decode("utf-8", errors="backslashreplace").replace("\r\n", "\n")
+
+
+def read_zip(path):
+    """A zip as text: each member's name, in archive order, followed by its contents."""
+    with zipfile.ZipFile(path) as archive:
+        return "".join(f"== {name}\n{read_text(archive.read(name))}" for name in archive.namelist())
 
 
 def read_golden(path):
@@ -98,7 +111,8 @@ class CliGoldenTest(unittest.TestCase):
 
 class RepositoryBuildTest(unittest.TestCase):
     def test_shipped_skills_pass_build(self):
-        result = run_cli(["build"], REPO_ROOT)
+        # --check writes nothing, and also fails if the committed prompt or manifests are stale.
+        result = run_cli(["build", "--check"], REPO_ROOT)
         self.assertEqual(result.returncode, 0, result.stderr)
 
 

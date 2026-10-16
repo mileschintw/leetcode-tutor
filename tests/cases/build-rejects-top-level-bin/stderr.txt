@@ -1,0 +1,2 @@
+bin/: a top-level bin directory makes claude.ai refuse the whole plugin
+build: metadata check failed (1 problem)

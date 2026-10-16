@@ -1,0 +1,16 @@
+{
+  "name": "two-sum-tutor",
+  "description": "Coaches learners through Two Sum.",
+  "author": {
+    "name": "example",
+    "email": "example@example.com",
+    "url": "https://example.com"
+  },
+  "homepage": "https://example.com/two-sum-tutor",
+  "repository": "https://example.com/two-sum-tutor",
+  "license": "MIT",
+  "keywords": [
+    "two-sum",
+    "tutor"
+  ]
+}

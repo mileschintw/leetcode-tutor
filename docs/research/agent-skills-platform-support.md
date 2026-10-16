@@ -24,7 +24,8 @@ Method: primary sources only (vendor docs, help centers, first-party blogs, offi
   - Uploads to claude.ai and the Claude API **hard-fail** on any frontmatter field outside the six spec fields.
 - **Plugins and marketplaces are vendor-specific; SKILL.md is the portable unit.**
   - Claude Code uses `.claude-plugin/marketplace.json` plus `.claude-plugin/plugin.json`.
-  - Cursor uses `.cursor-plugin/marketplace.json`.
+  - Cursor reads a root `plugin.json` (Agent Plugins) or `.cursor-plugin/plugin.json`. `.cursor-plugin/marketplace.json` is only for multi-plugin repos (corrected 2026-10-15, see 2.6).
+  - Codex reads a root `plugin.json` (Agent Plugins) and a repo marketplace at `.agents/plugins/marketplace.json` (added 2026-10-15, see 2.3).
   - Antigravity uses `agy plugin install <github-url>`.
   - In ChatGPT, GitHub marketplace import is for workspace admins.
   - No single manifest serves every vendor. One repo can carry several manifests that all point at the same `skills/<name>/SKILL.md`.
@@ -48,7 +49,7 @@ Method: primary sources only (vendor docs, help centers, first-party blogs, offi
 | Perplexity Agent API | Yes ("open Agent Skills format"). ZIP up to 32 MiB / 100 files. | Per API project. | Scripts run in the API sandbox. | https://docs.perplexity.ai/docs/agent-api/skills |
 | GitHub Copilot (cloud agent, code review, CLI, app, VS Code/JetBrains agent mode) | Yes. | Project `.github/skills`, `.claude/skills` or `.agents/skills`; personal `~/.copilot/skills` or `~/.agents/skills`. | Local (IDE/CLI) or the cloud agent's repo checkout. | https://docs.github.com/en/copilot/concepts/agents/about-agent-skills |
 | VS Code (Copilot Chat) | Yes. Skills appear as `/` commands. | Project `.github/skills`, `.claude/skills` or `.agents/skills`; personal `~/.copilot/skills`, `~/.claude/skills` or `~/.agents/skills`; extensions via `chatSkills`; agent plugins. | Local workspace. | https://code.visualstudio.com/docs/copilot/customization/agent-skills |
-| Cursor | Yes. | Project `.agents/skills` or `.cursor/skills`; user `~/.agents/skills` or `~/.cursor/skills`. Compatibility paths `.claude/skills` and `.codex/skills`. GitHub install only via a plugin (`.cursor-plugin/marketplace.json`). | Local workspace. | https://cursor.com/docs/context/skills |
+| Cursor | Yes. | Project `.agents/skills` or `.cursor/skills`; user `~/.agents/skills` or `~/.cursor/skills`. Compatibility paths `.claude/skills` and `.codex/skills`. GitHub install only via a plugin (root `plugin.json` or `.cursor-plugin/plugin.json`; see 2.6). | Local workspace. | https://cursor.com/docs/context/skills |
 
 Other listed adopters (agentskills.io client showcase, https://agentskills.io/home): Junie (JetBrains), OpenCode, OpenHands, Amp, Goose, Letta, Factory, Roo Code, Kiro, TRAE, Mistral Vibe, Databricks, Snowflake Cortex Code, Spring AI, Tabnine, Laravel Boost and others.
 
@@ -185,6 +186,7 @@ Precedence is enterprise > personal > project. Plugin skills are namespaced and 
   - SYSTEM: bundled
 - **Codex skill format.** `name` and `description` are required. Optional extras are `scripts/`, `references/`, `assets/` and `agents/openai.yaml`.
 - **Codex install and invocation.** Install with `$skill-installer`, or distribute via plugins. Invoke explicitly with `$` or `/skills` in Codex, or `@` in ChatGPT; skills also trigger implicitly.
+- **Codex plugin packaging** (https://developers.openai.com/codex/plugins/build, accessed 2026-10-15): put a `plugin.json` at the plugin root declaring the Agent Plugins schema (https://agent-plugins.org/schemas/1.0.0/plugin.schema.json: `$schema` and `name` required, no extra keys). Skills are discovered from the root `skills/`. `.codex-plugin/plugin.json` is an optional overlay for OpenAI-specific settings. A repo marketplace goes at `$REPO_ROOT/.agents/plugins/marketplace.json`; each entry needs `policy.installation`, `policy.authentication` and `category`, and the page says to use `"source": "url"` for a plugin at the repository root. The desktop app also reads `$REPO_ROOT/.claude-plugin/marketplace.json` as a legacy-compatible marketplace. Install: `codex plugin marketplace add owner/repo`.
 - **Where Codex skills appear.** Standalone skills appear in the ChatGPT desktop app, Codex CLI and the IDE extension. Plugin-bundled skills also appear in ChatGPT web, desktop and mobile. The skills list uses up to 2% of context (8,000 chars fallback).
 
 ### 2.4 Google Gemini app (Gems → skills) and Gemini CLI / Antigravity
@@ -240,7 +242,7 @@ Precedence is enterprise > personal > project. Plugin skills are namespaced and 
   - Source: https://code.visualstudio.com/docs/copilot/customization/agent-skills (accessed 2026-10-15).
 - **Cursor.**
   - Reads `.agents/skills`, `.cursor/skills`, `~/.agents/skills` and `~/.cursor/skills`, plus the compatibility paths `.claude/skills`, `.codex/skills`, `~/.claude/skills` and `~/.codex/skills`.
-  - Skills from GitHub must be packaged as a plugin with `.cursor-plugin/marketplace.json`.
+  - Skills from GitHub must be packaged as a plugin. A single-plugin repo needs a root `plugin.json` (Agent Plugins) or `.cursor-plugin/plugin.json`; `.cursor-plugin/marketplace.json` is "for multi-plugin repositories". Users install through the Cursor marketplace or a team admin's "Import from Repo" (https://cursor.com/docs/reference/plugins, https://cursor.com/docs/plugins, accessed 2026-10-15). An earlier version of this note said GitHub installs need `marketplace.json`; that was wrong.
   - Source: https://cursor.com/docs/context/skills (accessed 2026-10-15).
 
 ---
@@ -320,6 +322,8 @@ These items came only from secondary sources or search-result summaries, or are 
 10. **File persistence across conversations** on claude.ai, ChatGPT and the Gemini app. Not documented on any of the three.
 11. **Gemini app script execution.** Scripts may be bundled, but how and where they run isn't described.
 12. **claude.ai skill ZIP size limit.** The help article mentions size limits without giving a number.
-13. **Conflicting claude.ai docs.** These may be resolved by the time the decision is made:
+13. **Codex marketplace `url` source fields.** The Codex page says to use `"source": "url"` for a plugin at the repository root but gives no example and lists no fields. This repo's `.agents/plugins/marketplace.json` assumes `{"source": "url", "url": "<repo>.git"}`, by analogy with the documented `git-subdir` example. Codex skips entries it can't resolve, so a wrong guess fails silently; `.claude-plugin/marketplace.json` is the documented fallback. Not yet checked by hand.
+14. **Antigravity and a foreign `$schema`.** Antigravity's `plugin.json` schema has `additionalProperties: false` and its example uses its own `$schema` URL. Whether `agy plugin install` accepts the root `plugin.json` with the Agent Plugins `$schema` value is untested.
+15. **Conflicting claude.ai docs.** These may be resolved by the time the decision is made:
     - The platform overview vs the help center on plans (Free included or not), menu path (Settings > Features vs Customize > Skills) and org sharing.
     - The 200 vs 1024 description limit.
