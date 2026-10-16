@@ -1,0 +1,2 @@
+problems/leetcode/valid-parentheses/notes.md: attempt 1 (2026-10-02 stack): missing required field 'language'
+validate: failed (1 error)

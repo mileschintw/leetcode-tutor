@@ -11,6 +11,7 @@ import sys
 
 from practice_log import package
 from practice_log.frontmatter import FrontmatterError, read_frontmatter
+from practice_log.readme import plural
 
 SPEC_FIELDS = ("name", "description", "license", "compatibility", "metadata", "allowed-tools")
 # Literal ASCII classes: \w and \d would also accept non-ASCII letters and digits.
@@ -46,6 +47,10 @@ def run(root, check=False):
             requires[folder] = required
             skill_problems += check_required(required, folder, names)
         problems += [f"{label}: {problem}" for problem in skill_problems]
+        if required is None:
+            # Only a skill that gets a prompt has its prompt markers and reference files read.
+            folder_label = skill_file.parent.relative_to(root).as_posix()
+            problems += [f"{folder_label}/{problem}" for problem in package.prompt_problems(skill_file.parent)]
     problems += check_layout(root)
     problems += [f"{package.CLAUDE_PLUGIN}: {problem}" for problem in check_claude_plugin(root)]
 
@@ -131,10 +136,6 @@ def check_claude_plugin(root):
     if "repository" in plugin and not isinstance(plugin["repository"], str):
         problems.append("'repository' must be a URL string")
     return problems
-
-
-def plural(count, noun):
-    return f"{count} {noun}{'' if count == 1 else 's'}"
 
 
 def check_metadata(fields, folder):

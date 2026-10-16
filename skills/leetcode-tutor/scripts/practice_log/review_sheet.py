@@ -10,8 +10,8 @@ full-Session Attempt was solved alone: imported records carry `saw-solution` wit
 import sys
 
 from practice_log import readme
-from practice_log.index import to_problem
-from practice_log.notes import read_key_takeaway_line
+from practice_log.index import list_spellings, to_problem
+from practice_log.notes import read_key_takeaway
 from practice_log.problems import read_problems
 from practice_log.validate import is_date
 from practice_log.workspace import CONFIG_FILE
@@ -23,9 +23,9 @@ SHEETS_FOLDER = "review-sheets"
 class Entry:
     """What a Review Sheet shows of one Problem: the index's view of it, plus its notes' details."""
 
-    def __init__(self, notes):
-        self.problem = to_problem(notes.rel, notes.fields, notes.attempts)
-        self.key_takeaway = read_key_takeaway_line(notes.notes_file)
+    def __init__(self, notes, spellings):
+        self.problem = to_problem(notes.rel, notes.fields, notes.attempts, spellings)
+        self.key_takeaway = read_key_takeaway(notes.notes_file)
         # Oldest first by date; an Attempt with a malformed date sorts before every dated one.
         dated = [(a.fields.get("date", "") if is_date(a.fields.get("date", "")) else "", i) for i, a in enumerate(notes.attempts)]
         self.attempts = [notes.attempts[i].fields for _, i in sorted(dated)]
@@ -74,7 +74,8 @@ def run(root, ids, tags, lists, title, output):
             print(error, file=sys.stderr)
         print("review-sheet: nothing written; fix the notes (`practice-log validate` lists every error)", file=sys.stderr)
         return 1
-    entries = [Entry(n) for n in notes]
+    spellings = list_spellings(notes)
+    entries = [Entry(n, spellings) for n in notes]
 
     filters = Filters(ids, tags, lists)
     selected = [entry for entry in entries if filters.match(entry.problem)]
@@ -171,7 +172,7 @@ def entry_block(entry, base):
     lines = [f"### {readme.link(p, base)}\n", " · ".join(details) + "\n"]
     if entry.redo:
         lines.append(f"- **Redo:** {entry.redo}")
-    lines.append(f"- **Key Takeaway:** {entry.key_takeaway or 'none recorded'}")
+    lines.append(key_takeaway(entry.key_takeaway))
     if entry.attempts:
         approaches = [
             f"{a.get('approach') or '?'} ({a.get('date') or 'undated'}, {a.get('mode') or '?'}, {a.get('outcome') or '?'})"
@@ -190,3 +191,11 @@ def entry_block(entry, base):
     lists = ", ".join(p.lists) or "none"
     lines.append(f"- **Tags:** {tags} · **Problem Lists:** {lists}")
     return "\n".join(lines) + "\n"
+
+
+def key_takeaway(text):
+    """The Key Takeaway item: inline when it is one line, else as written, indented under the bullet."""
+    if "\n" not in text:
+        return f"- **Key Takeaway:** {text or 'none recorded'}"
+    block = "\n".join(f"  {line}" if line.strip() else "" for line in text.splitlines())
+    return f"- **Key Takeaway:**\n\n{block}\n"

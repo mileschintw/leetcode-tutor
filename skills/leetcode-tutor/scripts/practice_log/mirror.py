@@ -11,7 +11,7 @@ import re
 import sys
 from urllib.parse import quote
 
-from practice_log.index import items, text
+from practice_log.index import items, list_names, list_spellings, text
 from practice_log.notes import read_key_takeaway
 from practice_log.problems import read_problems
 from practice_log.validate import DIFFICULTIES, OUTCOMES, is_date
@@ -78,20 +78,21 @@ def build_plan(root):
     mirror = mirror if isinstance(mirror, dict) else {}
     repository = github_repository(mirror.get("repository"))
 
-    pages, errors = [], []
-    for problem in read_problems(root):
-        if problem.error:
-            errors.append(problem.error)
-            continue
-        folder = problem.folder
-        problem_id = f"{folder.parent.name}:{folder.name}"
-        takeaway = read_key_takeaway(problem.notes_file)
-        pages.append(page(repository, problem.rel, problem_id, problem.fields, takeaway, problem.attempts))
+    notes = list(read_problems(root))
+    errors = [problem.error for problem in notes if problem.error]
     if errors:
         raise PlanError(
             "\n".join(errors)
             + "\nmirror-plan: no plan printed; fix the notes (`practice-log validate` lists every error)"
         )
+    spellings = list_spellings(notes)
+    pages = []
+    for problem in notes:
+        folder = problem.folder
+        problem_id = f"{folder.parent.name}:{folder.name}"
+        takeaway = read_key_takeaway(problem.notes_file)
+        lists = list_names(problem.fields, spellings)
+        pages.append(page(repository, problem.rel, problem_id, problem.fields, lists, takeaway, problem.attempts))
 
     database_id = mirror.get("notion_database_id")
     return {
@@ -141,7 +142,7 @@ def github_repository(value):
     )
 
 
-def page(repository, rel, problem_id, fields, takeaway, attempts):
+def page(repository, rel, problem_id, fields, lists, takeaway, attempts):
     # HEAD is the repository's default branch, so links survive a branch rename.
     folder_url = f"{repository}/tree/HEAD/{quote(rel)}"
     file_url = f"{repository}/blob/HEAD/{quote(rel)}/"
@@ -157,7 +158,8 @@ def page(repository, rel, problem_id, fields, takeaway, attempts):
         "Difficulty": difficulty.capitalize() if difficulty in DIFFICULTIES else None,
         # Tags group case-insensitively, as the index shows them.
         "Tags": sorted({option(tag.lower()) for tag in items(fields.get("tags"))}),
-        "Lists": list(dict.fromkeys(option(name) for name in items(fields.get("lists")))),
+        # Lists group case-insensitively too, each in its first spelling in the Practice Log.
+        "Lists": list(dict.fromkeys(option(name) for name in lists)),
         "Need Review": need_review,
         "Need Review Reason": clip(text(fields.get("need_review_reason"))) if need_review else "",
         "Attempts": len(attempts),

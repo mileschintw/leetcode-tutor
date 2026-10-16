@@ -22,26 +22,23 @@ def run(root):
         )
         return 1
 
-    problems, errors = [], []
-    for problem in read_problems(root):
-        if problem.error:
-            errors.append(problem.error)
-            continue
-        problems.append(to_problem(problem.rel, problem.fields, problem.attempts))
-
+    notes = list(read_problems(root))
+    errors = [n.error for n in notes if n.error]
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
         print(f"index: {README_FILE} not written; fix the notes (`practice-log validate` lists every error)", file=sys.stderr)
         return 1
 
+    spellings = list_spellings(notes)
+    problems = [to_problem(n.rel, n.fields, n.attempts, spellings) for n in notes]
     (root / README_FILE).write_text(readme.render(problems), encoding="utf-8", newline="\n")
     attempts = sum(p.attempts for p in problems)
     print(f"index: wrote {README_FILE} ({readme.plural(len(problems), 'Problem')}, {readme.plural(attempts, 'Attempt')})")
     return 0
 
 
-def to_problem(rel, fields, attempts):
+def to_problem(rel, fields, attempts, spellings):
     problem_id = text(fields.get("id"))
     dates = [attempt.fields.get("date", "") for attempt in attempts]
     return readme.Problem(
@@ -51,7 +48,7 @@ def to_problem(rel, fields, attempts):
         difficulty=text(fields.get("difficulty")),
         # Tags group case-insensitively and show in lowercase, as the schema writes them.
         tags=sorted({tag.lower() for tag in items(fields.get("tags"))}),
-        lists=items(fields.get("lists")),
+        lists=list_names(fields, spellings),
         need_review=fields.get("need_review") == "true",
         reason=text(fields.get("need_review_reason")),
         # An Attempt with a malformed date still counts, but never sets the last date.
@@ -70,3 +67,21 @@ def items(value):
     if isinstance(value, list):
         return [item for item in value if item]
     return [value] if value else []
+
+
+def list_spellings(notes):
+    """Each Problem List name, case-folded, mapped to its first spelling in folder order.
+
+    Problem Lists group regardless of case, as `review-sheet --list` matches them, so `Grind 75` and
+    `grind 75` are one list, shown as it was first written.
+    """
+    spellings = {}
+    for problem in notes:
+        for name in items(problem.fields.get("lists")):
+            spellings.setdefault(name.casefold(), name)
+    return spellings
+
+
+def list_names(fields, spellings):
+    """A Problem's Problem Lists in the notes' order, each in its first spelling, once."""
+    return list(dict.fromkeys(spellings[name.casefold()] for name in items(fields.get("lists"))))

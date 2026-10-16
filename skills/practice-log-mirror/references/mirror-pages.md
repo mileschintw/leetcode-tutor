@@ -43,7 +43,7 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 | GitHub | url | |
 | Pending | checkbox | |
 
-In the plan, the `options` of Tags and Lists hold the sorted, de-duplicated values the pages use (an empty list when none use any). `Problem ID` is the key a push matches pages by. `Pending` marks an Attempt written straight to the Mirror from a chat platform, in the format of the `leetcode-tutor` skill's `references/chat-platforms.md`; the plan leaves it unchecked on every page.
+In the plan, the `options` of Tags and Lists hold the sorted, de-duplicated values the pages use (Lists names differing only in case are one option, see below) (an empty list when none use any). `Problem ID` is the key a push matches pages by. `Pending` marks an Attempt written straight to the Mirror from a chat platform, in the format of the `leetcode-tutor` skill's `references/chat-platforms.md`; the plan leaves it unchecked on every page.
 
 ## Page properties
 
@@ -55,7 +55,7 @@ In the plan, the `options` of Tags and Lists hold the sorted, de-duplicated valu
 | Problem ID | `<source>:<slug>`, from the folder |
 | Difficulty | `difficulty` capitalised (`Easy`); empty when it is none of `easy`, `medium` and `hard` |
 | Tags | `tags`, lowercased, de-duplicated and sorted |
-| Lists | `lists`, in the notes' order |
+| Lists | `lists`, in the notes' order, once each; names differing only in case are one list, spelt as the first Problem folder (in path order) writes it |
 | Need Review | `need_review` is `true` |
 | Need Review Reason | `need_review_reason` when Need Review is set, otherwise empty |
 | Attempts | the number of Attempts in the log |
@@ -91,7 +91,7 @@ Markdown, with a blank line between blocks:
 - Origin: <origin>
 ```
 
-One `###` block per Attempt, in the log's order, each leaving out the lines whose field is empty. With no Attempts, the section holds `No Attempts yet.` instead.
+One `###` block per Attempt, in the log's order, each leaving out the lines whose field is empty. So `Mistakes: none` means none were observed, and no Mistakes line means they aren't known. With no Attempts, the section holds `No Attempts yet.` instead.
 
 ## Writing values through a connector
 
