@@ -54,7 +54,9 @@ Flat frontmatter, Obsidian-compatible. Lists may be written `[a, b]` or as `- it
 | `link` | no | the Problem's URL; empty for a custom Problem without one |
 | `lists` | no | list of Problem List names (`Grind 75`, `NeetCode 150`) |
 | `need_review` | yes | `true` or `false` |
-| `need_review_reason` | when `need_review` is `true` | why it was last set, in one line |
+| `need_review_reason` | when `need_review` is `true` | why it was last set, in one line; empty when `need_review` is `false` |
+
+When the tutor sets and clears Need Review is in [need-review.md](need-review.md).
 
 ## Attempts
 
@@ -76,6 +78,8 @@ Outcomes:
 - `solved-alone`: the learner reached a working solution with no hints beyond the First Response.
 - `solved-with-hints`: the learner wrote the solution after hints, corrections or pseudocode review.
 - `saw-solution`: the learner saw the solution (asked for it, a skeleton, or a jump to the conclusion) before solving it.
+
+A `recap` Attempt's outcome is judged by the learner's recall of the Key Takeaway instead (see [modes.md](modes.md)).
 
 The code file is named `<date>-<approach slug>.<ext>`, for example `2026-10-15-hash-map.py`. If that name is taken, add `-2`, `-3` and so on before the extension.
 
