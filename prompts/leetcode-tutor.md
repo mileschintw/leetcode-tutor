@@ -167,6 +167,7 @@ The format of the learner's Practice Log inside their Practice Workspace. `valid
 ## Contents
 
 - Workspace layout
+- Workspace config
 - Problem ID
 - Notes file
 - Problem fields
@@ -185,6 +186,24 @@ review-sheets/                 saved Review Sheets
 ```
 
 Other files in a Problem's folder, such as a self-authored Problem's test harness, are the learner's own and stay as they are.
+
+## Workspace config
+
+`practice-log.json`, which `init` creates:
+
+```json
+{
+  "version": 1,
+  "mirror": {
+    "notion_database_id": null,
+    "repository": "https://github.com/<owner>/<repo>"
+  }
+}
+```
+
+- `version`: always `1`.
+- `mirror.notion_database_id`: the Notion database the Mirror created and owns; `null` until the first push (the `practice-log-mirror` skill sets it).
+- `mirror.repository`: the workspace's GitHub repository, which Mirror pages link to. Optional; `init` leaves it out, and the `practice-log-mirror` skill sets it from the `origin` remote.
 
 ## Problem ID
 

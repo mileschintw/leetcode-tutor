@@ -53,17 +53,19 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 | --- | --- |
 | Problem | `title`, or the Problem ID when it is empty |
 | Problem ID | `<source>:<slug>`, from the folder |
-| Difficulty | `difficulty` capitalised (`Easy`); empty when it has none |
+| Difficulty | `difficulty` capitalised (`Easy`); empty when it is none of `easy`, `medium` and `hard` |
 | Tags | `tags`, lowercased, de-duplicated and sorted |
 | Lists | `lists`, in the notes' order |
 | Need Review | `need_review` is `true` |
 | Need Review Reason | `need_review_reason` when Need Review is set, otherwise empty |
 | Attempts | the number of Attempts in the log |
 | Last Attempt | the latest Attempt `date`; empty when there is none |
-| Last Outcome | the `outcome` of that Attempt (on a tie, the later one in the log) |
+| Last Outcome | the `outcome` of that Attempt (on a tie, the later one in the log); empty when it isn't one of the three outcomes |
 | Link | `link`; empty when it has none |
 | GitHub | `<repository>/tree/HEAD/<folder>` |
 | Pending | unchecked |
+
+Notion's limits: a text or title value longer than 2000 characters is cut to its first 1999 and `…`, and a comma in a Tags or Lists name becomes `;` (`graph, bfs` → `graph; bfs`), since select options can't hold commas.
 
 ## Page body
 

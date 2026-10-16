@@ -8,7 +8,7 @@ import sys
 
 from practice_log import readme
 from practice_log.readme import README_FILE
-from practice_log.notes import NotesError, read_notes
+from practice_log.problems import read_problems
 from practice_log.validate import is_date
 from practice_log.workspace import CONFIG_FILE
 
@@ -23,20 +23,11 @@ def run(root):
         return 1
 
     problems, errors = [], []
-    for folder in sorted((root / "problems").glob("*/*/"), key=lambda path: path.as_posix()):
-        if not folder.is_dir():
+    for problem in read_problems(root):
+        if problem.error:
+            errors.append(problem.error)
             continue
-        rel = folder.relative_to(root).as_posix()
-        notes_file = folder / "notes.md"
-        if not notes_file.is_file():
-            errors.append(f"{rel}: missing notes.md")
-            continue
-        try:
-            fields, attempts = read_notes(notes_file)
-        except NotesError as error:
-            errors.append(f"{rel}/notes.md: {error}")
-            continue
-        problems.append(to_problem(rel, fields, attempts))
+        problems.append(to_problem(problem.rel, problem.fields, problem.attempts))
 
     if errors:
         for error in errors:

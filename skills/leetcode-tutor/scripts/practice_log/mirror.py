@@ -12,8 +12,9 @@ import sys
 from urllib.parse import quote
 
 from practice_log.index import items, text
-from practice_log.notes import NotesError, read_key_takeaway, read_notes
-from practice_log.validate import is_date
+from practice_log.notes import read_key_takeaway
+from practice_log.problems import read_problems
+from practice_log.validate import DIFFICULTIES, OUTCOMES, is_date
 from practice_log.workspace import CONFIG_FILE
 
 DATABASE_TITLE = "Practice Log"
@@ -23,19 +24,21 @@ DATABASE_TITLE = "Practice Log"
 PROPERTIES = [
     {"name": "Problem", "type": "title"},
     {"name": "Problem ID", "type": "text"},
-    {"name": "Difficulty", "type": "select", "options": ["Easy", "Medium", "Hard"]},
+    {"name": "Difficulty", "type": "select", "options": [difficulty.capitalize() for difficulty in DIFFICULTIES]},
     {"name": "Tags", "type": "multi_select"},
     {"name": "Lists", "type": "multi_select"},
     {"name": "Need Review", "type": "checkbox"},
     {"name": "Need Review Reason", "type": "text"},
     {"name": "Attempts", "type": "number"},
     {"name": "Last Attempt", "type": "date"},
-    {"name": "Last Outcome", "type": "select", "options": ["solved-alone", "solved-with-hints", "saw-solution"]},
+    {"name": "Last Outcome", "type": "select", "options": list(OUTCOMES)},
     {"name": "Link", "type": "url"},
     {"name": "GitHub", "type": "url"},
     {"name": "Pending", "type": "checkbox"},
 ]
 KEY = "Problem ID"
+# Notion refuses a text value over 2000 characters and a select option name holding a comma.
+TEXT_MAX = 2000
 
 PART = r"[A-Za-z0-9_.-]+"
 GITHUB_REPOSITORY = [
@@ -76,21 +79,14 @@ def build_plan(root):
     repository = github_repository(mirror.get("repository"))
 
     pages, errors = [], []
-    for folder in sorted((root / "problems").glob("*/*/"), key=lambda path: path.as_posix()):
-        if not folder.is_dir():
+    for problem in read_problems(root):
+        if problem.error:
+            errors.append(problem.error)
             continue
-        rel = folder.relative_to(root).as_posix()
-        notes_file = folder / "notes.md"
-        if not notes_file.is_file():
-            errors.append(f"{rel}: missing notes.md")
-            continue
-        try:
-            fields, attempts = read_notes(notes_file)
-            takeaway = read_key_takeaway(notes_file)
-        except NotesError as error:
-            errors.append(f"{rel}/notes.md: {error}")
-            continue
-        pages.append(page(repository, rel, f"{folder.parent.name}:{folder.name}", fields, takeaway, attempts))
+        folder = problem.folder
+        problem_id = f"{folder.parent.name}:{folder.name}"
+        takeaway = read_key_takeaway(problem.notes_file)
+        pages.append(page(repository, problem.rel, problem_id, problem.fields, takeaway, problem.attempts))
     if errors:
         raise PlanError(
             "\n".join(errors)
@@ -135,28 +131,37 @@ def page(repository, rel, problem_id, fields, takeaway, attempts):
     # HEAD is the repository's default branch, so links survive a branch rename.
     folder_url = f"{repository}/tree/HEAD/{quote(rel)}"
     file_url = f"{repository}/blob/HEAD/{quote(rel)}/"
-    difficulty = text(fields.get("difficulty")).capitalize()
+    difficulty = text(fields.get("difficulty")).lower()
     dated = [attempt for attempt in attempts if is_date(attempt.fields.get("date", ""))]
     # The latest date wins; on a tie, the later entry in the log.
     last = max(reversed(dated), key=lambda attempt: attempt.fields["date"], default=None)
     need_review = fields.get("need_review") == "true"
+    outcome = last.fields.get("outcome") if last else None
     properties = {
-        "Problem": text(fields.get("title")) or problem_id,
-        "Problem ID": problem_id,
-        "Difficulty": difficulty if difficulty in ("Easy", "Medium", "Hard") else None,
+        "Problem": clip(text(fields.get("title")) or problem_id),
+        "Problem ID": clip(problem_id),
+        "Difficulty": difficulty.capitalize() if difficulty in DIFFICULTIES else None,
         # Tags group case-insensitively, as the index shows them.
-        "Tags": sorted({tag.lower() for tag in items(fields.get("tags"))}),
-        "Lists": items(fields.get("lists")),
+        "Tags": sorted({option(tag.lower()) for tag in items(fields.get("tags"))}),
+        "Lists": list(dict.fromkeys(option(name) for name in items(fields.get("lists")))),
         "Need Review": need_review,
-        "Need Review Reason": text(fields.get("need_review_reason")) if need_review else "",
+        "Need Review Reason": clip(text(fields.get("need_review_reason"))) if need_review else "",
         "Attempts": len(attempts),
         "Last Attempt": last.fields["date"] if last else None,
-        "Last Outcome": (last.fields.get("outcome") or None) if last else None,
+        "Last Outcome": outcome if outcome in OUTCOMES else None,
         "Link": text(fields.get("link")) or None,
         "GitHub": folder_url,
         "Pending": False,
     }
     return {"properties": properties, "body": body(folder_url, file_url, takeaway, attempts)}
+
+
+def clip(value):
+    return value if len(value) <= TEXT_MAX else value[: TEXT_MAX - 1] + "…"
+
+
+def option(name):
+    return name.replace(",", ";")
 
 
 def body(folder_url, file_url, takeaway, attempts):
