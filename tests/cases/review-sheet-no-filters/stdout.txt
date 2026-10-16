@@ -7,7 +7,7 @@ Filters: none (every Problem).
 
 ## Redo
 
-### [3Sum](problems/leetcode/3sum/)
+### [3Sum](problems/leetcode/3sum/notes.md)
 
 `leetcode:3sum` · Medium
 
@@ -18,7 +18,7 @@ Filters: none (every Problem).
   - 2026-10-12: Returned duplicate triplets.
 - **Tags:** array, sorting, two-pointers · **Problem Lists:** Blind 75, NeetCode 150
 
-### [Course Schedule](problems/leetcode/course-schedule/)
+### [Course Schedule](problems/leetcode/course-schedule/notes.md)
 
 `leetcode:course-schedule` · Medium
 
@@ -28,7 +28,7 @@ Filters: none (every Problem).
 - **Past mistakes:** none recorded
 - **Tags:** graph, topological-sort · **Problem Lists:** grind 75
 
-### [Number of Islands](problems/leetcode/number-of-islands/)
+### [Number of Islands](problems/leetcode/number-of-islands/notes.md)
 
 `leetcode:number-of-islands` · Medium
 
@@ -42,7 +42,7 @@ Filters: none (every Problem).
 
 ## Refresh
 
-### [Alien Dictionary](problems/leetcode/alien-dictionary/)
+### [Alien Dictionary](problems/leetcode/alien-dictionary/notes.md)
 
 `leetcode:alien-dictionary` · Hard
 
@@ -52,7 +52,7 @@ Filters: none (every Problem).
   - 2026-09-28: Missed the invalid case where a word is followed by its own prefix.
 - **Tags:** graph, topological-sort · **Problem Lists:** none
 
-### [Foreign Dictionary](problems/neetcode/foreign-dictionary/)
+### [Foreign Dictionary](problems/neetcode/foreign-dictionary/notes.md)
 
 `neetcode:foreign-dictionary` · Hard
 
@@ -61,7 +61,7 @@ Filters: none (every Problem).
 - **Past mistakes:** none recorded
 - **Tags:** graph, topological-sort · **Problem Lists:** NeetCode 150
 
-### [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/)
+### [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/notes.md)
 
 `custom:lru-cache`
 
@@ -70,7 +70,7 @@ Filters: none (every Problem).
 - **Past mistakes:** none recorded
 - **Tags:** design, hash-table, linked-list · **Problem Lists:** none
 
-### [Two Sum](problems/leetcode/two-sum/)
+### [Two Sum](problems/leetcode/two-sum/notes.md)
 
 `leetcode:two-sum` · Easy
 

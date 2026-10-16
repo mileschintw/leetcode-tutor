@@ -36,7 +36,7 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Reason | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Number of Islands](problems/leetcode/number-of-islands/) | Medium | Asked for the solution on 2026-09-20. | 1 | 2026-09-20 |
+| [Number of Islands](problems/leetcode/number-of-islands/notes.md) | Medium | Asked for the solution on 2026-09-20. | 1 | 2026-09-20 |
 
 ## By Problem List
 
@@ -44,19 +44,19 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Clone Graph](problems/leetcode/clone-graph/) | Medium |  | 1 | 2026-10-02 |
-| [Course Schedule](problems/leetcode/course-schedule/) | Medium |  | 2 | 2026-10-08 |
-| [Number of Islands](problems/leetcode/number-of-islands/) | Medium | yes | 1 | 2026-09-20 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 1 | 2026-09-01 |
+| [Clone Graph](problems/leetcode/clone-graph/notes.md) | Medium |  | 1 | 2026-10-02 |
+| [Course Schedule](problems/leetcode/course-schedule/notes.md) | Medium |  | 2 | 2026-10-08 |
+| [Number of Islands](problems/leetcode/number-of-islands/notes.md) | Medium | yes | 1 | 2026-09-20 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 1 | 2026-09-01 |
 
 ### NeetCode 150
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Clone Graph](problems/leetcode/clone-graph/) | Medium |  | 1 | 2026-10-02 |
-| [Course Schedule](problems/leetcode/course-schedule/) | Medium |  | 2 | 2026-10-08 |
-| [Number of Islands](problems/leetcode/number-of-islands/) | Medium | yes | 1 | 2026-09-20 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 1 | 2026-09-01 |
+| [Clone Graph](problems/leetcode/clone-graph/notes.md) | Medium |  | 1 | 2026-10-02 |
+| [Course Schedule](problems/leetcode/course-schedule/notes.md) | Medium |  | 2 | 2026-10-08 |
+| [Number of Islands](problems/leetcode/number-of-islands/notes.md) | Medium | yes | 1 | 2026-09-20 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 1 | 2026-09-01 |
 
 ## By Topic
 
@@ -64,45 +64,45 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Number of Islands](problems/leetcode/number-of-islands/) | Medium | yes | 1 | 2026-09-20 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 1 | 2026-09-01 |
+| [Number of Islands](problems/leetcode/number-of-islands/notes.md) | Medium | yes | 1 | 2026-09-20 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 1 | 2026-09-01 |
 
 ### breadth-first-search
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Clone Graph](problems/leetcode/clone-graph/) | Medium |  | 1 | 2026-10-02 |
-| [Course Schedule](problems/leetcode/course-schedule/) | Medium |  | 2 | 2026-10-08 |
-| [Number of Islands](problems/leetcode/number-of-islands/) | Medium | yes | 1 | 2026-09-20 |
+| [Clone Graph](problems/leetcode/clone-graph/notes.md) | Medium |  | 1 | 2026-10-02 |
+| [Course Schedule](problems/leetcode/course-schedule/notes.md) | Medium |  | 2 | 2026-10-08 |
+| [Number of Islands](problems/leetcode/number-of-islands/notes.md) | Medium | yes | 1 | 2026-09-20 |
 
 ### depth-first-search
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Clone Graph](problems/leetcode/clone-graph/) | Medium |  | 1 | 2026-10-02 |
-| [Course Schedule](problems/leetcode/course-schedule/) | Medium |  | 2 | 2026-10-08 |
-| [Number of Islands](problems/leetcode/number-of-islands/) | Medium | yes | 1 | 2026-09-20 |
+| [Clone Graph](problems/leetcode/clone-graph/notes.md) | Medium |  | 1 | 2026-10-02 |
+| [Course Schedule](problems/leetcode/course-schedule/notes.md) | Medium |  | 2 | 2026-10-08 |
+| [Number of Islands](problems/leetcode/number-of-islands/notes.md) | Medium | yes | 1 | 2026-09-20 |
 
 ### graph
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Clone Graph](problems/leetcode/clone-graph/) | Medium |  | 1 | 2026-10-02 |
-| [Course Schedule](problems/leetcode/course-schedule/) | Medium |  | 2 | 2026-10-08 |
-| [Number of Islands](problems/leetcode/number-of-islands/) | Medium | yes | 1 | 2026-09-20 |
+| [Clone Graph](problems/leetcode/clone-graph/notes.md) | Medium |  | 1 | 2026-10-02 |
+| [Course Schedule](problems/leetcode/course-schedule/notes.md) | Medium |  | 2 | 2026-10-08 |
+| [Number of Islands](problems/leetcode/number-of-islands/notes.md) | Medium | yes | 1 | 2026-09-20 |
 
 ### hash-table
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Clone Graph](problems/leetcode/clone-graph/) | Medium |  | 1 | 2026-10-02 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 1 | 2026-09-01 |
+| [Clone Graph](problems/leetcode/clone-graph/notes.md) | Medium |  | 1 | 2026-10-02 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 1 | 2026-09-01 |
 
 ### topological-sort
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Course Schedule](problems/leetcode/course-schedule/) | Medium |  | 2 | 2026-10-08 |
+| [Course Schedule](problems/leetcode/course-schedule/notes.md) | Medium |  | 2 | 2026-10-08 |
 MD
 cat > problems/leetcode/number-of-islands/notes.md <<'MD'
 ---
@@ -244,7 +244,7 @@ Filters: tags graph, topological-sort.
 
 ## Redo
 
-### [Course Schedule](../problems/leetcode/course-schedule/)
+### [Course Schedule](../problems/leetcode/course-schedule/notes.md)
 
 `leetcode:course-schedule` · Medium
 
@@ -255,7 +255,7 @@ Filters: tags graph, topological-sort.
   - 2026-10-08: Treated a node on the current path the same as a finished node, so every revisit looked like a cycle.
 - **Tags:** breadth-first-search, depth-first-search, graph, topological-sort · **Problem Lists:** Grind 75, NeetCode 150
 
-### [Number of Islands](../problems/leetcode/number-of-islands/)
+### [Number of Islands](../problems/leetcode/number-of-islands/notes.md)
 
 `leetcode:number-of-islands` · Medium
 
@@ -268,7 +268,7 @@ Filters: tags graph, topological-sort.
 
 ## Refresh
 
-### [Clone Graph](../problems/leetcode/clone-graph/)
+### [Clone Graph](../problems/leetcode/clone-graph/notes.md)
 
 `leetcode:clone-graph` · Medium
 

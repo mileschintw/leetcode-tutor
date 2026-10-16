@@ -16,7 +16,7 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Reason | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Merge Intervals](problems/leetcode/merge-intervals/) | Medium | Marked for review in Notion before import | 1 | 2024-03-15 |
+| [Merge Intervals](problems/leetcode/merge-intervals/notes.md) | Medium | Marked for review in Notion before import | 1 | 2024-03-15 |
 
 ## By Problem List
 
@@ -24,26 +24,26 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 3 | 2024-04-02 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 3 | 2024-04-02 |
 
 ### Grind169
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Merge Intervals](problems/leetcode/merge-intervals/) | Medium | yes | 1 | 2024-03-15 |
+| [Merge Intervals](problems/leetcode/merge-intervals/notes.md) | Medium | yes | 1 | 2024-03-15 |
 
 ### Others
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Daily Temperatures](problems/leetcode/daily-temperatures/) | Medium |  | 1 | 2024-03-20 |
+| [Daily Temperatures](problems/leetcode/daily-temperatures/notes.md) | Medium |  | 1 | 2024-03-20 |
 
 ### No list
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Contains Duplicate](problems/leetcode/contains-duplicate/) | Easy |  | 1 | 2024-03-12 |
-| [Valid Parentheses](problems/leetcode/valid-parentheses/) | Easy |  | 1 | 2024-03-10 |
+| [Contains Duplicate](problems/leetcode/contains-duplicate/notes.md) | Easy |  | 1 | 2024-03-12 |
+| [Valid Parentheses](problems/leetcode/valid-parentheses/notes.md) | Easy |  | 1 | 2024-03-10 |
 
 ## By Topic
 
@@ -51,39 +51,39 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Contains Duplicate](problems/leetcode/contains-duplicate/) | Easy |  | 1 | 2024-03-12 |
-| [Merge Intervals](problems/leetcode/merge-intervals/) | Medium | yes | 1 | 2024-03-15 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 3 | 2024-04-02 |
+| [Contains Duplicate](problems/leetcode/contains-duplicate/notes.md) | Easy |  | 1 | 2024-03-12 |
+| [Merge Intervals](problems/leetcode/merge-intervals/notes.md) | Medium | yes | 1 | 2024-03-15 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 3 | 2024-04-02 |
 
 ### hash-table
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Contains Duplicate](problems/leetcode/contains-duplicate/) | Easy |  | 1 | 2024-03-12 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 3 | 2024-04-02 |
+| [Contains Duplicate](problems/leetcode/contains-duplicate/notes.md) | Easy |  | 1 | 2024-03-12 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 3 | 2024-04-02 |
 
 ### monotonic-stack
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Daily Temperatures](problems/leetcode/daily-temperatures/) | Medium |  | 1 | 2024-03-20 |
+| [Daily Temperatures](problems/leetcode/daily-temperatures/notes.md) | Medium |  | 1 | 2024-03-20 |
 
 ### sorting
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Contains Duplicate](problems/leetcode/contains-duplicate/) | Easy |  | 1 | 2024-03-12 |
-| [Merge Intervals](problems/leetcode/merge-intervals/) | Medium | yes | 1 | 2024-03-15 |
+| [Contains Duplicate](problems/leetcode/contains-duplicate/notes.md) | Easy |  | 1 | 2024-03-12 |
+| [Merge Intervals](problems/leetcode/merge-intervals/notes.md) | Medium | yes | 1 | 2024-03-15 |
 
 ### stack
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Daily Temperatures](problems/leetcode/daily-temperatures/) | Medium |  | 1 | 2024-03-20 |
-| [Valid Parentheses](problems/leetcode/valid-parentheses/) | Easy |  | 1 | 2024-03-10 |
+| [Daily Temperatures](problems/leetcode/daily-temperatures/notes.md) | Medium |  | 1 | 2024-03-20 |
+| [Valid Parentheses](problems/leetcode/valid-parentheses/notes.md) | Easy |  | 1 | 2024-03-10 |
 
 ### string
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Valid Parentheses](problems/leetcode/valid-parentheses/) | Easy |  | 1 | 2024-03-10 |
+| [Valid Parentheses](problems/leetcode/valid-parentheses/notes.md) | Easy |  | 1 | 2024-03-10 |

@@ -7,7 +7,7 @@ Filters: Problem IDs LeetCode:Alien-Dictionary, leetcode:two-sum.
 
 ## Refresh
 
-### [Alien Dictionary](problems/leetcode/alien-dictionary/)
+### [Alien Dictionary](problems/leetcode/alien-dictionary/notes.md)
 
 `leetcode:alien-dictionary` · Hard
 
@@ -17,7 +17,7 @@ Filters: Problem IDs LeetCode:Alien-Dictionary, leetcode:two-sum.
   - 2026-09-28: Missed the invalid case where a word is followed by its own prefix.
 - **Tags:** graph, topological-sort · **Problem Lists:** none
 
-### [Two Sum](problems/leetcode/two-sum/)
+### [Two Sum](problems/leetcode/two-sum/notes.md)
 
 `leetcode:two-sum` · Easy
 

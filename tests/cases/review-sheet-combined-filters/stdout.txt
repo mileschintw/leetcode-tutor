@@ -7,7 +7,7 @@ Filters: Problem IDs leetcode:number-of-islands, leetcode:course-schedule, leetc
 
 ## Redo
 
-### [Course Schedule](problems/leetcode/course-schedule/)
+### [Course Schedule](problems/leetcode/course-schedule/notes.md)
 
 `leetcode:course-schedule` · Medium
 
@@ -17,7 +17,7 @@ Filters: Problem IDs leetcode:number-of-islands, leetcode:course-schedule, leetc
 - **Past mistakes:** none recorded
 - **Tags:** graph, topological-sort · **Problem Lists:** grind 75
 
-### [Number of Islands](problems/leetcode/number-of-islands/)
+### [Number of Islands](problems/leetcode/number-of-islands/notes.md)
 
 `leetcode:number-of-islands` · Medium
 

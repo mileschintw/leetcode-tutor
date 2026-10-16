@@ -16,8 +16,8 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Reason | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [3Sum](problems/leetcode/3sum/) | Medium | Needed a hint to skip duplicate triplets. | 2 | 2026-10-12 |
-| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/) |  | Asked for a skeleton of the doubly linked list. | 1 | 2026-10-10 |
+| [3Sum](problems/leetcode/3sum/notes.md) | Medium | Needed a hint to skip duplicate triplets. | 2 | 2026-10-12 |
+| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/notes.md) |  | Asked for a skeleton of the doubly linked list. | 1 | 2026-10-10 |
 
 ## By Problem List
 
@@ -25,30 +25,30 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [3Sum](problems/leetcode/3sum/) | Medium | yes | 2 | 2026-10-12 |
+| [3Sum](problems/leetcode/3sum/notes.md) | Medium | yes | 2 | 2026-10-12 |
 
 ### Grind 75
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Merge Intervals](problems/leetcode/merge-intervals/) | Medium |  | 2 | 2026-10-01 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 3 | 2026-10-15 |
+| [Merge Intervals](problems/leetcode/merge-intervals/notes.md) | Medium |  | 2 | 2026-10-01 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 3 | 2026-10-15 |
 
 ### NeetCode 150
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [3Sum](problems/leetcode/3sum/) | Medium | yes | 2 | 2026-10-12 |
-| [Foreign Dictionary](problems/neetcode/foreign-dictionary/) | Hard |  | 0 | — |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 3 | 2026-10-15 |
+| [3Sum](problems/leetcode/3sum/notes.md) | Medium | yes | 2 | 2026-10-12 |
+| [Foreign Dictionary](problems/neetcode/foreign-dictionary/notes.md) | Hard |  | 0 | — |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 3 | 2026-10-15 |
 
 ### No list
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Alien Dictionary](problems/leetcode/alien-dictionary/) | Hard |  | 1 | 2025-03-02 |
-| [Escape a Windows path C:\\](problems/custom/escape-path/) | Easy |  | 1 | 2026-10-14 |
-| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/) |  | yes | 1 | 2026-10-10 |
+| [Alien Dictionary](problems/leetcode/alien-dictionary/notes.md) | Hard |  | 1 | 2025-03-02 |
+| [Escape a Windows path C:\\](problems/custom/escape-path/notes.md) | Easy |  | 1 | 2026-10-14 |
+| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/notes.md) |  | yes | 1 | 2026-10-10 |
 
 ## By Topic
 
@@ -56,63 +56,63 @@ The Practice Log is this repository: edit it here, and treat any copy elsewhere 
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [3Sum](problems/leetcode/3sum/) | Medium | yes | 2 | 2026-10-12 |
-| [Escape a Windows path C:\\](problems/custom/escape-path/) | Easy |  | 1 | 2026-10-14 |
-| [Merge Intervals](problems/leetcode/merge-intervals/) | Medium |  | 2 | 2026-10-01 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 3 | 2026-10-15 |
+| [3Sum](problems/leetcode/3sum/notes.md) | Medium | yes | 2 | 2026-10-12 |
+| [Escape a Windows path C:\\](problems/custom/escape-path/notes.md) | Easy |  | 1 | 2026-10-14 |
+| [Merge Intervals](problems/leetcode/merge-intervals/notes.md) | Medium |  | 2 | 2026-10-01 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 3 | 2026-10-15 |
 
 ### design
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/) |  | yes | 1 | 2026-10-10 |
+| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/notes.md) |  | yes | 1 | 2026-10-10 |
 
 ### graph
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Alien Dictionary](problems/leetcode/alien-dictionary/) | Hard |  | 1 | 2025-03-02 |
+| [Alien Dictionary](problems/leetcode/alien-dictionary/notes.md) | Hard |  | 1 | 2025-03-02 |
 
 ### hash-table
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/) |  | yes | 1 | 2026-10-10 |
-| [Two Sum](problems/leetcode/two-sum/) | Easy |  | 3 | 2026-10-15 |
+| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/notes.md) |  | yes | 1 | 2026-10-10 |
+| [Two Sum](problems/leetcode/two-sum/notes.md) | Easy |  | 3 | 2026-10-15 |
 
 ### linked-list
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/) |  | yes | 1 | 2026-10-10 |
+| [LRU Cache \| my harness \[v2\]](problems/custom/lru-cache/notes.md) |  | yes | 1 | 2026-10-10 |
 
 ### sorting
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [3Sum](problems/leetcode/3sum/) | Medium | yes | 2 | 2026-10-12 |
-| [Merge Intervals](problems/leetcode/merge-intervals/) | Medium |  | 2 | 2026-10-01 |
+| [3Sum](problems/leetcode/3sum/notes.md) | Medium | yes | 2 | 2026-10-12 |
+| [Merge Intervals](problems/leetcode/merge-intervals/notes.md) | Medium |  | 2 | 2026-10-01 |
 
 ### string
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Escape a Windows path C:\\](problems/custom/escape-path/) | Easy |  | 1 | 2026-10-14 |
+| [Escape a Windows path C:\\](problems/custom/escape-path/notes.md) | Easy |  | 1 | 2026-10-14 |
 
 ### topological-sort
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Alien Dictionary](problems/leetcode/alien-dictionary/) | Hard |  | 1 | 2025-03-02 |
+| [Alien Dictionary](problems/leetcode/alien-dictionary/notes.md) | Hard |  | 1 | 2025-03-02 |
 
 ### two-pointers
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [3Sum](problems/leetcode/3sum/) | Medium | yes | 2 | 2026-10-12 |
+| [3Sum](problems/leetcode/3sum/notes.md) | Medium | yes | 2 | 2026-10-12 |
 
 ### Untagged
 
 | Problem | Difficulty | Need Review | Attempts | Last Attempt |
 | --- | --- | --- | --- | --- |
-| [Foreign Dictionary](problems/neetcode/foreign-dictionary/) | Hard |  | 0 | — |
+| [Foreign Dictionary](problems/neetcode/foreign-dictionary/notes.md) | Hard |  | 0 | — |
