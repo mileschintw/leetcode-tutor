@@ -36,7 +36,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 - **mode:** `session`.
 - **outcome:** take it from the record when it says (`saw solution`, `with hints`). When it doesn't, use `solved-alone` and say so in the preview so the learner can change it.
 - **approach:** the entry's own approach name, lowercased. When there is none, name the approach from the code in two or three words (`hash map`, `two pointers`).
-- **mistakes:** from the entry's own notes on what went wrong; leave the line out when there are none. Drop runtime and memory figures (`Time: 3 ms (98%)`) on purpose: the Practice Log doesn't store them. Only dates come from commit history.
+- **mistakes:** from the entry's own notes on what went wrong; `none` only when the entry says nothing went wrong. Leave the line out when it doesn't say: `none` means none were observed, a missing line means unknown. Drop runtime and memory figures (`Time: 3 ms (98%)`) on purpose: the Practice Log doesn't store them. Only dates come from commit history.
 - **language:** from the code fence or the file extension, lowercase (`python`, `cpp`).
 - **code:** every Attempt needs its code in its own file, `<date>-<approach slug>.<ext>`, with `-2`, `-3` before the extension when the name is taken. Copy the code exactly. An entry with no code is an uncertain match.
 - **Order.** Keep the Attempt log oldest first, putting imported Attempts among the existing ones by date. The heading is `### <date> <approach>`, then the `- key: value` lines.

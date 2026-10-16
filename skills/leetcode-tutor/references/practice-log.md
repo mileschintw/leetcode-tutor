@@ -71,7 +71,7 @@ Flat frontmatter, Obsidian-compatible. Lists may be written `[a, b]` or as `- it
 | `difficulty` | no | `easy`, `medium` or `hard`; leave empty when the source has none |
 | `tags` | no | list of algorithm and data-structure tags only (`array`, `hash-table`), lowercase and hyphenated |
 | `link` | no | the Problem's URL; empty for a custom Problem without one |
-| `lists` | no | list of Problem List names (`Grind 75`, `NeetCode 150`) |
+| `lists` | no | list of Problem List names (`Grind 75`, `NeetCode 150`); names differing only in case are one list |
 | `need_review` | yes | `true` or `false` |
 | `need_review_reason` | when `need_review` is `true` | why it was last set, in one line; empty when `need_review` is `false` |
 
@@ -79,7 +79,7 @@ When the tutor sets and clears Need Review is in [need-review.md](need-review.md
 
 ## Attempts
 
-Each Attempt is a `### <date> <approach>` heading followed by `- key: value` lines, one line per value:
+Each Attempt is a `### <date> <approach>` heading followed by unindented `- key: value` lines, one line per value. Indented bullets and fenced code blocks after them are the learner's own notes, not fields:
 
 | Key | Required | Value |
 | --- | --- | --- |
@@ -87,7 +87,7 @@ Each Attempt is a `### <date> <approach>` heading followed by `- key: value` lin
 | `mode` | yes | `session` (the full Socratic flow) or `recap` (Recap Mode) |
 | `outcome` | yes | `solved-alone`, `solved-with-hints` or `saw-solution` |
 | `approach` | yes | a short name for the approach (`hash map`, `two pointers`) |
-| `mistakes` | no | what went wrong during the Session, in one line |
+| `mistakes` | no | what went wrong during the Session, in one line; `none` when nothing did. Leave the line out when it isn't known, as for an imported record that doesn't say |
 | `language` | yes | the code's language, lowercase (`python`, `cpp`, `java`) |
 | `code` | yes | the code file's name in the Problem's folder (no subfolders) |
 | `origin` | no | where an Attempt came from when it was not written in a Session in the Practice Workspace (`notion`, `leethub`; `mirror-pending` for a pending page in the Mirror and `chat` for a pasted Attempt block, see [chat-platforms.md](chat-platforms.md)) |

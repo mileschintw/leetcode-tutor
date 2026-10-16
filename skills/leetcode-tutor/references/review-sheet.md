@@ -79,7 +79,8 @@ Filters: tags graph, topological-sort.
 - **Order:** by title within each section. Attempts oldest first by date.
 - **Links:** to the Problem's `notes.md`, relative to the sheet (Obsidian cannot link to a folder).
 - **Approaches:** every Attempt as `approach (date, mode, outcome)`, or `no Attempts yet`.
-- **Past mistakes:** each Attempt's `mistakes` other than `none`, with its date, or `none recorded`.
+- **Key Takeaway:** as written. One line stays on the bullet; a longer one goes on the lines below it, indented.
+- **Past mistakes:** each Attempt's `mistakes` other than `none`, with its date, or `none recorded`, both when every Attempt says `none` and when none says anything.
 
 The sheet is the learner's file once written: they may edit it, and the tutor never rewrites an existing sheet.
 
