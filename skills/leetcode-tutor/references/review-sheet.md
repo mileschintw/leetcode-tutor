@@ -41,8 +41,8 @@ When the learner asks what to practise without a goal, don't build or save a she
 
    When every relevant Problem is already done, write one line saying so instead.
 5. **Index.** Nothing to run: the workspace's README.md lists Problems, not Review Sheets, so saving a sheet changes nothing it shows.
-6. **Mirror.** <!-- Mirror push offer goes here (issue #8): after the sheet is saved and before the reply. --> Nothing to do yet.
-7. **Reply.** Open with "Review Sheet saved to" and the file's path. Then, in a few lines: the filters you chose, the Problems to redo with their reason, and the suggestions. End on one question only: which Problem to start with. Don't ask yet whether they want a recap or a full Session; that comes once they pick (see the last section).
+6. **Mirror.** Offer a push exactly when step 7 of "End of a Session" in [practice-workspace.md](practice-workspace.md) would: when `practice-log.json` has a `mirror.notion_database_id`, or the learner has asked for a Notion Mirror before. The Mirror holds Problems, not Review Sheets, so the push carries the Practice Log as it is now, which keeps Notion current while they review. Push nothing yet: the reply asks (next step), and on yes you push with the `practice-log-mirror` skill. For every other learner, don't mention the Mirror.
+7. **Reply.** Open with "Review Sheet saved to" and the file's path. Then, in a few lines: the filters you chose, the Problems to redo with their reason, and the suggestions. End on one question only: which Problem to start with. When step 6 offers a push, the same closing line also asks whether to push to the Mirror first, such as "Which one first? I can also push your Practice Log to the Notion Mirror before we start." Don't ask yet whether they want a recap or a full Session; that comes once they pick (see the last section).
 
 ## The sheet's format
 

@@ -9,3 +9,4 @@ Judge only the tutor's final reply to the learner. The learner asked to brush up
 3. The reply suggests at least one graph Problem the learner has not done yet (not one of the four above).
 4. The reply does not lay out a day-by-day study schedule or calendar.
 5. The reply ends with a single question asking which Problem to start with (or equivalent), rather than starting a Problem on its own.
+6. The reply does not mention Notion, a Mirror, or pushing or syncing anywhere: this workspace has no Mirror set up.
