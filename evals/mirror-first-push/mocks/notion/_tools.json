@@ -61,6 +61,29 @@
       }
     },
     {
+      "name": "notion-update-data-source",
+      "description": "Update a Notion data source's schema, title or attributes. statements is semicolon-separated SQL DDL: ADD COLUMN, DROP COLUMN, RENAME COLUMN, ALTER COLUMN \"Name\" SET <type>. For SELECT and MULTI_SELECT, list every option to keep; omitted options are removed.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "data_source_id": {
+            "type": "string",
+            "description": "A collection:// URI from <data-source> tags, a bare UUID, or a single-source database ID"
+          },
+          "statements": {
+            "type": "string",
+            "description": "Semicolon-separated SQL DDL statements, e.g. ALTER COLUMN \"Tags\" SET MULTI_SELECT('a':blue, 'b':green)"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "data_source_id"
+        ]
+      }
+    },
+    {
       "name": "notion-create-pages",
       "description": "Creates one or more Notion pages with properties and Notion Markdown content. For a database, fetch it first and use its collection:// data source as parent. Checkbox values are \"__YES__\"/\"__NO__\"; dates split into \"date:<Name>:start\" and \"date:<Name>:is_datetime\".",
       "inputSchema": {

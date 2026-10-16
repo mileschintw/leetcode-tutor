@@ -24,11 +24,27 @@
       },
       {
         "name": "Tags",
-        "type": "multi_select"
+        "type": "multi_select",
+        "options": [
+          "array",
+          "design",
+          "graph",
+          "hash-table",
+          "linked-list",
+          "sorting",
+          "string",
+          "topological-sort",
+          "two-pointers"
+        ]
       },
       {
         "name": "Lists",
-        "type": "multi_select"
+        "type": "multi_select",
+        "options": [
+          "Blind 75",
+          "Grind 75",
+          "NeetCode 150"
+        ]
       },
       {
         "name": "Need Review",

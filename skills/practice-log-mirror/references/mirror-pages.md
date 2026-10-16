@@ -32,8 +32,8 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 | Problem | title | |
 | Problem ID | text | |
 | Difficulty | select | Easy, Medium, Hard |
-| Tags | multi-select | |
-| Lists | multi-select | |
+| Tags | multi-select | every Tags value in the pages, sorted |
+| Lists | multi-select | every Lists value in the pages, sorted |
 | Need Review | checkbox | |
 | Need Review Reason | text | |
 | Attempts | number | |
@@ -43,7 +43,7 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 | GitHub | url | |
 | Pending | checkbox | |
 
-`Problem ID` is the key a push matches pages by. `Pending` marks an Attempt written straight to the Mirror from a chat platform, in the format of the `leetcode-tutor` skill's `references/chat-platforms.md`; the plan leaves it unchecked on every page.
+In the plan, the `options` of Tags and Lists hold the sorted, de-duplicated values the pages use (an empty list when none use any). `Problem ID` is the key a push matches pages by. `Pending` marks an Attempt written straight to the Mirror from a chat platform, in the format of the `leetcode-tutor` skill's `references/chat-platforms.md`; the plan leaves it unchecked on every page.
 
 ## Page properties
 
@@ -96,3 +96,11 @@ One `###` block per Attempt, in the log's order, each leaving out the lines whos
 ## Writing values through a connector
 
 Turn each value into what your Notion connector expects: text and urls as strings, a select as its option name, a multi-select as its option names, a checkbox as checked or unchecked, `Attempts` as a number and `Last Attempt` as a date (`YYYY-MM-DD`, no time). An empty or `null` value clears the property. Write the body as the page's content, replacing everything on the page.
+
+Notion's connector rejects a multi-select value that isn't already one of the property's options (`Invalid multi_select value for property "Tags"`), and a new database starts with no Tags or Lists options. So before writing any page, make the data source's options cover the plan:
+
+1. Take the `options` of Tags and Lists from `database.properties` (without a shell, collect every value the pages use).
+2. Fetch the data source for the options it already has. A new database has none.
+3. When some are missing, call `notion-update-data-source` once with `ALTER COLUMN "Tags" SET MULTI_SELECT('a', 'b'); ALTER COLUMN "Lists" SET MULTI_SELECT('c')`, listing every existing option plus the missing ones, since options left out are removed. Escape a single quote in a name by doubling it. Leave a property alone when nothing is missing.
+
+Do this on every push, not only the first: a later push can bring new tags or lists. Never remove an option the data source already has.

@@ -24,11 +24,24 @@
       },
       {
         "name": "Tags",
-        "type": "multi_select"
+        "type": "multi_select",
+        "options": [
+          "array",
+          "hash-table",
+          "monotonic-stack",
+          "sorting",
+          "stack",
+          "string"
+        ]
       },
       {
         "name": "Lists",
-        "type": "multi_select"
+        "type": "multi_select",
+        "options": [
+          "Grind 75",
+          "Grind169",
+          "Others"
+        ]
       },
       {
         "name": "Need Review",
