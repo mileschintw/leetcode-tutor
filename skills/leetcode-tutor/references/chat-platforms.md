@@ -11,9 +11,9 @@ How the tutor records an Attempt where it can't save files: a chat app such as c
 
 ## Telling a chat platform apart
 
-You are on a chat platform when you can't save files to a folder the learner keeps: you have no tool that writes files, or the only files you can write live in a temporary sandbox (such as a code-execution environment) that is gone after the conversation.
+You are on a chat platform when you can't save files to a folder the learner keeps: your tool list has no tool that creates or edits files and none that runs shell commands, or the only files you can write live in a temporary sandbox (such as a code-execution environment) that is gone after the conversation. Being able to read or search files doesn't change this.
 
-On a chat platform there is no Practice Workspace to find or create, so don't offer one. A Practice Workspace is a folder on the learner's computer, kept in git.
+On a chat platform there is no Practice Workspace to find or create: don't look for one, don't offer to create one, and don't ask the learner to choose between saving and printing. A Practice Workspace is a folder on the learner's computer, kept in git.
 
 ## End of a Session on a chat platform
 
@@ -28,9 +28,8 @@ Do steps 1 to 3 of "End of a Session: record the Attempt" in [practice-workspace
 
 ## The Attempt block
 
-The Problem's `notes.md` as [practice-log.md](practice-log.md) defines it, holding only this Session's Attempt, then the code file:
+Two parts, each a path in backticks on its own line followed by a fenced block. First the Problem's `notes.md` as [practice-log.md](practice-log.md) defines it, holding only this Session's Attempt:
 
-````markdown
 `problems/<source>/<slug>/notes.md`
 
 ```markdown
@@ -62,12 +61,7 @@ need_review_reason: <reason, or empty>
 - code: <date>-<approach slug>.<ext>
 ```
 
-`problems/<source>/<slug>/<date>-<approach slug>.<ext>`
-
-```<language>
-<the learner's final code>
-```
-````
+Then the code file, `problems/<source>/<slug>/<date>-<approach slug>.<ext>`, with the learner's final code in a block fenced with its language.
 
 Leave out no field: write an empty value as the schema says. Translate nothing in the block, so it stays in the Practice Log format.
 

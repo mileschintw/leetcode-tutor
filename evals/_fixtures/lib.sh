@@ -372,3 +372,24 @@ git_origin() {
 	merge = refs/heads/main
 CFG
 }
+
+# --- Pending Attempts from a chat app ---
+
+# Two Sum's pending Attempt from the Mirror (evals/import-pending-*/mocks), as Import writes it.
+imported_pending_two_sum() {
+  local dir=problems/leetcode/two-sum
+  attempt 2026-10-14 "hash map" mirror-pending 2026-10-14-hash-map.py \
+    | sed 's/^- outcome: solved-alone$/- outcome: solved-with-hints/' \
+    | sed '/^- approach: hash map$/a - mistakes: Planned to return the values instead of their indices; inserted before looking up, so [3, 3] matched an element with itself.' \
+    >> "$dir/notes.md"
+  cat > "$dir/2026-10-14-hash-map.py" <<'PY'
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        seen = {}
+        for i, num in enumerate(nums):
+            if target - num in seen:
+                return [seen[target - num], i]
+            seen[num] = i
+        return []
+PY
+}

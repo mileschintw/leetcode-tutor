@@ -43,9 +43,9 @@ How the tutor records an Attempt where it can't save files: a chat app such as c
 
 ## Telling a chat platform apart
 
-You are on a chat platform when you can't save files to a folder the learner keeps: you have no tool that writes files, or the only files you can write live in a temporary sandbox (such as a code-execution environment) that is gone after the conversation.
+You are on a chat platform when you can't save files to a folder the learner keeps: your tool list has no tool that creates or edits files and none that runs shell commands, or the only files you can write live in a temporary sandbox (such as a code-execution environment) that is gone after the conversation. Being able to read or search files doesn't change this.
 
-On a chat platform there is no Practice Workspace to find or create, so don't offer one. A Practice Workspace is a folder on the learner's computer, kept in git.
+On a chat platform there is no Practice Workspace to find or create: don't look for one, don't offer to create one, and don't ask the learner to choose between saving and printing. A Practice Workspace is a folder on the learner's computer, kept in git.
 
 ## End of a Session on a chat platform
 
@@ -60,9 +60,8 @@ Do steps 1 to 3 of "End of a Session: record the Attempt" in the "Practice Works
 
 ## The Attempt block
 
-The Problem's `notes.md` as the "Practice Log schema" section defines it, holding only this Session's Attempt, then the code file:
+Two parts, each a path in backticks on its own line followed by a fenced block. First the Problem's `notes.md` as the "Practice Log schema" section defines it, holding only this Session's Attempt:
 
-````markdown
 `problems/<source>/<slug>/notes.md`
 
 ```markdown
@@ -94,12 +93,7 @@ need_review_reason: <reason, or empty>
 - code: <date>-<approach slug>.<ext>
 ```
 
-`problems/<source>/<slug>/<date>-<approach slug>.<ext>`
-
-```<language>
-<the learner's final code>
-```
-````
+Then the code file, `problems/<source>/<slug>/<date>-<approach slug>.<ext>`, with the learner's final code in a block fenced with its language.
 
 Leave out no field: write an empty value as the schema says. Translate nothing in the block, so it stays in the Practice Log format.
 
@@ -422,7 +416,7 @@ Run it with the command given in `SKILL.md`. Its subcommands:
 
 ## Start of a Session: find the workspace
 
-Do this before the first reply of a Session. Skip it on a chat platform, where you can't save files (see the "Chat platforms" section): teach the Session as usual.
+Do this before the first reply of a Session. First check your tool list for a tool that creates or edits files (such as Write or Edit) or runs shell commands. When it has none, you are on a chat platform, even if you can read and search files: you can't create a workspace or save an Attempt, so offer neither. Skip this section, teach the Session as usual, and record the Attempt as the "Chat platforms" section says.
 
 1. Look for `practice-log.json` in the current folder and its parent folders. The folder holding it is the Practice Workspace: reply as usual.
 2. When there is none, open your reply with a short note, then continue with it as usual (the First Response, or Recap Mode). The note says that this folder isn't a Practice Workspace, so the Attempt won't be saved, and offers the way to fix it:
@@ -431,7 +425,7 @@ Do this before the first reply of a Session. Skip it on a chat platform, where y
 
    Phrase the offer as something the learner can take up at any time, so the reply still ends on its one question.
 3. When the learner accepts, run `init` in the chosen folder, then `git init` in it when git is installed, and say they can push it to GitHub as their own repository. Create nothing before they accept. When the workspace is in another folder, read and write it by path for the rest of the Session.
-4. When the Session ends without a workspace, make the offer once more. If the learner declines, show the Attempt in chat in the notes format instead of writing it.
+4. When the Session ends without a workspace, make the offer once more (never on a chat platform). If the learner declines, show the Attempt block from the "Chat platforms" section instead of writing it.
 
 ## Returning to a Problem
 
