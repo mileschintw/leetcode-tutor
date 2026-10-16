@@ -19,7 +19,7 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
 5. **Validate.** After the learner confirms, check the result before it touches the workspace:
    - **With a shell:** run `init` in a new temporary folder outside the workspace, copy the workspace's `problems/` folder into it, apply the import there exactly as previewed, and run `validate --root` on that folder. Fix every error, then delete the temporary folder.
    - **Without a shell:** check each notes file you are about to write against the schema yourself: required fields, enum values, dates, `need_review_reason`, and that every `code` names a file you are writing.
-6. **Write.** Create or update the Problems in the workspace exactly as previewed. With a shell, run `validate` on the workspace afterwards.
+6. **Write.** Create or update the Problems in the workspace exactly as previewed. With a shell, run `validate` on the workspace afterwards, then `index` on it to regenerate its README.md, the index of the Practice Log. Without a shell, tell the learner the index is out of date until `index` runs.
 7. **Report.** Say how many Problems were created and merged, how many Attempts were added from each origin, what was skipped as already imported, and the uncertain matches the learner still has to decide.
 
 ## The practice-log CLI
@@ -28,5 +28,6 @@ The CLI ships with the `leetcode-tutor` skill as `../leetcode-tutor/scripts/prac
 
 - `init [folder]`: create a Practice Workspace in a new or empty folder.
 - `validate [--root folder]`: check a workspace against the schema; it prints each error and exits non-zero on failure.
+- `index [--root folder]`: regenerate the workspace's README.md from the Practice Log.
 
 If that folder isn't there (this skill was installed on its own), use the without-a-shell check in step 5.
