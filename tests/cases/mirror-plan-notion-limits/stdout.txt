@@ -17,25 +17,46 @@
         "name": "Difficulty",
         "type": "select",
         "options": [
-          "Easy",
-          "Medium",
-          "Hard"
+          {
+            "name": "Easy",
+            "color": "green"
+          },
+          {
+            "name": "Medium",
+            "color": "yellow"
+          },
+          {
+            "name": "Hard",
+            "color": "red"
+          }
         ]
       },
       {
         "name": "Tags",
         "type": "multi_select",
         "options": [
-          "graph; bfs",
-          "hash table"
+          {
+            "name": "graph; bfs",
+            "color": "yellow"
+          },
+          {
+            "name": "hash table",
+            "color": "brown"
+          }
         ]
       },
       {
         "name": "Lists",
         "type": "multi_select",
         "options": [
-          "Grind 75; week 2",
-          "NeetCode 150"
+          {
+            "name": "Grind 75; week 2",
+            "color": "brown"
+          },
+          {
+            "name": "NeetCode 150",
+            "color": "green"
+          }
         ]
       },
       {
@@ -58,9 +79,18 @@
         "name": "Last Outcome",
         "type": "select",
         "options": [
-          "solved-alone",
-          "solved-with-hints",
-          "saw-solution"
+          {
+            "name": "solved-alone",
+            "color": "green"
+          },
+          {
+            "name": "solved-with-hints",
+            "color": "yellow"
+          },
+          {
+            "name": "saw-solution",
+            "color": "red"
+          }
         ]
       },
       {
@@ -74,6 +104,34 @@
       {
         "name": "Pending",
         "type": "checkbox"
+      }
+    ],
+    "views": [
+      {
+        "name": "All Problems",
+        "type": "table",
+        "show": [
+          "Lists",
+          "Difficulty",
+          "Problem",
+          "Tags",
+          "Link",
+          "Need Review",
+          "Attempts",
+          "Last Attempt",
+          "Last Outcome"
+        ],
+        "sort": [
+          {
+            "property": "Last Attempt",
+            "direction": "descending"
+          }
+        ]
+      },
+      {
+        "name": "By Date",
+        "type": "calendar",
+        "calendar_by": "Last Attempt"
       }
     ]
   },
