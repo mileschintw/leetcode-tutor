@@ -6,7 +6,8 @@ Ask one question at a time.
 
 1. When the learner is stuck, read the "Hints" section.
 2. When they know the Problem, follow the "Recap Mode" section.
-3. Check their answer with [scripts/check.py](scripts/check.py).
+
+This prompt comes without the checker, so check the answer against the "Hints" section.
 
 Problem statement: [Two Sum](https://leetcode.com/problems/two-sum/).
 

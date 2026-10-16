@@ -3,7 +3,7 @@
 The frontmatter reader understands what Obsidian writes for flat properties: `key: value` scalars
 (plain or quoted, with optional ` # comment`), flow lists (`[a, b]`) and block lists (`- item` lines
 under a key with no value). The Attempt log is every `### ` heading under `## Attempts`, each followed
-by `- key: value` lines.
+by unindented `- key: value` lines. Headings and fields inside a fenced code block are part of its text.
 """
 
 import re
@@ -11,6 +11,8 @@ import re
 COMMENT = re.compile(r"\s+#.*$")
 LIST_ITEM = re.compile(r"^\s*-\s+(.*)$")
 ATTEMPT_FIELD = re.compile(r"^-\s+([A-Za-z_]+)\s*:(.*)$")
+# A fence may be indented, as under a list item; a backtick fence's info string holds no backtick.
+FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
 
 
 class NotesError(ValueError):
@@ -18,9 +20,8 @@ class NotesError(ValueError):
 
 
 class Attempt:
-    def __init__(self, heading, line_number):
+    def __init__(self, heading):
         self.heading = heading
-        self.line_number = line_number
         self.fields = {}
         self.problems = []
 
@@ -37,7 +38,8 @@ def read_notes(path):
         end = next(i for i in range(1, len(lines)) if lines[i].strip() == "---")
     except StopIteration:
         raise NotesError("unterminated frontmatter (no closing '---' line)") from None
-    return _frontmatter(lines[1:end]), _attempts(lines, end + 1)
+    body = list(_body(lines, end + 1))
+    return _frontmatter(lines[1:end]), _attempts(body)
 
 
 def _frontmatter(lines):
@@ -111,19 +113,42 @@ def _flow_list(value, line_number):
     return [_scalar(item, line_number) for item in items]
 
 
-def _attempts(lines, start):
+def _body(lines, start):
+    """(line number, line, fenced) for each line after the frontmatter; fenced lines are inside a code block."""
+    fence, opened = None, 0
+    for line_number, line in enumerate(lines[start:], start=start + 1):
+        marker = FENCE.match(line)
+        rest = line[marker.end() :] if marker else ""
+        if fence is None:
+            if marker and not (marker.group(1)[0] == "`" and "`" in rest):
+                fence, opened = marker.group(1), line_number
+                yield line_number, line, True
+            else:
+                yield line_number, line, False
+            continue
+        # A closing fence uses the same character, at least as many times, and nothing after it.
+        if marker and marker.group(1)[0] == fence[0] and len(marker.group(1)) >= len(fence) and not rest.strip():
+            fence = None
+        yield line_number, line, True
+    if fence is not None:
+        raise NotesError(f"line {opened}: code fence never closed (add a closing {fence} line)")
+
+
+def _attempts(body):
     attempts = []
     in_log = False
-    for line_number, line in enumerate(lines[start:], start=start + 1):
+    for line_number, line, fenced in body:
+        if fenced:
+            continue
         if line.startswith("## "):
             in_log = line[3:].strip().lower() == "attempts"
             continue
         if not in_log:
             continue
         if line.startswith("### "):
-            attempts.append(Attempt(line[4:].strip(), line_number))
+            attempts.append(Attempt(line[4:].strip()))
             continue
-        field = ATTEMPT_FIELD.match(line.strip())
+        field = ATTEMPT_FIELD.match(line.rstrip())
         if field and attempts:
             key, value = field.group(1), field.group(2).strip()
             attempt = attempts[-1]
@@ -135,26 +160,17 @@ def _attempts(lines, start):
 
 
 def read_key_takeaway(path):
-    """The text under `## Key Takeaway`, stripped; empty when the section is missing or blank."""
+    """The text under `## Key Takeaway`, stripped; empty when the section is missing or blank.
+
+    Call it only on notes `read_notes` has read, so the frontmatter and fences are known to be sound.
+    """
     lines = path.read_text(encoding="utf-8-sig").splitlines()
+    end = next(i for i in range(1, len(lines)) if lines[i].strip() == "---")
     section, inside = [], False
-    for line in lines:
-        if line.startswith("## "):
+    for _, line, fenced in _body(lines, end + 1):
+        if not fenced and line.startswith("## "):
             inside = line[3:].strip().lower() == "key takeaway"
             continue
         if inside:
             section.append(line)
     return "\n".join(section).strip()
-
-
-def read_key_takeaway_line(path):
-    """The text under a notes file's `## Key Takeaway` heading, as one line ("" when there is none)."""
-    lines = path.read_text(encoding="utf-8-sig").splitlines()
-    body, in_section = [], False
-    for line in lines:
-        if line.startswith("## "):
-            in_section = line[3:].strip().lower() == "key takeaway"
-            continue
-        if in_section and line.strip():
-            body.append(line.strip())
-    return " ".join(body)

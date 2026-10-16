@@ -26,4 +26,4 @@ Filters: Problem IDs LeetCode:Alien-Dictionary, leetcode:two-sum.
 - **Past mistakes:**
   - 2024-03-01: Gave up on the nested loops and read the editorial.
   - 2026-10-03: Forgot that the answer is indices, not values.
-- **Tags:** array, hash-table · **Problem Lists:** Grind 75, NeetCode 150
+- **Tags:** array, hash-table · **Problem Lists:** grind 75, NeetCode 150

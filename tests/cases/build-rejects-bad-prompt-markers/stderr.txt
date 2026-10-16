@@ -1,0 +1,4 @@
+skills/marked/SKILL.md: line 7: write the prompt marker as '<!-- in the copy-paste prompt: <replacement> -->' on one line
+skills/marked/SKILL.md: line 10: no paragraph right after the prompt marker for it to replace
+skills/marked/references/hints.md: line 5: no paragraph right after the prompt marker for it to replace
+build: metadata check failed (3 problems)

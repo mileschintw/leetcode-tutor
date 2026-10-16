@@ -14,9 +14,17 @@ class FrontmatterError(ValueError):
     pass
 
 
+def read_text(path):
+    """The file's text; a file that isn't UTF-8 raises FrontmatterError rather than a traceback."""
+    try:
+        return path.read_text(encoding="utf-8-sig")
+    except UnicodeDecodeError as error:
+        raise FrontmatterError(f"not valid UTF-8 (byte {error.start}); save the file as UTF-8") from None
+
+
 def read_frontmatter(path):
     """Return the frontmatter of `path` as a dict of strings and string-to-string dicts."""
-    lines = path.read_text(encoding="utf-8-sig").splitlines()
+    lines = read_text(path).splitlines()
     if not lines or lines[0].strip() != "---":
         raise FrontmatterError("missing frontmatter (the file must start with a '---' line)")
     try:

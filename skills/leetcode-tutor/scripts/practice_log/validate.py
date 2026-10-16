@@ -6,6 +6,7 @@ import re
 import sys
 
 from practice_log.problems import read_problems
+from practice_log.readme import plural
 from practice_log.workspace import CONFIG_FILE
 
 PART = r"[a-z0-9]+(?:-[a-z0-9]+)*"
@@ -61,10 +62,6 @@ def run(root):
         return 1
     print(f"validate: {plural(problem_count, 'Problem')}, {plural(attempt_count, 'Attempt')}, ok")
     return 0
-
-
-def plural(count, noun):
-    return f"{count} {noun}{'' if count == 1 else 's'}"
 
 
 def misplaced_notes(root):
