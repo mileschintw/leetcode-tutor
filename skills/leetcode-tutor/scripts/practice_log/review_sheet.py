@@ -11,7 +11,7 @@ import sys
 
 from practice_log import readme
 from practice_log.index import to_problem
-from practice_log.notes import read_key_takeaway
+from practice_log.notes import read_key_takeaway_line
 from practice_log.problems import read_problems
 from practice_log.validate import is_date
 from practice_log.workspace import CONFIG_FILE
@@ -25,7 +25,7 @@ class Entry:
 
     def __init__(self, notes):
         self.problem = to_problem(notes.rel, notes.fields, notes.attempts)
-        self.key_takeaway = read_key_takeaway(notes.notes_file)
+        self.key_takeaway = read_key_takeaway_line(notes.notes_file)
         # Oldest first by date; an Attempt with a malformed date sorts before every dated one.
         dated = [(a.fields.get("date", "") if is_date(a.fields.get("date", "")) else "", i) for i, a in enumerate(notes.attempts)]
         self.attempts = [notes.attempts[i].fields for _, i in sorted(dated)]

@@ -147,7 +147,7 @@ def read_key_takeaway(path):
     return "\n".join(section).strip()
 
 
-def read_key_takeaway(path):
+def read_key_takeaway_line(path):
     """The text under a notes file's `## Key Takeaway` heading, as one line ("" when there is none)."""
     lines = path.read_text(encoding="utf-8-sig").splitlines()
     body, in_section = [], False
