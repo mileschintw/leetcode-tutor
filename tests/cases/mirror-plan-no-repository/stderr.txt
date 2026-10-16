@@ -1,0 +1,2 @@
+mirror-plan: practice-log.json has no mirror.repository, so pages can't link to GitHub.
+Push the Practice Workspace to a GitHub repository, then set "repository" under "mirror" to its URL, such as https://github.com/<owner>/<repo> (`git remote get-url origin` prints it).

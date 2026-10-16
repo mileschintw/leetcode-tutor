@@ -109,6 +109,26 @@ class CliGoldenTest(unittest.TestCase):
             self.assertEqual(read_tree(work), read_tree(case / "expected"), "resulting files")
 
 
+class MirrorPlanRerunTest(unittest.TestCase):
+    """A second push with no Practice Log change must regenerate exactly the same pages."""
+
+    def plan(self, case):
+        with tempfile.TemporaryDirectory() as tmp:
+            work = Path(tmp) / "work"
+            shutil.copytree(CASES_DIR / case / "input", work)
+            first, second = run_cli(["mirror-plan"], work), run_cli(["mirror-plan"], work)
+        self.assertEqual(first.returncode, 0, first.stderr)
+        self.assertEqual(first.stdout, second.stdout, "a re-run printed a different plan")
+        return json.loads(first.stdout)
+
+    def test_rerun_and_stored_database_id_give_the_same_pages(self):
+        # The two cases differ only in the stored database id and the form of the GitHub remote.
+        first_use, later_push = self.plan("mirror-plan-workspace"), self.plan("mirror-plan-stored-id")
+        self.assertIsNone(first_use["database"]["id"])
+        self.assertEqual(later_push["database"]["id"], "1f2e3d4c5b6a47988a7b6c5d4e3f2a1b")
+        self.assertEqual(first_use["pages"], later_push["pages"])
+
+
 class RepositoryBuildTest(unittest.TestCase):
     def test_shipped_skills_pass_build(self):
         # --check writes nothing, and also fails if the committed prompt or manifests are stale.

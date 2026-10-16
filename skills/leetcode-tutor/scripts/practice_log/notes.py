@@ -132,3 +132,16 @@ def _attempts(lines, start):
             else:
                 attempt.fields[key] = value
     return attempts
+
+
+def read_key_takeaway(path):
+    """The text under `## Key Takeaway`, stripped; empty when the section is missing or blank."""
+    lines = path.read_text(encoding="utf-8-sig").splitlines()
+    section, inside = [], False
+    for line in lines:
+        if line.startswith("## "):
+            inside = line[3:].strip().lower() == "key takeaway"
+            continue
+        if inside:
+            section.append(line)
+    return "\n".join(section).strip()

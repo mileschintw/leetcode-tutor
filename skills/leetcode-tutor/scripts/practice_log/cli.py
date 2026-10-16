@@ -4,7 +4,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from practice_log import build, index, validate, workspace
+from practice_log import build, index, mirror, validate, workspace
 
 
 def main(argv=None):
@@ -33,6 +33,11 @@ def main(argv=None):
     index_parser = subcommands.add_parser("index", help="regenerate a Practice Workspace's README.md index")
     index_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
 
+    mirror_parser = subcommands.add_parser(
+        "mirror-plan", help="print, as JSON, every Notion page the Mirror should hold (it never talks to Notion)"
+    )
+    mirror_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+
     args = parser.parse_args(argv)
     if args.command == "build":
         return build.run(args.root, check=args.check)
@@ -42,3 +47,5 @@ def main(argv=None):
         return validate.run(args.root)
     if args.command == "index":
         return index.run(args.root)
+    if args.command == "mirror-plan":
+        return mirror.run(args.root)
