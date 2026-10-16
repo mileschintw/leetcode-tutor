@@ -16,7 +16,7 @@
   },
   "GET /v1/views/view-default": {
     "id": "view-default",
-    "name": "",
+    "name": "Default view",
     "type": "table"
   },
   "GET /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f": {

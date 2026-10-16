@@ -20,7 +20,7 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
    - `auto`: the connector when there is one, otherwise the API.
    - Missing: use the way you have. When you have both, ask the learner once which to use by default (`connector`, `api`, or `auto` for the connector first), and write the answer to `mirror.via`, keeping the rest of the file as it is.
 
-   With neither, offer both: connecting Notion to this app, or the API. For the API, the learner creates an internal integration at https://www.notion.so/my-integrations, shares the Mirror's database (or, before the first push, the page it should live in) with it from the page's `•••` menu, Connections, and sets `NOTION_TOKEN` in the environment you run commands in. Never ask for the token, type it, print it or store it in a file: the learner sets it themselves. Then stop until they have. Through the API, follow "Pushing through the API" below instead of steps 5 and 6.
+   With neither, offer both: connecting Notion to this app, or the API, set up once as "Setting up the API" below says. Never ask for the token, type it, print it or store it in a file: the learner sets it themselves. Then stop until they have. Through the API, follow "Pushing through the API" below instead of steps 5 and 6.
 3. **GitHub repository.** Every page links to the workspace on GitHub, so the Mirror needs `"repository"` under `"mirror"` in `practice-log.json`.
    - When it is missing, read the workspace's `origin` remote: `git remote get-url origin` with a shell, otherwise the `url` under `[remote "origin"]` in `.git/config`. When it is a GitHub repository, write it to `mirror.repository` as `https://github.com/<owner>/<repo>`, keeping the rest of the file as it is.
    - With no GitHub remote, explain that the Mirror's pages link to the workspace on GitHub, so it has to be pushed to a GitHub repository first: create an empty repository on GitHub, then `git remote add origin <its URL>` and `git push -u origin HEAD` in the workspace. Push nothing to Notion until it is there.
@@ -39,6 +39,17 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
 
    With a shell, once the pages are written, run `mirror-record`, and `mirror-record --id <Problem ID>` for each page moved to the trash, so the next `mirror-plan --changed` knows what the Mirror holds.
 7. **Report.** Say how many pages were created and updated (and how many were left out as unchanged), link the database, and end with this warning in the learner's language: the Mirror is regenerated from the Practice Log, so edits made in Notion are overwritten (on a push that leaves unchanged pages out, the next time their Problem changes); change the notes in the Practice Workspace instead.
+
+## Setting up the API
+
+Walk the learner through these steps, one at a time, in their language:
+
+1. At https://www.notion.so/profile/integrations, create a new integration of type **Internal** (its secret is called an API key). Not OAuth, which is for integrations other workspaces install, and not a personal access token, which acts as the learner with access to everything they can see; an internal integration sees only the pages shared with it. Give it Read content, Update content and Insert content, and no user information.
+2. Share the page the Mirror lives in (before the first push, the page it should be created in) with the integration: the page's `•••` menu, Connections, then the integration's name. Pages inside it are shared too.
+3. Copy the integration's secret and set it as the `NOTION_TOKEN` environment variable in their own terminal, never in this conversation:
+   - Windows: `setx NOTION_TOKEN "<secret>"` in PowerShell, then fully quit and reopen the app running you (and any terminal), since only programs started afterwards see it.
+   - macOS and Linux: add `export NOTION_TOKEN="<secret>"` to their shell profile (`~/.zshrc`, `~/.bashrc`), then open a new terminal and restart the app running you from it.
+4. Check it without showing it: `test -n "$NOTION_TOKEN" && echo set` (PowerShell: `if ($env:NOTION_TOKEN) { "set" }`). When it isn't set, the app was started before the variable; ask the learner to restart it.
 
 ## Pushing through the API
 

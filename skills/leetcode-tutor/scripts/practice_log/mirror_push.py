@@ -250,10 +250,10 @@ def push(api, root, changed, parent, trash):
                 " a page shared with the integration"
             )
         database_id, source_id = create_database(api, root, full_plan, page_id(parent))
-        state = None
+        state, created_now = None, True
     else:
-        source_id = check_database(api, database_id, full_plan)
-    ensure_views(api, database_id, source_id, full_plan)
+        source_id, created_now = check_database(api, database_id, full_plan), False
+    ensure_views(api, database_id, source_id, full_plan, created_now)
 
     pending, by_id, duplicates = read_pages(api, source_id)
     recorded = dict(state["pages"]) if state and state.get("notion_database_id") == database_id else {}
@@ -373,7 +373,7 @@ def check_database(api, database_id, plan):
     return source_id
 
 
-def ensure_views(api, database_id, source_id, plan):
+def ensure_views(api, database_id, source_id, plan, created_now=False):
     """Add the plan's views the database lacks, by name; never change one that exists, except a new database's default."""
     listed = api.call("GET", f"/v1/views?database_id={database_id}").get("results", [])
     views = [api.call("GET", f"/v1/views/{view['id']}") for view in listed]
@@ -383,8 +383,8 @@ def ensure_views(api, database_id, source_id, plan):
         return
     ids = {name: prop.get("id", name) for name, prop in
            api.call("GET", f"/v1/data_sources/{source_id}").get("properties", {}).items()}
-    # A database the push just created has one unnamed default table view: make it the plan's first view.
-    reuse = views[0]["id"] if len(views) == 1 and not views[0].get("name") and wanted[0]["type"] == "table" else None
+    # A database the push just created has one default table view ("Default view"): make it the plan's first view.
+    reuse = views[0]["id"] if created_now and len(views) == 1 and wanted[0]["type"] == "table" else None
     for view in wanted:
         body = view_body(view, ids)
         if reuse:
