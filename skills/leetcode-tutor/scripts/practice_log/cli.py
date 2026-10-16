@@ -4,7 +4,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from practice_log import build, validate, workspace
+from practice_log import build, index, validate, workspace
 
 
 def main(argv=None):
@@ -30,6 +30,9 @@ def main(argv=None):
     validate_parser = subcommands.add_parser("validate", help="check a Practice Workspace against the schema")
     validate_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
 
+    index_parser = subcommands.add_parser("index", help="regenerate a Practice Workspace's README.md index")
+    index_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+
     args = parser.parse_args(argv)
     if args.command == "build":
         return build.run(args.root, check=args.check)
@@ -37,3 +40,5 @@ def main(argv=None):
         return workspace.run(args.path)
     if args.command == "validate":
         return validate.run(args.root)
+    if args.command == "index":
+        return index.run(args.root)

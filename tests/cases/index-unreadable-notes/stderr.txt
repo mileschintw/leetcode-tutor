@@ -1,0 +1,3 @@
+problems/leetcode/two-sum/notes.md: missing frontmatter (the file must start with a '---' line)
+problems/leetcode/valid-anagram: missing notes.md
+index: README.md not written; fix the notes (`practice-log validate` lists every error)
