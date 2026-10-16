@@ -1,0 +1,5 @@
+.claude-plugin/plugin.json: 'name' must be lowercase ASCII letters, digits and single hyphens
+.claude-plugin/plugin.json: 'description' must be non-empty text
+.claude-plugin/plugin.json: 'author' must be a name or an object with a 'name'
+.claude-plugin/plugin.json: 'repository' must be a URL string
+build: metadata check failed (4 problems)

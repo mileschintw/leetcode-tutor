@@ -1,0 +1,8 @@
+build: 1 skill checked, metadata ok
+build: wrote .agents/plugins/marketplace.json
+build: wrote .cursor-plugin/plugin.json
+build: wrote dist/two-sum-coach-agents-skills.zip
+build: wrote dist/two-sum-coach-claude-ai.zip
+build: wrote dist/two-sum-coach-gemini-perplexity.zip
+build: wrote plugin.json
+build: wrote prompts/two-sum-coach.md

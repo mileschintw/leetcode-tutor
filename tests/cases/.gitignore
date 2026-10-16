@@ -1,0 +1,3 @@
+# The packaging fixtures include Python caches on purpose: build must leave them out of the zips.
+!__pycache__/
+!*.pyc

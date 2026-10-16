@@ -24,6 +24,16 @@ Then name a Problem, for example "Let's do LeetCode 1. Two Sum". The tutor start
 
 The tutor keeps your practice in a Practice Workspace, a git repository you own with one folder per Problem. If you start a Session outside one, it offers to create one for you. At the end of each Session it saves the Attempt (outcome, approach, the mistakes it saw, your code) and the Key Takeaway there.
 
+## Other platforms
+
+These installs should work, but haven't been tested by hand yet.
+
+- **Codex:** `codex plugin marketplace add mileschintw/leetcode-tutor`, then install `leetcode-tutor` from the Plugins Directory.
+- **Antigravity:** `agy plugin install https://github.com/mileschintw/leetcode-tutor`.
+- **Cursor:** add this repo as a plugin (team admins: Dashboard → Plugins & MCPs → Import from Repo), or unzip `leetcode-tutor-agents-skills.zip` (see the next item for how to build it) into your project or home directory.
+- **claude.ai, the Gemini app and Perplexity:** upload a skill zip. Run `python skills/leetcode-tutor/scripts/practice_log build` and it writes them to `dist/`: `leetcode-tutor-claude-ai.zip` for claude.ai, `leetcode-tutor-gemini-perplexity.zip` for the Gemini app and Perplexity.
+- **ChatGPT and anything else:** paste [prompts/leetcode-tutor.md](./prompts/leetcode-tutor.md) into a Project's instructions or your first message.
+
 ## Project docs
 
 - [CONTEXT.md](./CONTEXT.md): the project's domain language
