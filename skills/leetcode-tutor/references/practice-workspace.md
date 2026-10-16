@@ -15,6 +15,7 @@ Run it with the command given in `SKILL.md`. Its subcommands:
 
 - `init [folder]`: create a Practice Workspace in a new or empty folder (default: the current one).
 - `validate [--root folder]`: check a workspace against the schema. It prints each error and exits non-zero on failure.
+- `review-sheet [--root folder] [--id ID] [--tag TAG] [--list NAME] [--title TITLE] [--output file]`: write a Review Sheet of the Problems matching the filters (see [review-sheet.md](review-sheet.md)).
 
 ## Start of a Session: find the workspace
 

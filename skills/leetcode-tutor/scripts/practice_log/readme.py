@@ -96,10 +96,11 @@ def cells(values):
     return "| " + " | ".join(values) + " |"
 
 
-def link(p):
+def link(p, base=""):
+    """A link to the Problem's folder; `base` leads from the linking file's folder to the workspace root."""
     text = escape(p.title).replace("[", "\\[").replace("]", "\\]")
     # The trailing slash makes github.com open the folder, with notes.md and the code files.
-    return f"[{text}]({p.folder}/)"
+    return f"[{text}]({base}{p.folder}/)"
 
 
 def difficulty(p):

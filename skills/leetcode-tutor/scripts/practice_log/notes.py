@@ -145,3 +145,16 @@ def read_key_takeaway(path):
         if inside:
             section.append(line)
     return "\n".join(section).strip()
+
+
+def read_key_takeaway(path):
+    """The text under a notes file's `## Key Takeaway` heading, as one line ("" when there is none)."""
+    lines = path.read_text(encoding="utf-8-sig").splitlines()
+    body, in_section = [], False
+    for line in lines:
+        if line.startswith("## "):
+            in_section = line[3:].strip().lower() == "key takeaway"
+            continue
+        if in_section and line.strip():
+            body.append(line.strip())
+    return " ".join(body)
