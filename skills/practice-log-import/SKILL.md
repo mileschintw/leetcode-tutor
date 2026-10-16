@@ -1,6 +1,6 @@
 ---
 name: practice-log-import
-description: Imports a learner's Legacy Records (old practice notes from Notion, LeetHub or any export) into their Practice Log, merging by Problem ID after a preview. 匯入 舊紀錄 刷題紀錄
+description: Imports a learner's Legacy Records (old notes from Notion, LeetHub or any export) and pending Attempts from the Notion Mirror into their Practice Log, merging by Problem ID. 匯入 舊紀錄 刷題紀錄
 license: MIT
 metadata:
   requires: leetcode-tutor
@@ -8,21 +8,22 @@ metadata:
 
 # Practice Log Import
 
-You bring the learner's Legacy Records (practice history kept before the Practice Log, in Notion, a LeetHub repository or anything else) into their Practice Log. There is no adapter per source: read whatever the records hold and apply the principles in [references/import-principles.md](references/import-principles.md). Read it before you start.
+You bring the learner's Legacy Records (practice history kept before the Practice Log, in Notion, a LeetHub repository or anything else) into their Practice Log, and the pending Attempts the tutor wrote to the Mirror from a chat app. There is no adapter per source: read whatever the records hold and apply the principles in [references/import-principles.md](references/import-principles.md). Read it before you start.
 
 The Practice Log format is defined by the `leetcode-tutor` skill, which is installed next to this one. Read its schema, `../leetcode-tutor/references/practice-log.md` relative to the folder holding this file, before you map anything. This skill needs that one: if the `leetcode-tutor` skill's folder isn't there, ask the learner to install it as well, and import nothing until they have.
 
 ## Steps
 
 1. **Find the Practice Workspace.** Look for `practice-log.json` in the current folder and its parent folders. If there is none, ask whether to create one (the `init` command below) or where the existing one is. Create nothing before the learner answers.
-2. **Get the records.** Use whatever access you have, in this order: a connector to the source (a Notion connector, a GitHub connector), a local export or clone the learner points to, then telling the learner how to export or clone it and waiting for them. When a source's dates live only in git history and you can't run `git`, ask the learner to run `git log --date=short --name-only` in it and paste the output.
+2. **Get the records.** When the learner asks to bring home pending Attempts, or `practice-log.json` has a `mirror.notion_database_id` and you have a Notion connector, read the Mirror's pending pages: fetch that database, list its pages with `Pending` checked, and fetch each one for its content. Read only those; every other Mirror page is generated from the Practice Log. For other records, use whatever access you have, in this order: a connector to the source (a Notion connector, a GitHub connector), a local export or clone the learner points to, then telling the learner how to export or clone it and waiting for them. When a source's dates live only in git history and you can't run `git`, ask the learner to run `git log --date=short --name-only` in it and paste the output.
 3. **Map.** Turn every record into Problems and Attempts, following the principles. Ask the learner once, in a single message, about every field whose meaning you can't tell; don't ask about fields you can map with confidence.
 4. **Preview.** Show the preview the principles describe and ask the learner to confirm. Write nothing to the workspace before they say yes. If they correct anything, show the changed part again.
 5. **Validate.** After the learner confirms, check the result before it touches the workspace:
    - **With a shell:** run `init` in a new temporary folder outside the workspace, copy the workspace's `problems/` folder into it, apply the import there exactly as previewed, and run `validate --root` on that folder. Fix every error, then delete the temporary folder.
    - **Without a shell:** check each notes file you are about to write against the schema yourself: required fields, enum values, dates, `need_review_reason`, and that every `code` names a file you are writing.
 6. **Write.** Create or update the Problems in the workspace exactly as previewed. With a shell, run `validate` on the workspace afterwards, then `index` on it to regenerate its README.md, the index of the Practice Log. Without a shell, tell the learner the index is out of date until `index` runs.
-7. **Report.** Say how many Problems were created and merged, how many Attempts were added from each origin, what was skipped as already imported, and the uncertain matches the learner still has to decide.
+   Then move each pending page you imported, and each one skipped as already imported, to Notion's trash, as the preview said. Never touch a pending page you listed as an uncertain match.
+7. **Report.** Say how many Problems were created and merged, how many Attempts were added from each origin, what was skipped as already imported, how many pending pages were moved to Notion's trash, and the uncertain matches the learner still has to decide.
 
 ## The practice-log CLI
 

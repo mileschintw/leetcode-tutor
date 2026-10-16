@@ -7,6 +7,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 - Problems
 - Problem fields
 - Attempts
+- Pending Attempts
 - Merging and re-runs
 - Uncertain matches
 - Preview
@@ -40,11 +41,20 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 - **code:** every Attempt needs its code in its own file, `<date>-<approach slug>.<ext>`, with `-2`, `-3` before the extension when the name is taken. Copy the code exactly. An entry with no code is an uncertain match.
 - **Order.** Keep the Attempt log oldest first, putting imported Attempts among the existing ones by date. The heading is `### <date> <approach>`, then the `- key: value` lines.
 
+## Pending Attempts
+
+Two records come from the tutor itself on a chat platform; their format is in the `leetcode-tutor` skill's `references/chat-platforms.md`. Both hold an Attempt block, the Problem's notes in the Practice Log format with one Attempt and its code, so map it field for field, not by the rules above.
+
+- **A pending page** in the Mirror database: a page with `Pending` checked. Its content is the Attempt block; the Attempt gets `origin: mirror-pending`. Once the import is written, the page goes to Notion's trash, so its Attempt can't come back on the next push or Import. Say so in the preview.
+- **A pasted Attempt block,** which the tutor printed when it had no Notion: the Attempt gets `origin: chat`.
+
+The block's `need_review` follows the merge rule below: `true` sets the mark. When it is `false` but the Problem is marked, keep the mark and say in the preview that the learner can clear it.
+
 ## Merging and re-runs
 
 - **Merge by Problem ID.** When the workspace already has the Problem, add the new Attempts to its log and keep every existing Attempt and field. Add new `tags` and `lists` values to the existing ones. Set `need_review` to `true` when a source flags it; never clear it during import. Fill an empty Key Takeaway; when the Problem already has a different one, keep it and show the imported one in the preview so the learner can choose.
 - **Keep every Attempt.** The same Problem from two sources keeps the Attempts of both, each with its own `origin`, even on the same date.
-- **Idempotent.** An Attempt is already imported when the Problem has an Attempt with the same `origin` and `date` (and, when several share them, the same code). Skip it, and skip Problem field changes that are already there. When the source's code or fields for that Attempt differ from what the workspace holds, don't overwrite or skip it silently: list it as an uncertain match. Running the same import again adds nothing and writes nothing.
+- **Idempotent.** An Attempt is already imported when the Problem has an Attempt with the same `origin` and `date` (and, when several share them, the same code). Skip it, and skip Problem field changes that are already there. When the source's code or fields for that Attempt differ from what the workspace holds, don't overwrite or skip it silently: list it as an uncertain match. Running the same import again adds nothing and writes nothing. A pending page whose Attempt is already in the log (an earlier Import couldn't trash it) is skipped like any other; list it under skipped and offer to move it to the trash.
 
 ## Uncertain matches
 
@@ -54,7 +64,7 @@ List, rather than import, every record you can't place with confidence, and say 
 
 Before writing, show:
 
-- **Totals:** Problems to create, Problems to merge into, Attempts to add per origin, and records skipped as already imported.
+- **Totals:** Problems to create, Problems to merge into, Attempts to add per origin, records skipped as already imported, and pending pages to move to Notion's trash afterwards.
 - **Per Problem:** its Problem ID, whether it is new or merged, the fields it gets (difficulty, tags, lists, need_review and its reason), and each Attempt to add as `date, approach, origin, code file`.
 - **Dropped:** the tags and fields you drop, by name.
 - **Assumed:** every default you applied, such as `outcome: solved-alone` where the source doesn't say.

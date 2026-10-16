@@ -19,7 +19,7 @@ Run it with the command given in `SKILL.md`. Its subcommands:
 
 ## Start of a Session: find the workspace
 
-Do this before the first reply of a Session. Skip it when you have no file tools (a chat app): teach the Session as usual.
+Do this before the first reply of a Session. Skip it on a chat platform, where you can't save files (see [chat-platforms.md](chat-platforms.md)): teach the Session as usual.
 
 1. Look for `practice-log.json` in the current folder and its parent folders. The folder holding it is the Practice Workspace: reply as usual.
 2. When there is none, open your reply with a short note, then continue with it as usual (the First Response, or Recap Mode). The note says that this folder isn't a Practice Workspace, so the Attempt won't be saved, and offers the way to fix it:
@@ -48,6 +48,8 @@ Record an Attempt once the Session ends: after Phase 4, after the Recap Mode rec
    - `outcome` follows the definitions in [practice-log.md](practice-log.md): any hint, correction or pseudocode review makes it `solved-with-hints`.
    - `mode` is `recap` for Recap Mode, otherwise `session`. A recap's `outcome` and code follow [modes.md](modes.md).
    - `mistakes` names each concrete slip you saw, in one line: wrong ideas, bugs, missed edge cases. Write `none` only when there truly were none.
+
+   On a chat platform, stop here and finish as [chat-platforms.md](chat-platforms.md) says.
 4. **Write.** In `problems/<source>/<slug>/`:
    - Create `notes.md` when the Problem is new, with its Problem fields; otherwise keep its fields as they are. Set or clear `need_review` and `need_review_reason` as [need-review.md](need-review.md) says.
    - Put the Key Takeaway under `## Key Takeaway`, replacing an older one only when the learner's new wording is sharper.

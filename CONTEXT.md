@@ -65,5 +65,5 @@ Practice history the learner kept before the Practice Log existed, in any format
 _Avoid_: Old notes, backup
 
 **Import**:
-Turning Legacy Records into Practice Log entries.
+Turning Legacy Records into Practice Log entries. It also brings home Attempts the tutor wrote to the Mirror as pending from a chat platform with no filesystem.
 _Avoid_: Migration, sync
