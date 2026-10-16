@@ -57,7 +57,7 @@ A repository the learner owns that holds their Practice Log together with their 
 _Avoid_: Practice repo, LeetCode repo
 
 **Mirror**:
-A read-only copy of the Practice Log published to another tool (e.g. Notion) for browsing. Changes flow from the Practice Log to the Mirror, never back.
+A read-only copy of the Practice Log published to another tool (e.g. Notion) for browsing. Changes flow from the Practice Log to the Mirror, never back; the one exception is an Attempt written to it as pending from a chat platform, which only Import brings back.
 _Avoid_: Sync, backup, backend
 
 **Legacy Record**:

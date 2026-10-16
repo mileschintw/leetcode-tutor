@@ -32,7 +32,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 
 - **What counts as an Attempt.** Every dated entry about solving the Problem: a dated toggle or heading with an approach or code, a committed solution, a dated row. One entry, one Attempt.
 - **date:** from the entry itself. When the source has no other dates, take the date of the commit that added or last changed the solution file in its git history, as `git log --date=short` prints it. An entry with no date anywhere is an uncertain match.
-- **origin:** the source's name, lowercase and hyphenated (`notion`, `leethub`). Attempts written to the Mirror from a chat app and marked pending come back with `origin: mirror-pending`.
+- **origin:** the source's name, lowercase and hyphenated (`notion`, `leethub`). Attempts written to the Mirror from a chat platform and marked pending come back with `origin: mirror-pending`.
 - **mode:** `session`.
 - **outcome:** take it from the record when it says (`saw solution`, `with hints`). When it doesn't, use `solved-alone` and say so in the preview so the learner can change it.
 - **approach:** the entry's own approach name, lowercased. When there is none, name the approach from the code in two or three words (`hash map`, `two pointers`).
@@ -43,7 +43,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 
 ## Pending Attempts
 
-Two records come from the tutor itself on a chat platform; their format is in the `leetcode-tutor` skill's `references/chat-platforms.md`. Both hold an Attempt block, the Problem's notes in the Practice Log format with one Attempt and its code, so map it field for field, not by the rules above.
+Two kinds of record come from the tutor itself on a chat platform; their format is in the `leetcode-tutor` skill's `references/chat-platforms.md`. Both hold an Attempt block, the Problem's notes in the Practice Log format with one Attempt and its code, so map it field for field, not by the rules above.
 
 - **A pending page** in the Mirror database: a page with `Pending` checked. Its content is the Attempt block; the Attempt gets `origin: mirror-pending`. Once the import is written, the page goes to Notion's trash, so its Attempt can't come back on the next push or Import. Say so in the preview.
 - **A pasted Attempt block,** which the tutor printed when it had no Notion: the Attempt gets `origin: chat`.
