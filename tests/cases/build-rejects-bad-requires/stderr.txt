@@ -1,0 +1,3 @@
+skills/coach-import/SKILL.md: metadata 'requires' names 'missing-skill', which is not a skill in skills/
+skills/coach/SKILL.md: metadata 'requires' names the skill itself
+build: metadata check failed (2 problems)
