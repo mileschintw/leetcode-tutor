@@ -103,10 +103,24 @@ def build_plan(root):
                 " Edits made here are overwritten on the next push."
             ),
             "key": KEY,
-            "properties": PROPERTIES,
+            "properties": with_options(PROPERTIES, pages),
         },
         "pages": pages,
     }
+
+
+def with_options(properties, pages):
+    """The fixed schema, with Tags and Lists carrying every value the pages use, sorted.
+
+    Notion rejects a multi-select value that isn't already an option of the property.
+    """
+    result = []
+    for prop in properties:
+        if prop["type"] == "multi_select":
+            used = {value for page in pages for value in page["properties"][prop["name"]]}
+            prop = {**prop, "options": sorted(used)}
+        result.append(prop)
+    return result
 
 
 def github_repository(value):

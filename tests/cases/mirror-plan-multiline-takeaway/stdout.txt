@@ -24,11 +24,15 @@
       },
       {
         "name": "Tags",
-        "type": "multi_select"
+        "type": "multi_select",
+        "options": [
+          "heap-priority-queue"
+        ]
       },
       {
         "name": "Lists",
-        "type": "multi_select"
+        "type": "multi_select",
+        "options": []
       },
       {
         "name": "Need Review",
