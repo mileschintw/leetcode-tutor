@@ -38,7 +38,7 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
    - **Not in the plan:** a Problem no longer in the Practice Log, or a second page for the same Problem ID. List them and ask before moving them to Notion's trash.
 
    With a shell, once the pages are written, run `mirror-record`, and `mirror-record --id <Problem ID>` for each page moved to the trash, so the next `mirror-plan --changed` knows what the Mirror holds.
-7. **Report.** Say how many pages were created and updated (and, through a browser, how many were left out as unchanged), link the database, and end with this warning in the learner's language: the Mirror is regenerated from the Practice Log on every push, so edits made in Notion are overwritten; change the notes in the Practice Workspace instead.
+7. **Report.** Say how many pages were created and updated (and, through a browser, how many were left out as unchanged), link the database, and end with this warning in the learner's language: the Mirror is regenerated from the Practice Log, so edits made in Notion are overwritten (on a push that leaves unchanged pages out, the next time their Problem changes); change the notes in the Practice Workspace instead.
 
 ## The practice-log CLI
 

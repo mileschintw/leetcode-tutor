@@ -38,7 +38,7 @@ Only on a first push, when the plan has no database id.
 
 ## Opening the Mirror
 
-Open `https://www.notion.so/<database id>`. Check that its properties include every property in the plan. When `Problem ID` or `Pending` is missing, stop before writing anything, name it, and ask the learner to rename it back; add back any other missing property with the plan's type. Also check that its Tags and Lists properties have every option the plan lists, adding the missing ones and removing none.
+Open `https://www.notion.so/<database id>`. Check its properties against the plan's as step 5 of the skill says, and stop the same way when `Problem ID` or `Pending` is missing. Also check that its Tags and Lists properties have every option the plan lists, adding the missing ones and removing none.
 
 To find a page, use the database's search (the magnifier above the table) with its Problem ID, and take the row whose `Problem ID` is exactly that value and whose `Pending` is unchecked. When no row matches, the page is new. When two unpending rows match, write neither: list them with the pages not in the plan.
 

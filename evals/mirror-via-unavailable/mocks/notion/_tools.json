@@ -1,0 +1,210 @@
+{
+  "tools": [
+    {
+      "name": "notion-search",
+      "description": "Search Notion with short, specific keywords. Returns matching pages and databases with their ids and URLs.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Short keywords"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "notion-fetch",
+      "description": "Retrieves a Notion page, database or data source by URL or ID. Databases return their data sources in <data-source url=\"collection://...\"> tags; fetch the collection:// URL for its schema and use it with notion-query-data-sources or as the parent of new pages.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID or URL of the page, database, or data source (collection://...)"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "notion-create-database",
+      "description": "Creates a new Notion database from a SQL DDL CREATE TABLE statement. Without a parent, it is created as a private page at the workspace level. Returns the database id and its data source in a <data-source> tag.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the new database"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the new database"
+          },
+          "parent": {
+            "type": "object",
+            "description": "Optional parent page: {\"type\": \"page_id\", \"page_id\": \"...\"}"
+          },
+          "schema": {
+            "type": "string",
+            "description": "SQL DDL, e.g. CREATE TABLE (\"Name\" TITLE, \"Tags\" MULTI_SELECT('a':blue), \"Done\" CHECKBOX, \"When\" DATE, \"Count\" NUMBER, \"Link\" URL, \"Notes\" RICH_TEXT, \"Kind\" SELECT('x':gray))"
+          }
+        },
+        "required": [
+          "schema"
+        ]
+      }
+    },
+    {
+      "name": "notion-update-data-source",
+      "description": "Update a Notion data source's schema, title or attributes. statements is semicolon-separated SQL DDL: ADD COLUMN, DROP COLUMN, RENAME COLUMN, ALTER COLUMN \"Name\" SET <type>. For SELECT and MULTI_SELECT, list every option to keep; omitted options are removed.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "data_source_id": {
+            "type": "string",
+            "description": "A collection:// URI from <data-source> tags, a bare UUID, or a single-source database ID"
+          },
+          "statements": {
+            "type": "string",
+            "description": "Semicolon-separated SQL DDL statements, e.g. ALTER COLUMN \"Tags\" SET MULTI_SELECT('a':blue, 'b':green)"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "data_source_id"
+        ]
+      }
+    },
+    {
+      "name": "notion-create-pages",
+      "description": "Creates one or more Notion pages with properties and Notion Markdown content. For a database, fetch it first and use its collection:// data source as parent. Checkbox values are \"__YES__\"/\"__NO__\"; dates split into \"date:<Name>:start\" and \"date:<Name>:is_datetime\".",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "parent": {
+            "type": "object",
+            "description": "{\"type\": \"data_source_id\", \"data_source_id\": \"...\"} or {\"type\": \"database_id\", \"database_id\": \"...\"} or a page_id"
+          },
+          "pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "properties": {
+                  "type": "object"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "Notion Markdown"
+                }
+              },
+              "required": []
+            }
+          }
+        },
+        "required": [
+          "pages"
+        ]
+      }
+    },
+    {
+      "name": "notion-update-page",
+      "description": "Update a Notion page's properties or content. Commands: update_properties (with properties), replace_content (with new_str replacing the whole page), update_content, insert_content.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "page_id": {
+            "type": "string",
+            "description": "The ID of the page to update"
+          },
+          "command": {
+            "type": "string",
+            "enum": [
+              "update_properties",
+              "update_content",
+              "replace_content",
+              "insert_content"
+            ]
+          },
+          "properties": {
+            "type": "object"
+          },
+          "new_str": {
+            "type": "string",
+            "description": "For replace_content: the new content of the whole page"
+          }
+        },
+        "required": [
+          "page_id",
+          "command"
+        ]
+      }
+    },
+    {
+      "name": "notion-query-data-sources",
+      "description": "Query Notion data sources. SQL mode: {\"data\": {\"data_source_urls\": [\"collection://...\"], \"query\": \"SELECT * FROM \\\"collection://...\\\"\"}}. Rows mode: {\"data\": {\"mode\": \"rows\", \"data_source_url\": \"collection://...\"}}. Fetch the data source first for its schema.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      }
+    },
+    {
+      "name": "notion-move-pages",
+      "description": "Move one or more Notion pages or databases to a new parent.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "page_or_database_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "new_parent": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "page_or_database_ids",
+          "new_parent"
+        ]
+      }
+    },
+    {
+      "name": "notion-delete-pages",
+      "description": "Move Notion pages to Trash. Use only when the user explicitly asks to delete specific pages. Without user_confirmed: true, nothing is trashed.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "page_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "user_confirmed": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "page_ids"
+        ]
+      }
+    }
+  ]
+}
