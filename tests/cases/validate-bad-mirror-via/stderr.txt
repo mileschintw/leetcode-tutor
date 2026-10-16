@@ -1,0 +1,2 @@
+practice-log.json: mirror.via 'playwright' must be one of connector, browser, auto
+validate: failed (1 error)

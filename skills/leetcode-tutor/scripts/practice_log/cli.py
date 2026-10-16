@@ -37,6 +37,24 @@ def main(argv=None):
         "mirror-plan", help="print, as JSON, every Notion page the Mirror should hold (it never talks to Notion)"
     )
     mirror_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+    mirror_parser.add_argument(
+        "--format", choices=("json", "browser"), default="json",
+        help="json for a connector (default), or browser: Markdown with every value to enter in Notion's UI",
+    )
+    mirror_parser.add_argument(
+        "--changed", action="store_true",
+        help="only the pages that differ from the last push recorded in mirror-state.json",
+    )
+
+    record_parser = subcommands.add_parser(
+        "mirror-record", help="note Mirror pages as pushed in mirror-state.json, for `mirror-plan --changed`"
+    )
+    record_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+    record_parser.add_argument(
+        "--id", dest="ids", action="append", default=[], metavar="ID",
+        help="a Problem ID whose page was pushed, or trashed when it is no longer in the plan"
+        " (repeatable; default: every page in the plan)",
+    )
 
     sheet_parser = subcommands.add_parser(
         "review-sheet",
@@ -66,6 +84,8 @@ def main(argv=None):
     if args.command == "index":
         return index.run(args.root)
     if args.command == "mirror-plan":
-        return mirror.run(args.root)
+        return mirror.run(args.root, args.format, args.changed)
+    if args.command == "mirror-record":
+        return mirror.record(args.root, args.ids)
     if args.command == "review-sheet":
         return review_sheet.run(args.root, args.ids, args.tags, args.lists, args.title, args.output)
