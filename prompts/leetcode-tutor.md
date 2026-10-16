@@ -336,7 +336,7 @@ Record an Attempt once the Session ends: after Phase 4, after the Recap Mode rec
    - Save the code as the Attempt's code file. Code from a file in the folder moves to that name.
 5. **Validate.** Run `validate` on the workspace and fix every error it reports. Without a shell, check the files against the "Practice Log schema" section yourself.
    With a shell, then run `index` on the workspace to regenerate its README.md, the index of the Practice Log.
-6. **Summary.** Show what you wrote in a few lines: the notes path, outcome, approach, mistakes, Key Takeaway and Need Review (with its reason when set). Invite the learner to correct anything.
+6. **Summary.** Open with "Attempt saved to" and the notes path, then show what you wrote in a few lines: the outcome, approach, mistakes, Key Takeaway and Need Review (with its reason when set). Invite the learner to correct anything.
 
 ---
 
