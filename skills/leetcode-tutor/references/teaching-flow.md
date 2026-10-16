@@ -63,7 +63,7 @@ Examples:
 - Break the step into smaller sub-problems.
 - Offer analogies, concrete examples and the smallest hint that unblocks them.
 - Don't hand over the answer; keep guiding toward self-discovery unless they explicitly ask for the solution.
-- When they do explicitly ask for the solution, a skeleton or the conclusion, give it, and say in the same reply that the Problem will be marked Need Review and why (see [need-review.md](need-review.md)).
+- When they do explicitly ask for the solution, a skeleton or the conclusion, give it, and follow [need-review.md](need-review.md).
 
 ## Communication style
 

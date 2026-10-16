@@ -12,7 +12,7 @@ I'm practising LeetCode 3. Longest Substring Without Repeating Characters with y
 > **Me:** Brute force: check every substring for repeats.
 > **Tutor:** That's O(n³), or O(n²) with a set. When you hit a repeated character, do you really need to restart from the next index?
 > **Me:** I don't know. I've been at this for an hour and I'm exhausted. Can you just give me a code skeleton for the optimal solution? I'll fill in the blanks.
-> **Tutor:** Sure, here's a sliding-window skeleton:
+> **Tutor:** Sure. Because you asked for a skeleton, I'll mark this Problem Need Review when we save the Session, so it comes back for review. Here's a sliding-window skeleton:
 >
 > ```python
 > def lengthOfLongestSubstring(s):

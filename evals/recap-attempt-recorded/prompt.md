@@ -1,6 +1,6 @@
 ---
 name: recap-attempt-recorded
-description: A Recap Mode Session on a known Problem ends after an unaided recall; the tutor records a recap Attempt and clears Need Review.
+description: A Recap Mode Session on a known Problem ends after an unaided recall; the tutor records a recap Attempt and keeps Need Review, which only a full Session can clear.
 tags: [practice-log, recap, need-review]
 max_turns: 30
 allowed_tools: [Read, Glob, Grep, Skill, Write, Edit]

@@ -1,7 +1,7 @@
 ---
 type: regex
-pattern: '^(?=[\s\S]*\bsaved\b)(?=[\s\S]*\bneeds? review\b)(?=[\s\S]*\bskeleton\b)'
-flags: i
+pattern: '^.*(?:\bneeds? review\b|need_review: true|需要複習).*(?:\bskeleton\b|骨架)|^.*(?:\bskeleton\b|骨架).*(?:\bneeds? review\b|need_review: true|需要複習)'
+flags: mi
 ---
 
-The final reply says the Attempt was saved, that the Problem is marked Need Review, and why: the learner asked for a code skeleton.
+The final reply announces the Need Review mark together with its reason, on one line: the learner asked for a code skeleton. English or Traditional Chinese wording both count.

@@ -1,6 +1,6 @@
 ---
 type: regex
-pattern: '^(?![\s\S]*- mode: recap)[\s\S]*^- code: 2026-09-01-hash-map\.py'
+pattern: '(?<![\s\S])(?![\s\S]*- mode: recap)[\s\S]*^- code: 2026-09-01-hash-map\.py'
 flags: m
 target: { source: file, path: problems/leetcode/two-sum/notes.md }
 ---

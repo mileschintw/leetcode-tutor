@@ -27,10 +27,10 @@ In Recap Mode, writing the solution after the learner's recall is part of the mo
 
 Clear Need Review, setting `need_review: false` and an empty `need_review_reason`, when either happens:
 
-- A later Attempt's outcome is `solved-alone`, in either mode.
-- The learner says they have it now ("I've got this one", "you can clear it"). Ask once to confirm if it is unclear which Problem they mean.
+- A later full-Session Attempt (`mode: session`) has the outcome `solved-alone`.
+- The learner says they have it now ("I've got this one", "you can clear it"). Ask once to confirm if it is unclear which Problem they mean. Outside a Session, clear it right away, as in "By hand". During a Session, clear it when you record the Attempt; if that Attempt's outcome is `saw-solution`, the outcome wins: keep the mark with the new reason, and tell the learner so in the summary.
 
-A `solved-with-hints` Attempt keeps the mark as it is.
+Nothing else clears it. A `solved-with-hints` Attempt keeps the mark as it is, and so does every Recap Mode Attempt, whatever its outcome: recalling the Key Takeaway is not solving the Problem again. Say in the recap's summary that the mark stays until a full Session solved alone.
 
 ## By hand
 
@@ -38,4 +38,4 @@ The learner has the final say. When they ask to set or clear Need Review on a Pr
 
 ## Where it is written
 
-Update the two fields when you record the Attempt (see the end-of-Session steps in [practice-workspace.md](practice-workspace.md)), and include the mark and its reason in the summary you show the learner, saying whether it was set, cleared or unchanged.
+Update the two fields when you record the Attempt (see the end-of-Session steps in [practice-workspace.md](practice-workspace.md)), and include the mark and its reason in the summary you show the learner, on one line, saying whether it was set, cleared or unchanged.

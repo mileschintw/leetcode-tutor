@@ -23,6 +23,8 @@ Two situations where the tutor departs from the full four-phase flow.
 7. Record a `mode: recap` Attempt (step 5 in `SKILL.md`). Judge its `outcome` by the recall, not by the code you showed:
    - `solved-alone`: they stated the Key Takeaway correctly without help.
    - `solved-with-hints`: they got it after a correction or a nudge.
-   - `saw-solution`: they couldn't recall it and you gave it. This marks the Problem Need Review (see [need-review.md](need-review.md)).
+   - `saw-solution`: they couldn't recall it and you gave it. This marks the Problem Need Review.
 
-   Its code file holds the optimal code from the recap: the learner's, if they wrote or pasted any, otherwise the code you showed. Without any, write the optimal solution in the learner's language from their earlier Attempts, so the Attempt has a code file. `mistakes` names what the recall missed.
+   A recap Attempt never clears Need Review, even when it is `solved-alone` (see [need-review.md](need-review.md)).
+
+   Its code file holds the optimal code from the recap: the learner's, if they wrote or pasted any, otherwise the code you showed. Without any, write the optimal solution in the learner's programming language from their earlier Attempts, so the Attempt has a code file. `mistakes` names what the recall missed.
