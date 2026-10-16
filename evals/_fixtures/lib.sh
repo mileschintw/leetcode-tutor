@@ -3,7 +3,9 @@
 #
 # Legacy Records: a small LeetHub repository (legacy/LeetCodeRecord) and a small Notion export
 # (legacy/notion-export). Two Sum is in both. Imported states: the Practice Log after importing
-# one source or both, written the way the import skill should write it.
+# one source or both, written the way the import skill should write it. tests/cases/validate-imported-workspace
+# holds the state after both imports (workspace; two_sum both; imported_notion; imported_leethub):
+# regenerate it when this file changes.
 
 # --- Code shared by the sources and the imported Practice Log ---
 
@@ -327,7 +329,7 @@ MD
 
 imported_notion() {
   problem merge-intervals "Merge Intervals" medium "[array, sorting]" "[Grind169]" true \
-    "Marked for review in notion before import" \
+    "Marked for review in Notion before import" \
     "Sort by start, then extend the last merged interval while the next one starts before it ends." \
     2024-03-15 "sort and merge" notion code_merge_intervals
   problem daily-temperatures "Daily Temperatures" medium "[stack, monotonic-stack]" "[Others]" false "" \

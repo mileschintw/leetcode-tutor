@@ -24,7 +24,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 - **tags:** algorithm and data-structure tags only, lowercase and hyphenated (`Hash Table` → `hash-table`). Drop every other tag: contest names and weeks (`Weekly Contest 350`), job levels (`L4`), companies, statuses and personal labels.
 - **lists:** a collection, folder or study-plan field becomes `lists`, each value kept as the learner wrote it (`Grind169` stays `Grind169`).
 - **List style:** write `tags` and `lists` as flow lists, `[a, b]`, and an empty one as `[]`.
-- **need_review:** a review flag that is set (a checkbox, a "review" tag) becomes `need_review: true` with `need_review_reason: Marked for review in <source> before import`. Otherwise `false`.
+- **need_review:** a review flag that is set (a checkbox, a "review" tag) becomes `need_review: true` with `need_review_reason: Marked for review in <source name> before import` (`Marked for review in Notion before import`). Otherwise `false`.
 - **Key Takeaway:** a callout, summary or "takeaway" note on the Problem becomes the Key Takeaway, word for word apart from a label such as `Key Takeaway:`. Never write one yourself: leave the section empty when no source has one.
 
 ## Attempts
@@ -44,7 +44,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 
 - **Merge by Problem ID.** When the workspace already has the Problem, add the new Attempts to its log and keep every existing Attempt and field. Add new `tags` and `lists` values to the existing ones. Set `need_review` to `true` when a source flags it; never clear it during import. Fill an empty Key Takeaway; when the Problem already has a different one, keep it and show the imported one in the preview so the learner can choose.
 - **Keep every Attempt.** The same Problem from two sources keeps the Attempts of both, each with its own `origin`, even on the same date.
-- **Idempotent.** An Attempt is already imported when the Problem has an Attempt with the same `origin` and `date` (and, when several share them, the same code). Skip it, and skip Problem field changes that are already there. Running the same import again adds nothing and writes nothing.
+- **Idempotent.** An Attempt is already imported when the Problem has an Attempt with the same `origin` and `date` (and, when several share them, the same code). Skip it, and skip Problem field changes that are already there. When the source's code or fields for that Attempt differ from what the workspace holds, don't overwrite or skip it silently: list it as an uncertain match. Running the same import again adds nothing and writes nothing.
 
 ## Uncertain matches
 

@@ -5,4 +5,4 @@ min: 0
 max: 0
 ---
 
-Nothing is written to the workspace before the learner confirms.
+A re-run writes nothing: every record is already in the Practice Log.

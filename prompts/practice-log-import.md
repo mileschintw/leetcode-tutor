@@ -4,7 +4,7 @@
 
 You bring the learner's Legacy Records (practice history kept before the Practice Log, in Notion, a LeetHub repository or anything else) into their Practice Log. There is no adapter per source: read whatever the records hold and apply the principles in the "Import principles" section. Read it before you start.
 
-The Practice Log format is defined by the `leetcode-tutor` skill, which is installed next to this one. Read its schema, `../leetcode-tutor/references/practice-log.md` relative to the folder holding this file, before you map anything.
+The Practice Log format is defined by the `leetcode-tutor` skill, which is installed next to this one. Read its schema, `../leetcode-tutor/references/practice-log.md` relative to the folder holding this file, before you map anything. If that file isn't there, ask the learner to install the `leetcode-tutor` skill as well, and import nothing until it is.
 
 ## Steps
 
@@ -13,7 +13,7 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
 3. **Map.** Turn every record into Problems and Attempts, following the principles. Ask the learner once, in a single message, about every field whose meaning you can't tell; don't ask about fields you can map with confidence.
 4. **Preview.** Show the preview the principles describe and ask the learner to confirm. Write nothing to the workspace before they say yes. If they correct anything, show the changed part again.
 5. **Validate.** After the learner confirms, check the result before it touches the workspace:
-   - **With a shell:** run `init` in a new temporary folder outside the workspace, write every Problem the import creates or changes there in its final, merged form (with its existing code files), and run `validate --root` on that folder. Fix every error, then delete the temporary folder.
+   - **With a shell:** run `init` in a new temporary folder outside the workspace, copy the workspace's `problems/` folder into it, apply the import there exactly as previewed, and run `validate --root` on that folder. Fix every error, then delete the temporary folder.
    - **Without a shell:** check each notes file you are about to write against the schema yourself: required fields, enum values, dates, `need_review_reason`, and that every `code` names a file you are writing.
 6. **Write.** Create or update the Problems in the workspace exactly as previewed. With a shell, run `validate` on the workspace afterwards.
 7. **Report.** Say how many Problems were created and merged, how many Attempts were added from each origin, what was skipped as already imported, and the uncertain matches the learner still has to decide.
@@ -25,7 +25,7 @@ The CLI ships with the `leetcode-tutor` skill as `../leetcode-tutor/scripts/prac
 - `init [folder]`: create a Practice Workspace in a new or empty folder.
 - `validate [--root folder]`: check a workspace against the schema; it prints each error and exits non-zero on failure.
 
-If that folder isn't there (this skill was installed on its own), check the files against the schema by hand as in step 5.
+If that folder isn't there (this skill was installed on its own), use the without-a-shell check in step 5.
 
 ---
 
@@ -55,7 +55,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 - **tags:** algorithm and data-structure tags only, lowercase and hyphenated (`Hash Table` → `hash-table`). Drop every other tag: contest names and weeks (`Weekly Contest 350`), job levels (`L4`), companies, statuses and personal labels.
 - **lists:** a collection, folder or study-plan field becomes `lists`, each value kept as the learner wrote it (`Grind169` stays `Grind169`).
 - **List style:** write `tags` and `lists` as flow lists, `[a, b]`, and an empty one as `[]`.
-- **need_review:** a review flag that is set (a checkbox, a "review" tag) becomes `need_review: true` with `need_review_reason: Marked for review in <source> before import`. Otherwise `false`.
+- **need_review:** a review flag that is set (a checkbox, a "review" tag) becomes `need_review: true` with `need_review_reason: Marked for review in <source name> before import` (`Marked for review in Notion before import`). Otherwise `false`.
 - **Key Takeaway:** a callout, summary or "takeaway" note on the Problem becomes the Key Takeaway, word for word apart from a label such as `Key Takeaway:`. Never write one yourself: leave the section empty when no source has one.
 
 ## Attempts
@@ -75,7 +75,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 
 - **Merge by Problem ID.** When the workspace already has the Problem, add the new Attempts to its log and keep every existing Attempt and field. Add new `tags` and `lists` values to the existing ones. Set `need_review` to `true` when a source flags it; never clear it during import. Fill an empty Key Takeaway; when the Problem already has a different one, keep it and show the imported one in the preview so the learner can choose.
 - **Keep every Attempt.** The same Problem from two sources keeps the Attempts of both, each with its own `origin`, even on the same date.
-- **Idempotent.** An Attempt is already imported when the Problem has an Attempt with the same `origin` and `date` (and, when several share them, the same code). Skip it, and skip Problem field changes that are already there. Running the same import again adds nothing and writes nothing.
+- **Idempotent.** An Attempt is already imported when the Problem has an Attempt with the same `origin` and `date` (and, when several share them, the same code). Skip it, and skip Problem field changes that are already there. When the source's code or fields for that Attempt differ from what the workspace holds, don't overwrite or skip it silently: list it as an uncertain match. Running the same import again adds nothing and writes nothing.
 
 ## Uncertain matches
 

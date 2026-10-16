@@ -6,7 +6,7 @@ tags: [array, sorting]
 link: https://leetcode.com/problems/merge-intervals/
 lists: [Grind169]
 need_review: true
-need_review_reason: Marked for review in notion before import
+need_review_reason: Marked for review in Notion before import
 ---
 
 ## Key Takeaway
