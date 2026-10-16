@@ -40,7 +40,7 @@ Once you know the Problem ID, read `problems/<source>/<slug>/notes.md` directly 
 
 ## End of a Session: record the Attempt
 
-Record an Attempt once the Session ends: after Phase 4, after the Recap Mode recall, or when the learner stops early. Work through every step:
+Record an Attempt once the Session ends: after Phase 4, after the Recap Mode recall, or when the learner stops early. On a chat platform (see "Start of a Session" above), do steps 1 to 3, then finish as [chat-platforms.md](chat-platforms.md) says, offering no workspace. Otherwise work through every step:
 
 1. **Key Takeaway.** Write it in one or two sentences (see the Key Takeaway section of [teaching-flow.md](teaching-flow.md)) and ask whether the learner wants to add or change anything. Wait for the answer. Skip the question when the learner has already said there is nothing to add.
 2. **Code.** Take the learner's final code from the chat, or from the file they kept in the Problem's folder. If neither exists, ask them to paste it.
@@ -48,8 +48,6 @@ Record an Attempt once the Session ends: after Phase 4, after the Recap Mode rec
    - `outcome` follows the definitions in [practice-log.md](practice-log.md): any hint, correction or pseudocode review makes it `solved-with-hints`.
    - `mode` is `recap` for Recap Mode, otherwise `session`. A recap's `outcome` and code follow [modes.md](modes.md).
    - `mistakes` names each concrete slip you saw, in one line: wrong ideas, bugs, missed edge cases. Write `none` only when there truly were none.
-
-   On a chat platform, stop here and finish as [chat-platforms.md](chat-platforms.md) says.
 4. **Write.** In `problems/<source>/<slug>/`:
    - Create `notes.md` when the Problem is new, with its Problem fields; otherwise keep its fields as they are. Set or clear `need_review` and `need_review_reason` as [need-review.md](need-review.md) says.
    - Put the Key Takeaway under `## Key Takeaway`, replacing an older one only when the learner's new wording is sharper.
