@@ -38,10 +38,6 @@ def main(argv=None):
     )
     mirror_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
     mirror_parser.add_argument(
-        "--format", choices=("json", "browser"), default="json",
-        help="json for a connector (default), or browser: Markdown with every value to enter in Notion's UI",
-    )
-    mirror_parser.add_argument(
         "--changed", action="store_true",
         help="only the pages that differ from the last push recorded in mirror-state.json",
     )
@@ -84,7 +80,7 @@ def main(argv=None):
     if args.command == "index":
         return index.run(args.root)
     if args.command == "mirror-plan":
-        return mirror.run(args.root, args.format, args.changed)
+        return mirror.run(args.root, args.changed)
     if args.command == "mirror-record":
         return mirror.record(args.root, args.ids)
     if args.command == "review-sheet":

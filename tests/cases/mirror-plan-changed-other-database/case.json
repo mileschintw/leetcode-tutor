@@ -1,1 +1,1 @@
-{"args": ["mirror-plan", "--format", "browser", "--changed"], "exit_code": 0}
+{"args": ["mirror-plan", "--changed"], "exit_code": 0}

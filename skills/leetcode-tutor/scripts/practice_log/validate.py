@@ -17,8 +17,8 @@ DIFFICULTIES = ("easy", "medium", "hard")
 MODES = ("session", "recap")
 OUTCOMES = ("solved-alone", "solved-with-hints", "saw-solution")
 BOOLEANS = ("true", "false")
-# How the Mirror is pushed: through a Notion connector, a browser, or a connector when there is one.
-MIRROR_VIAS = ("connector", "browser", "auto")
+# How the Mirror is pushed: through a Notion connector, Notion's API (`mirror-push`), or a connector when there is one.
+MIRROR_VIAS = ("connector", "api", "auto")
 LIST_FIELDS = ("tags", "lists")
 ATTEMPT_REQUIRED = ("date", "mode", "outcome", "approach", "language", "code")
 

@@ -1,2 +1,2 @@
-practice-log.json: mirror.via 'playwright' must be one of connector, browser, auto
+practice-log.json: mirror.via 'browser' must be one of connector, api, auto
 validate: failed (1 error)

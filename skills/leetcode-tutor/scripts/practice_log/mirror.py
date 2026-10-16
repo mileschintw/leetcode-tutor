@@ -1,7 +1,7 @@
 """`mirror-plan`: print every Notion page the Mirror should hold, derived from the Practice Log.
 
 It never talks to Notion: the practice-log-mirror skill writes the plan through the agent's connector,
-or through a browser from `--format browser`. The plan is a pure function of the workspace, so a re-run
+or `mirror-push` writes it through Notion's API. The plan is a pure function of the workspace, so a re-run
 with no Practice Log change prints the same pages. Each page links to its Problem's folder on GitHub,
 from `mirror.repository` in the config. `mirror-record` keeps a hash of each page as last pushed in
 mirror-state.json, so that `--changed` can leave out the pages a push wouldn't change.
@@ -77,7 +77,7 @@ class PlanError(ValueError):
     pass
 
 
-def run(root, format="json", changed=False):
+def run(root, changed=False):
     try:
         plan = build_plan(root)
         if changed:
@@ -343,86 +343,3 @@ def record(root, ids):
         summary += f", forgot {forgotten}"
     print(summary)
     return 0
-
-
-# --- --format browser ---
-
-TYPE_NAMES = {
-    "title": "Title",
-    "text": "Text",
-    "select": "Select",
-    "multi_select": "Multi-select",
-    "checkbox": "Checkbox",
-    "number": "Number",
-    "date": "Date",
-    "url": "URL",
-}
-
-
-def browser(plan):
-    """The plan as Markdown to reproduce in Notion's UI: every value exactly as it should be entered."""
-    database = plan["database"]
-    lines = ["# Mirror push through the browser", "", "## Database", ""]
-    if database["id"]:
-        lines.append(f"- Id: {database['id']}")
-    else:
-        lines.append("- Id: none yet. Create the database below, then store its id as mirror.notion_database_id.")
-    lines += [
-        f"- Title: {database['title']}",
-        f"- Description: {database['description']}",
-        "",
-        "Properties, in this order:",
-        "",
-    ]
-    for prop in database["properties"]:
-        line = f"- {prop['name']}: {TYPE_NAMES[prop['type']]}"
-        if "options" in prop:
-            line += ", options: " + (", ".join(prop["options"]) if prop["options"] else "none")
-        lines.append(line)
-
-    pages = plan["pages"]
-    changes = plan.get("changes")
-    summary = f"{plural(len(pages), 'page')} to write"
-    if changes is None:
-        summary += "."
-    elif changes["state"] == "recorded":
-        unchanged = len(changes["unchanged"])
-        summary += f"; {unchanged} unchanged since the last push, left out."
-    elif changes["state"] == "none":
-        summary += ", every page: no push is recorded."
-    else:
-        summary += ", every page: the last push recorded was to another database."
-    lines += ["", "## Pages", "", summary + " Match each to its page by Problem ID."]
-    for number, page in enumerate(pages, 1):
-        properties = page["properties"]
-        lines += ["", f"### {number}/{len(pages)} {properties[KEY]}", ""]
-        for prop in database["properties"]:
-            lines.append(f"- {prop['name']}: {shown(properties[prop['name']], prop['type'])}")
-        fence = "`" * max(4, longest_backtick_run(page["body"]) + 1)
-        lines += ["", "Body:", "", fence + "markdown", page["body"].rstrip("\n"), fence]
-
-    if changes and changes["removed"]:
-        lines += [
-            "",
-            "## No longer in the Practice Log",
-            "",
-            "These Problem IDs had a page at the last push. Ask before moving their pages to Notion's trash.",
-            "",
-        ]
-        lines += [f"- {problem_id}" for problem_id in changes["removed"]]
-    return "\n".join(lines) + "\n"
-
-
-def shown(value, kind):
-    if kind == "checkbox":
-        return "checked" if value else "unchecked"
-    if value is None or value == "" or value == []:
-        return "(empty)"
-    if isinstance(value, list):
-        return ", ".join(value)
-    return str(value)
-
-
-def longest_backtick_run(text):
-    return max((len(run) for run in re.findall(r"`+", text)), default=0)
-
