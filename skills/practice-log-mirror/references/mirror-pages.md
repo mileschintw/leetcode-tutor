@@ -6,6 +6,7 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 
 - The plan
 - Database
+- Views
 - Page properties
 - Page body
 - Writing values through a connector
@@ -14,7 +15,7 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 
 ```json
 {
-  "database": {"id": "...", "title": "...", "description": "...", "key": "Problem ID", "properties": [...]},
+  "database": {"id": "...", "title": "...", "description": "...", "key": "Problem ID", "properties": [...], "views": [...]},
   "pages": [{"properties": {...}, "body": "..."}]
 }
 ```
@@ -43,7 +44,16 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 | GitHub | url | |
 | Pending | checkbox | |
 
-In the plan, the `options` of Tags and Lists hold the sorted, de-duplicated values the pages use (Lists names differing only in case are one option, see below) (an empty list when none use any). `Problem ID` is the key a push matches pages by. `Pending` marks an Attempt written straight to the Mirror from a chat platform, in the format of the `leetcode-tutor` skill's `references/chat-platforms.md`; the plan leaves it unchecked on every page.
+In the plan, each select and multi-select property has `options`, a list of `{"name", "color"}`. Difficulty and Last Outcome have fixed colours: Easy and solved-alone green, Medium and solved-with-hints yellow, Hard and saw-solution red. The options of Tags and Lists are the sorted, de-duplicated values the pages use (Lists names differing only in case are one option, see below), an empty list when none use any, each with a colour picked from its name, so it is the same on every push and machine. `Problem ID` is the key a push matches pages by. `Pending` marks an Attempt written straight to the Mirror from a chat platform, in the format of the `leetcode-tutor` skill's `references/chat-platforms.md`; the plan leaves it unchecked on every page.
+
+## Views
+
+`database.views` lists the views the Mirror's database should have, in order:
+
+- **All Problems,** a table: it shows `Lists`, `Difficulty`, `Problem`, `Tags`, `Link`, `Need Review`, `Attempts`, `Last Attempt` and `Last Outcome`, in that order, sorted by `Last Attempt`, newest first. The other properties stay in the schema, hidden from this view.
+- **By Date,** a calendar on `Last Attempt`.
+
+Each view has `name`, `type`, and `show` and `sort` (a table) or `calendar_by` (a calendar). With Notion's own connector: on a new database, rename its default table view and set it with `notion-update-view` (`SHOW "Lists", "Difficulty", …; SORT BY "Last Attempt" DESC`), then add the calendar with `notion-create-view` (`CALENDAR BY "Last Attempt"`). On a later push, add a view that is missing by name, but never change one that exists: its layout belongs to the learner.
 
 ## Page properties
 
@@ -101,6 +111,6 @@ Notion's connector rejects a multi-select value that isn't already one of the pr
 
 1. Take the `options` of Tags and Lists from `database.properties` (without a shell, collect every value the pages use).
 2. Fetch the data source for the options it already has. A new database has none.
-3. When some are missing, call `notion-update-data-source` once with `ALTER COLUMN "Tags" SET MULTI_SELECT('a', 'b'); ALTER COLUMN "Lists" SET MULTI_SELECT('c')`, listing every existing option plus the missing ones, since options left out are removed. Escape a single quote in a name by doubling it. Leave a property alone when nothing is missing.
+3. When some are missing, call `notion-update-data-source` once with `ALTER COLUMN "Tags" SET MULTI_SELECT('a':blue, 'b':red); ALTER COLUMN "Lists" SET MULTI_SELECT('c':green)`, listing every existing option with the colour it already has, plus the missing ones with the plan's colour, since options left out are removed. Escape a single quote in a name by doubling it. Leave a property alone when nothing is missing.
 
 Do this on every push, not only the first: a later push can bring new tags or lists. Never remove an option the data source already has.

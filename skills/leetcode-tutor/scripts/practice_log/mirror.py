@@ -6,6 +6,7 @@ pages. Each page links to its Problem's folder on GitHub, from `mirror.repositor
 The format is documented in skills/practice-log-mirror/references/mirror-pages.md; keep the two in step.
 """
 
+import hashlib
 import json
 import re
 import sys
@@ -37,6 +38,24 @@ PROPERTIES = [
     {"name": "Pending", "type": "checkbox"},
 ]
 KEY = "Problem ID"
+# Option colours. Difficulty and Last Outcome read like traffic lights; every Tags and Lists option gets a
+# colour picked from its name, so it is the same on every push and machine.
+FIXED_COLORS = {
+    "Easy": "green", "Medium": "yellow", "Hard": "red",
+    "solved-alone": "green", "solved-with-hints": "yellow", "saw-solution": "red",
+}
+PALETTE = ["gray", "brown", "orange", "yellow", "green", "blue", "purple", "pink", "red"]
+# The default table view shows the columns of the learner's old Notion database, newest Attempt first;
+# Problem ID, Need Review Reason, GitHub and Pending stay in the schema but out of that view.
+VIEWS = [
+    {
+        "name": "All Problems",
+        "type": "table",
+        "show": ["Lists", "Difficulty", "Problem", "Tags", "Link", "Need Review", "Attempts", "Last Attempt", "Last Outcome"],
+        "sort": [{"property": "Last Attempt", "direction": "descending"}],
+    },
+    {"name": "By Date", "type": "calendar", "calendar_by": "Last Attempt"},
+]
 # Notion refuses a text value over 2000 characters and a select option name holding a comma.
 TEXT_MAX = 2000
 
@@ -105,6 +124,7 @@ def build_plan(root):
             ),
             "key": KEY,
             "properties": with_options(PROPERTIES, pages),
+            "views": VIEWS,
         },
         "pages": pages,
     }
@@ -120,6 +140,8 @@ def with_options(properties, pages):
         if prop["type"] == "multi_select":
             used = {value for page in pages for value in page["properties"][prop["name"]]}
             prop = {**prop, "options": sorted(used)}
+        if "options" in prop:
+            prop = {**prop, "options": [{"name": name, "color": color(name)} for name in prop["options"]]}
         result.append(prop)
     return result
 
@@ -210,3 +232,11 @@ def body(folder_url, file_url, takeaway, attempts):
         ]
         parts.append(f"### {attempt.heading}\n\n" + "\n".join(lines) if lines else f"### {attempt.heading}")
     return "\n\n".join(parts) + "\n"
+
+
+def color(name):
+    """An option's colour: fixed for Difficulty and Last Outcome, otherwise stable per name."""
+    if name in FIXED_COLORS:
+        return FIXED_COLORS[name]
+    digest = hashlib.sha256(name.lower().encode("utf-8")).digest()
+    return PALETTE[digest[0] % len(PALETTE)]

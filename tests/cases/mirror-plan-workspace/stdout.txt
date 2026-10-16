@@ -17,33 +17,78 @@
         "name": "Difficulty",
         "type": "select",
         "options": [
-          "Easy",
-          "Medium",
-          "Hard"
+          {
+            "name": "Easy",
+            "color": "green"
+          },
+          {
+            "name": "Medium",
+            "color": "yellow"
+          },
+          {
+            "name": "Hard",
+            "color": "red"
+          }
         ]
       },
       {
         "name": "Tags",
         "type": "multi_select",
         "options": [
-          "array",
-          "design",
-          "graph",
-          "hash-table",
-          "linked-list",
-          "sorting",
-          "string",
-          "topological-sort",
-          "two-pointers"
+          {
+            "name": "array",
+            "color": "yellow"
+          },
+          {
+            "name": "design",
+            "color": "blue"
+          },
+          {
+            "name": "graph",
+            "color": "green"
+          },
+          {
+            "name": "hash-table",
+            "color": "brown"
+          },
+          {
+            "name": "linked-list",
+            "color": "blue"
+          },
+          {
+            "name": "sorting",
+            "color": "pink"
+          },
+          {
+            "name": "string",
+            "color": "red"
+          },
+          {
+            "name": "topological-sort",
+            "color": "orange"
+          },
+          {
+            "name": "two-pointers",
+            "color": "red"
+          }
         ]
       },
       {
         "name": "Lists",
         "type": "multi_select",
         "options": [
-          "Blind 75",
-          "Grind 75",
-          "NeetCode 150"
+          {
+            "name": "Blind 75",
+            "color": "pink"
+          },
+          {
+            "name": "Grind 75",
+            "color": "red"
+          },
+          {
+            "name": "NeetCode 150",
+            "color": "green"
+          }
         ]
       },
       {
@@ -66,9 +111,18 @@
         "name": "Last Outcome",
         "type": "select",
         "options": [
-          "solved-alone",
-          "solved-with-hints",
-          "saw-solution"
+          {
+            "name": "solved-alone",
+            "color": "green"
+          },
+          {
+            "name": "solved-with-hints",
+            "color": "yellow"
+          },
+          {
+            "name": "saw-solution",
+            "color": "red"
+          }
         ]
       },
       {
@@ -82,6 +136,34 @@
       {
         "name": "Pending",
         "type": "checkbox"
+      }
+    ],
+    "views": [
+      {
+        "name": "All Problems",
+        "type": "table",
+        "show": [
+          "Lists",
+          "Difficulty",
+          "Problem",
+          "Tags",
+          "Link",
+          "Need Review",
+          "Attempts",
+          "Last Attempt",
+          "Last Outcome"
+        ],
+        "sort": [
+          {
+            "property": "Last Attempt",
+            "direction": "descending"
+          }
+        ]
+      },
+      {
+        "name": "By Date",
+        "type": "calendar",
+        "calendar_by": "Last Attempt"
       }
     ]
   },

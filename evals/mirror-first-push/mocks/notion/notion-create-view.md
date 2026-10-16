@@ -1,0 +1,1 @@
+Created view "{{input.name}}".
