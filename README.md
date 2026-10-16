@@ -96,7 +96,7 @@ To bring in your Legacy Records, the practice history you kept before, ask to im
 
 To browse your Practice Log in Notion, ask to push it there. The `practice-log-mirror` skill publishes a one-way Mirror through your Notion connector: on first use it creates its own database, and every push regenerates one page per Problem, each linking to the Problem's folder on GitHub. It never touches your old Notion database. Your Practice Workspace has to be on GitHub first. Edits made in Notion are overwritten by the next push, so change your notes in the workspace. Once the Mirror is set up, the tutor asks after each Session and Review Sheet whether to push.
 
-You can rename or move the Mirror database: pushes find it by its id, not its name. In a chat app, though, the tutor finds it by searching for "Practice Log", so after renaming it, give the tutor the database's link. Don't rename or delete its properties, especially `Problem ID` and `Pending`.
+You can rename or move the Mirror database: pushes find it by its id, not its name. Don't rename or delete its properties: a push stops when `Problem ID` or `Pending` is missing, since without them it can't match pages or keep your pending Attempts safe.
 
 The import and mirror skills only work with the tutor skill installed alongside them, which the plugin installs above do. They have no upload zips or prompts of their own.
 
@@ -108,6 +108,8 @@ On claude.ai, the Gemini app, ChatGPT and other chat apps, the tutor teaches the
 - **Otherwise:** it prints an Attempt block for you to keep.
 
 The next Import in your Practice Workspace brings pending pages home. Paste an Attempt block into an Import to bring it in too.
+
+To find the Mirror, the tutor searches your Notion for "Practice Log" and checks which GitHub repository each match belongs to. It asks when there are several, and it can miss one you renamed unless you name your repository. So put your Mirror's link and your repository's URL in the chat app's Project instructions (a Project in claude.ai or ChatGPT, a Gem in the Gemini app), for example "My Notion Mirror is <link>, for github.com/<owner>/<repo>". The tutor then never has to search. Import warns you about pending pages it finds in any other database.
 
 ## Your data
 
