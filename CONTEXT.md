@@ -48,6 +48,10 @@ _Avoid_: Cheat sheet, review plan, schedule
 
 ### Records
 
+**Chat platform**:
+Anywhere the tutor runs without a folder it can save to: a chat app such as claude.ai, the Gemini app or ChatGPT, or the tutor pasted in as a prompt. It teaches fully there, and hands each Attempt over as a pending Mirror page or a printed Attempt block for the next Import.
+_Avoid_: No-filesystem mode, chat-only mode
+
 **Practice Log**:
 The learner's own durable history of Problems they have practised, owned by the learner rather than by the tutor.
 _Avoid_: History, progress, database
@@ -57,7 +61,7 @@ A repository the learner owns that holds their Practice Log together with their 
 _Avoid_: Practice repo, LeetCode repo
 
 **Mirror**:
-A read-only copy of the Practice Log published to another tool (e.g. Notion) for browsing. Changes flow from the Practice Log to the Mirror, never back.
+A read-only copy of the Practice Log published to another tool (e.g. Notion) for browsing. Changes flow from the Practice Log to the Mirror, never back; the one exception is an Attempt written to it as pending from a chat platform, which only Import brings back.
 _Avoid_: Sync, backup, backend
 
 **Legacy Record**:
@@ -65,5 +69,5 @@ Practice history the learner kept before the Practice Log existed, in any format
 _Avoid_: Old notes, backup
 
 **Import**:
-Turning Legacy Records into Practice Log entries.
+Turning Legacy Records into Practice Log entries. It also brings home Attempts the tutor wrote to the Mirror as pending from a chat platform with no filesystem.
 _Avoid_: Migration, sync

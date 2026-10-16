@@ -1,7 +1,7 @@
 ---
 type: regex
 target: mock_calls
-pattern: '"tool":\s*"(?:[\w-]+__)?notion-(create-pages|update-page|move-pages|delete-pages)".*(8a1f2c00-?1111-?4222-?8333-?444455556666|8a1fd5a7-?aaaa-?4bbb-?8ccc-?dddddddddddd)'
+pattern: '"tool":\s*"(?:[\w-]+__)?notion-(create-pages|update-page|move-pages|delete-pages)"(?:(?!"verdict":).)*?(8a1f2c00-?1111-?4222-?8333-?444455556666|8a1fd5a7-?aaaa-?4bbb-?8ccc-?dddddddddddd)'
 match: not_contains
 ---
 

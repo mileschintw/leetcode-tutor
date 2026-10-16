@@ -90,7 +90,7 @@ Each Attempt is a `### <date> <approach>` heading followed by `- key: value` lin
 | `mistakes` | no | what went wrong during the Session, in one line |
 | `language` | yes | the code's language, lowercase (`python`, `cpp`, `java`) |
 | `code` | yes | the code file's name, relative to the Problem's folder |
-| `origin` | no | where an Attempt came from when it was not written in a Session (`notion`, `leethub`, `mirror-pending`) |
+| `origin` | no | where an Attempt came from when it was not written in a Session in the Practice Workspace (`notion`, `leethub`; `mirror-pending` for a pending page in the Mirror and `chat` for a pasted Attempt block, see [chat-platforms.md](chat-platforms.md)) |
 
 Outcomes:
 

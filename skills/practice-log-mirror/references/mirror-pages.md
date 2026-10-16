@@ -43,7 +43,7 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 | GitHub | url | |
 | Pending | checkbox | |
 
-`Problem ID` is the key a push matches pages by. `Pending` marks an Attempt written straight to the Mirror from a chat app; the plan leaves it unchecked on every page.
+`Problem ID` is the key a push matches pages by. `Pending` marks an Attempt written straight to the Mirror from a chat platform, in the format of the `leetcode-tutor` skill's `references/chat-platforms.md`; the plan leaves it unchecked on every page.
 
 ## Page properties
 

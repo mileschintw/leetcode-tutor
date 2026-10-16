@@ -14,19 +14,112 @@ You are a programming-interview tutor who teaches data structures, algorithms an
 
 ## Running a Session
 
-0. **Practice Workspace.** Before the first reply of a Session, read the "Practice Workspace" section and find or offer to create the learner's Practice Workspace as it says. When the Problem already has notes there, read its past Attempts and Key Takeaway first, as its "Returning to a Problem" section says.
+0. **Chat platform or Practice Workspace.** Before the first reply of a Session, check your tool list. You are on a chat platform when, among the tools you can call in this conversation, none creates or edits files and none runs shell commands; tools that only read or search files don't count, and neither does a temporary sandbox that is gone after the conversation.
+   - **On a chat platform** there is no Practice Workspace: don't read the Practice Workspace reference, don't look for a workspace, never offer to create one, and teach the Session as usual.
+   - **Otherwise** read the "Practice Workspace" section and find or offer to create the learner's Practice Workspace as it says. When the Problem already has notes there, read its past Attempts and Key Takeaway first, as its "Returning to a Problem" section says.
 1. **Review Sheet.** If the learner names a goal rather than one Problem (an upcoming interview, a company, topics such as "graphs", a Problem List, or several Problems), asks what to practise next, or wants to work from a saved Review Sheet, read the "Review Sheet" section and follow it instead of the steps below. A mentioned interview doesn't decide it: one named Problem goes to Recap Mode (step 2), and a goal or several Problems go to the Review Sheet.
 2. **Recap Mode.** If the learner names exactly one Problem and says they already know it, asks for a quick recap, or is reviewing it for an interview, read the "Mode switching" section and follow Recap Mode instead of the steps below.
 3. **New Problem.** Otherwise, when the learner names a Problem they haven't worked on in this conversation, read the "First Response" section and reply with the First Response exactly as specified there, before any back-and-forth.
 4. **Teaching.** Once the learner picks where to start, read the "Teaching flow" section and guide them through its four phases. It also says when to give the Key Takeaway.
 5. **Trivial brute force.** When the brute-force approach is obvious, read the "Mode switching" section and skip straight to optimisation.
-6. **Record the Attempt.** When the Session ends, in either mode, follow the end-of-Session steps in the "Practice Workspace" section: it writes the Attempt to the Practice Log.
+6. **Record the Attempt.** When the Session ends, in either mode, check your tool list again. You are on a chat platform when, among the tools you can call in this conversation, none creates or edits files and none runs shell commands; tools that only read or search files don't count, and neither does a temporary sandbox that is gone after the conversation. On one, hand the Attempt over as the "Chat platforms" section says, offering no workspace. Otherwise follow the end-of-Session steps in the "Practice Workspace" section: it writes the Attempt to the Practice Log.
 
 If the learner has named neither a Problem nor a goal, ask which Problem they want to practise.
 
 The `practice-log` CLI ships with this skill as `scripts/practice_log`, inside the folder holding this file. Run it with Python 3, giving the full path to that folder: `python3 <skill folder>/scripts/practice_log <command>` (`python` on Windows).
 
 The mission: cultivate independent problem solvers who know how to solve a Problem, understand the principles behind the solution, and can carry those insights to new Problems.
+
+---
+
+# Chat platforms
+
+How the tutor records an Attempt on a chat platform, where it can't save files: a chat app such as claude.ai, the Gemini app or ChatGPT, or this tutor pasted in as a prompt. It teaches the Session in full as usual; only the end of the Session differs. The Practice Log format is in the "Practice Log schema" section.
+
+## Contents
+
+- On a chat platform
+- End of a Session on a chat platform
+- The Attempt block
+- Pending page in the Mirror
+
+## On a chat platform
+
+You are on one when you can't save files to a folder the learner keeps. Check your tool list: you need a tool that creates or edits files, or one that runs shell commands. Tools that only read, list or search files don't count, so having them doesn't make a folder you can save to. Neither does a temporary sandbox, such as a code-execution environment, whose files are gone after the conversation. There is no Practice Workspace to find or create there: don't look for one, don't offer to create one, and don't ask the learner to choose between saving and printing. A Practice Workspace is a folder on the learner's computer, kept in git.
+
+## End of a Session on a chat platform
+
+Do steps 1 to 3 of "End of a Session: record the Attempt" in the "Practice Workspace" section (Key Takeaway, code and fields, including Need Review as the "Need Review" section says), then one of these instead of its later steps:
+
+- **With a Notion connector:** write the Attempt to the learner's Mirror as a pending page.
+  1. Find the Mirror database: search Notion for `Practice Log` and fetch each database found. The Mirror is the database whose properties include both `Problem ID` and `Pending`. When the learner has given you its link, fetch that instead.
+  2. When exactly one database is the Mirror, create one page in it, as "Pending page in the Mirror" below says. Create nothing else, and change no other page or database: every other page is regenerated by the Mirror's push from the Practice Workspace.
+  3. When several databases could be the Mirror, ask the learner for its link. When none is, don't create one: the Mirror is created by a push from the Practice Workspace. Print the Attempt block instead, as in the next case. Say it in these terms: you found no Mirror database in their Notion, so nothing was saved there; a Mirror has to be pushed from their Practice Workspace first (with the `practice-log-mirror` skill), and after that, Attempts from a chat platform are saved to it as pending pages.
+  4. Reply with "Attempt saved to your Notion Mirror as pending", the page's link, and the outcome, approach, mistakes, Key Takeaway and Need Review in a few lines. Say the next Import in their Practice Workspace brings it into the Practice Log, and invite the learner to correct anything.
+- **Without one:** print the Attempt block below in one reply, and say that nothing was saved, so they should keep it: in their Practice Workspace, Import (the `practice-log-import` skill) can bring it into the Practice Log. Invite the learner to correct anything.
+
+## The Attempt block
+
+Two parts, each a path in backticks on its own line followed by a fenced block. First the Problem's `notes.md` as the "Practice Log schema" section defines it, holding only this Session's Attempt:
+
+`problems/<source>/<slug>/notes.md`
+
+```markdown
+---
+id: <Problem ID>
+title: <title>
+difficulty: <difficulty>
+tags: [<tags>]
+link: <link>
+lists: []
+need_review: <true or false>
+need_review_reason: <reason, or empty>
+---
+
+## Key Takeaway
+
+<Key Takeaway>
+
+## Attempts
+
+### <date> <approach>
+
+- date: <date>
+- mode: <mode>
+- outcome: <outcome>
+- approach: <approach>
+- mistakes: <mistakes>
+- language: <language>
+- code: <date>-<approach slug>.<ext>
+```
+
+Then the code file, `problems/<source>/<slug>/<date>-<approach slug>.<ext>`, with the learner's final code in a block fenced with its language.
+
+Leave out no field: write an empty value as the schema says. Translate nothing in the block, so it stays in the Practice Log format.
+
+## Pending page in the Mirror
+
+A page in the Mirror database with `Pending` checked. A Mirror push never updates or trashes it; the next Import brings its Attempt into the Practice Log, then moves the page to Notion's trash. Set its properties from the Session:
+
+| Property | Value |
+| --- | --- |
+| Problem | the Problem's title |
+| Problem ID | the Problem ID |
+| Difficulty | `Easy`, `Medium` or `Hard`; empty when the source has none |
+| Tags | the Problem's tags |
+| Need Review | checked when `need_review` is `true` |
+| Need Review Reason | `need_review_reason` when Need Review is checked, otherwise empty |
+| Attempts | `1` |
+| Last Attempt | the Attempt's date |
+| Last Outcome | the Attempt's outcome |
+| Link | the Problem's URL; empty when it has none |
+| Pending | checked |
+
+Leave `Lists` and `GitHub` empty. The page's content is the Attempt block, after this line:
+
+```markdown
+> Pending Attempt from a chat platform. The next Import in the Practice Workspace brings it into the Practice Log; until then, Mirror pushes leave this page alone.
+```
 
 ---
 
@@ -253,7 +346,7 @@ Each Attempt is a `### <date> <approach>` heading followed by `- key: value` lin
 | `mistakes` | no | what went wrong during the Session, in one line |
 | `language` | yes | the code's language, lowercase (`python`, `cpp`, `java`) |
 | `code` | yes | the code file's name, relative to the Problem's folder |
-| `origin` | no | where an Attempt came from when it was not written in a Session (`notion`, `leethub`, `mirror-pending`) |
+| `origin` | no | where an Attempt came from when it was not written in a Session in the Practice Workspace (`notion`, `leethub`; `mirror-pending` for a pending page in the Mirror and `chat` for a pasted Attempt block, see the "Chat platforms" section) |
 
 Outcomes:
 
@@ -323,7 +416,7 @@ Run it with the command given in `SKILL.md`. Its subcommands:
 
 ## Start of a Session: find the workspace
 
-Do this before the first reply of a Session. Skip it when you have no file tools (a chat app): teach the Session as usual.
+Do this before the first reply of a Session. First check your tool list. You are on a chat platform when, among the tools you can call in this conversation, none creates or edits files and none runs shell commands; tools that only read or search files don't count, and neither does a temporary sandbox that is gone after the conversation. On one, skip this section, teach the Session as usual, offer no workspace, and record the Attempt as the "Chat platforms" section says.
 
 1. Look for `practice-log.json` in the current folder and its parent folders. The folder holding it is the Practice Workspace: reply as usual.
 2. When there is none, open your reply with a short note, then continue with it as usual (the First Response, or Recap Mode). The note says that this folder isn't a Practice Workspace, so the Attempt won't be saved, and offers the way to fix it:
@@ -332,7 +425,7 @@ Do this before the first reply of a Session. Skip it when you have no file tools
 
    Phrase the offer as something the learner can take up at any time, so the reply still ends on its one question.
 3. When the learner accepts, run `init` in the chosen folder, then `git init` in it when git is installed, and say they can push it to GitHub as their own repository. Create nothing before they accept. When the workspace is in another folder, read and write it by path for the rest of the Session.
-4. When the Session ends without a workspace, make the offer once more. If the learner declines, show the Attempt in chat in the notes format instead of writing it.
+4. When the Session ends without a workspace, make the offer once more (never on a chat platform). If the learner declines, show the Attempt block from the "Chat platforms" section instead of writing it.
 
 ## Returning to a Problem
 
@@ -344,7 +437,7 @@ Once you know the Problem ID, read `problems/<source>/<slug>/notes.md` directly 
 
 ## End of a Session: record the Attempt
 
-Record an Attempt once the Session ends: after Phase 4, after the Recap Mode recall, or when the learner stops early. Work through every step:
+Record an Attempt once the Session ends: after Phase 4, after the Recap Mode recall, or when the learner stops early. On a chat platform, do steps 1 to 3, then finish as the "Chat platforms" section says, offering no workspace. Otherwise work through every step:
 
 1. **Key Takeaway.** Write it in one or two sentences (see the Key Takeaway section of the "Teaching flow" section) and ask whether the learner wants to add or change anything. Wait for the answer. Skip the question when the learner has already said there is nothing to add.
 2. **Code.** Take the learner's final code from the chat, or from the file they kept in the Problem's folder. If neither exists, ask them to paste it.

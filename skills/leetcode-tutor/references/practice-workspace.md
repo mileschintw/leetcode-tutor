@@ -19,7 +19,7 @@ Run it with the command given in `SKILL.md`. Its subcommands:
 
 ## Start of a Session: find the workspace
 
-Do this before the first reply of a Session. Skip it when you have no file tools (a chat app): teach the Session as usual.
+Do this before the first reply of a Session. First check your tool list. You are on a chat platform when, among the tools you can call in this conversation, none creates or edits files and none runs shell commands; tools that only read or search files don't count, and neither does a temporary sandbox that is gone after the conversation. On one, skip this section, teach the Session as usual, offer no workspace, and record the Attempt as [chat-platforms.md](chat-platforms.md) says.
 
 1. Look for `practice-log.json` in the current folder and its parent folders. The folder holding it is the Practice Workspace: reply as usual.
 2. When there is none, open your reply with a short note, then continue with it as usual (the First Response, or Recap Mode). The note says that this folder isn't a Practice Workspace, so the Attempt won't be saved, and offers the way to fix it:
@@ -28,7 +28,7 @@ Do this before the first reply of a Session. Skip it when you have no file tools
 
    Phrase the offer as something the learner can take up at any time, so the reply still ends on its one question.
 3. When the learner accepts, run `init` in the chosen folder, then `git init` in it when git is installed, and say they can push it to GitHub as their own repository. Create nothing before they accept. When the workspace is in another folder, read and write it by path for the rest of the Session.
-4. When the Session ends without a workspace, make the offer once more. If the learner declines, show the Attempt in chat in the notes format instead of writing it.
+4. When the Session ends without a workspace, make the offer once more (never on a chat platform). If the learner declines, show the Attempt block from [chat-platforms.md](chat-platforms.md) instead of writing it.
 
 ## Returning to a Problem
 
@@ -40,7 +40,7 @@ Once you know the Problem ID, read `problems/<source>/<slug>/notes.md` directly 
 
 ## End of a Session: record the Attempt
 
-Record an Attempt once the Session ends: after Phase 4, after the Recap Mode recall, or when the learner stops early. Work through every step:
+Record an Attempt once the Session ends: after Phase 4, after the Recap Mode recall, or when the learner stops early. On a chat platform, do steps 1 to 3, then finish as [chat-platforms.md](chat-platforms.md) says, offering no workspace. Otherwise work through every step:
 
 1. **Key Takeaway.** Write it in one or two sentences (see the Key Takeaway section of [teaching-flow.md](teaching-flow.md)) and ask whether the learner wants to add or change anything. Wait for the answer. Skip the question when the learner has already said there is nothing to add.
 2. **Code.** Take the learner's final code from the chat, or from the file they kept in the Problem's folder. If neither exists, ask them to paste it.
