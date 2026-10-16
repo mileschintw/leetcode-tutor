@@ -1,0 +1,80 @@
+{
+  "tools": [
+    {
+      "name": "notion-search",
+      "description": "Search the connected Notion workspace for pages and databases by title or content.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {"query": {"type": "string", "description": "Text to search for"}},
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "notion-fetch",
+      "description": "Fetch a Notion page or database by id or URL. For a database, returns its schema and the pages it holds, each with its id and properties.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {"id": {"type": "string", "description": "Page or database id or URL"}},
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "notion-create-database",
+      "description": "Create a new Notion database. Without a parent, it is created as a new private top-level page in the workspace. Returns the new database's id and URL.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "parent_page_id": {"type": "string", "description": "Optional page to create the database in"},
+          "title": {"type": "string"},
+          "description": {"type": "string"},
+          "properties": {
+            "type": "array",
+            "description": "The database schema: one entry per property, each {name, type, options?}. Types: title, text, number, select, multi_select, date, checkbox, url.",
+            "items": {"type": "object"}
+          }
+        },
+        "required": ["title", "properties"]
+      }
+    },
+    {
+      "name": "notion-create-pages",
+      "description": "Create one or more pages in a Notion database. Each page has property values keyed by property name and Markdown content.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "database_id": {"type": "string"},
+          "pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {"properties": {"type": "object"}, "content": {"type": "string", "description": "Markdown"}}
+            }
+          }
+        },
+        "required": ["database_id", "pages"]
+      }
+    },
+    {
+      "name": "notion-update-page",
+      "description": "Update a Notion page: set property values (keyed by property name) and/or replace the page's whole content with new Markdown.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "page_id": {"type": "string"},
+          "properties": {"type": "object"},
+          "replace_content": {"type": "string", "description": "Markdown that replaces everything on the page"}
+        },
+        "required": ["page_id"]
+      }
+    },
+    {
+      "name": "notion-move-to-trash",
+      "description": "Move a Notion page to the trash.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {"page_id": {"type": "string"}},
+        "required": ["page_id"]
+      }
+    }
+  ]
+}

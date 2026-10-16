@@ -3,6 +3,7 @@
 It never talks to Notion: the practice-log-mirror skill writes the plan through the agent's connector.
 The plan is a pure function of the workspace, so a re-run with no Practice Log change prints the same
 pages. Each page links to its Problem's folder on GitHub, from `mirror.repository` in the config.
+The format is documented in skills/practice-log-mirror/references/mirror-pages.md; keep the two in step.
 """
 
 import json
