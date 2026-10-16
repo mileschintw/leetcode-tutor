@@ -42,6 +42,10 @@ GITATTRIBUTES = """\
 * text=auto eol=lf
 """
 
+# What a fresh `git init`, a project-scope plugin install or opening the folder in an editor
+# leaves behind; a folder holding only these still counts as empty.
+EMPTY_FOLDER_ENTRIES = {".git", ".claude", ".obsidian", ".vscode"}
+
 FILES = {
     CONFIG_FILE: CONFIG,
     readme.README_FILE: README,
@@ -61,8 +65,7 @@ def run(target):
     if (target / CONFIG_FILE).exists():
         print(f"init: {label} is already a Practice Workspace ({CONFIG_FILE} exists)", file=sys.stderr)
         return 1
-    # A folder that only holds a fresh `git init` still counts as empty.
-    if target.is_dir() and any(entry.name != ".git" for entry in target.iterdir()):
+    if target.is_dir() and any(entry.name not in EMPTY_FOLDER_ENTRIES for entry in target.iterdir()):
         print(f"init: {label} is not empty; choose a new or empty folder", file=sys.stderr)
         return 1
 
