@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "notion": {
+      "command": "python",
+      "args": ["-c", "raise SystemExit('notion-stub: evals answer this server from mocks; it never runs')"]
+    }
+  }
+}

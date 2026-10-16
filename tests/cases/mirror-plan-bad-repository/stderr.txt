@@ -1,0 +1,1 @@
+mirror-plan: mirror.repository 'https://gitlab.com/learner/practice-log' is not a GitHub repository URL; use https://github.com/<owner>/<repo>

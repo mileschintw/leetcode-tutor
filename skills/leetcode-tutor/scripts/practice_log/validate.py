@@ -5,7 +5,7 @@ import json
 import re
 import sys
 
-from practice_log.notes import NotesError, read_notes
+from practice_log.problems import read_problems
 from practice_log.workspace import CONFIG_FILE
 
 PART = r"[a-z0-9]+(?:-[a-z0-9]+)*"
@@ -33,21 +33,13 @@ def run(root):
     problems = check_config(config)
     seen = {}
     attempt_count = 0
-    notes_files = []
-    for folder in sorted((root / "problems").glob("*/*/"), key=lambda path: path.as_posix()):
-        if not folder.is_dir():
+    problem_count = 0
+    for problem in read_problems(root):
+        if problem.error:
+            problems.append(problem.error)
             continue
-        notes_file = folder / "notes.md"
-        label = notes_file.relative_to(root).as_posix()
-        if not notes_file.is_file():
-            problems.append(f"{folder.relative_to(root).as_posix()}: missing notes.md")
-            continue
-        notes_files.append(notes_file)
-        try:
-            fields, attempts = read_notes(notes_file)
-        except NotesError as error:
-            problems.append(f"{label}: {error}")
-            continue
+        problem_count += 1
+        folder, label, fields, attempts = problem.folder, problem.notes_label, problem.fields, problem.attempts
         attempt_count += len(attempts)
         file_problems = check_problem(fields, folder)
         for number, attempt in enumerate(attempts, start=1):
@@ -66,7 +58,7 @@ def run(root):
             print(problem, file=sys.stderr)
         print(f"validate: failed ({plural(len(problems), 'error')})", file=sys.stderr)
         return 1
-    print(f"validate: {plural(len(notes_files), 'Problem')}, {plural(attempt_count, 'Attempt')}, ok")
+    print(f"validate: {plural(problem_count, 'Problem')}, {plural(attempt_count, 'Attempt')}, ok")
     return 0
 
 

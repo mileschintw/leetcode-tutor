@@ -343,3 +343,32 @@ imported_leethub() {
   problem contains-duplicate "Contains Duplicate" easy "[array, hash-table, sorting]" "[]" false "" "" \
     2024-03-12 "hash set" leethub code_contains_duplicate
 }
+
+# --- The Mirror ---
+
+# The workspace config with a Mirror database id and repository: mirror_config <id|null> [repository]
+mirror_config() {
+  local id=null
+  if [ "$1" != null ]; then id="\"$1\""; fi
+  if [ -n "${2:-}" ]; then
+    printf '{\n  "version": 1,\n  "mirror": {\n    "notion_database_id": %s,\n    "repository": "%s"\n  }\n}\n' "$id" "$2"
+  else
+    printf '{\n  "version": 1,\n  "mirror": {\n    "notion_database_id": %s\n  }\n}\n' "$id"
+  fi > practice-log.json
+}
+
+# A git repository's config with an origin remote, written by hand: git_origin <url>
+git_origin() {
+  mkdir -p .git
+  cat > .git/config <<CFG
+[core]
+	repositoryformatversion = 0
+	bare = false
+[remote "origin"]
+	url = $1
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+CFG
+}

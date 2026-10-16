@@ -167,6 +167,7 @@ The format of the learner's Practice Log inside their Practice Workspace. `valid
 ## Contents
 
 - Workspace layout
+- Workspace config
 - Problem ID
 - Notes file
 - Problem fields
@@ -185,6 +186,24 @@ review-sheets/                 saved Review Sheets
 ```
 
 Other files in a Problem's folder, such as a self-authored Problem's test harness, are the learner's own and stay as they are.
+
+## Workspace config
+
+`practice-log.json`, which `init` creates:
+
+```json
+{
+  "version": 1,
+  "mirror": {
+    "notion_database_id": null,
+    "repository": "https://github.com/<owner>/<repo>"
+  }
+}
+```
+
+- `version`: always `1`.
+- `mirror.notion_database_id`: the Notion database the Mirror created and owns; `null` until the first push (the `practice-log-mirror` skill sets it).
+- `mirror.repository`: the workspace's GitHub repository, which Mirror pages link to. Optional; `init` leaves it out, and the `practice-log-mirror` skill sets it from the `origin` remote.
 
 ## Problem ID
 
@@ -339,6 +358,7 @@ Record an Attempt once the Session ends: after Phase 4, after the Recap Mode rec
 5. **Validate.** Run `validate` on the workspace and fix every error it reports. Without a shell, check the files against the "Practice Log schema" section yourself.
    With a shell, then run `index` on the workspace to regenerate its README.md, the index of the Practice Log.
 6. **Summary.** Open with "Attempt saved to" and the notes path, then show what you wrote in a few lines: the outcome, approach, mistakes, Key Takeaway and Need Review (with its reason when set). End by inviting the learner to correct anything in the record, not just one field.
+7. **Mirror.** When `practice-log.json` has a `mirror.notion_database_id`, or the learner has asked for a Notion Mirror before (in this conversation, or your memory records it), the summary's closing line also asks whether to push to the Mirror now; on yes, push with the `practice-log-mirror` skill. For every other learner, the summary ends on the invitation alone.
 
 ---
 
