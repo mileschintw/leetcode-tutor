@@ -23,5 +23,23 @@ Single-context: `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/
 - Build: `python skills/leetcode-tutor/scripts/practice_log build` checks the metadata, then generates every release artefact. These outputs are committed: `prompts/<skill>.md` (the copy-paste prompt: SKILL.md's body plus `references/*.md`), `plugin.json` (Agent Plugins manifest for Codex, Cursor and Antigravity), `.cursor-plugin/plugin.json` and `.agents/plugins/marketplace.json` (Codex; generated only when `.claude-plugin/plugin.json` has a `repository`). Never edit them by hand; rerun `build` after changing a skill or `.claude-plugin/plugin.json`. A pasted prompt has no skill folder, so a paragraph about the skill's own files goes right after a `<!-- in the copy-paste prompt: <replacement> -->` line: the prompt gets the replacement instead (nothing, when it is empty), and `build` fails on a malformed marker or one with no paragraph after it. The upload zips go to the gitignored `dist/`: `<skill>-claude-ai.zip`, `<skill>-gemini-perplexity.zip` (SKILL.md at the zip root) and `<skill>-agents-skills.zip` (the `.agents/skills/` layout). `build --check` writes nothing and fails if a committed output is stale; CI runs it.
 - Metadata rules: skill frontmatter may use only the six open-spec fields, with an ASCII `name` matching its folder and a `description` of at most 200 characters. Following `docs/research/agent-skills-platform-support.md`, build also rejects names over 64 characters or containing `anthropic`/`claude`, and XML tags in descriptions, which claude.ai refuses. It also rejects a top-level `bin/` directory, which makes claude.ai refuse the whole plugin. A skill that only works with another installed alongside it declares `metadata:` / `requires: <skill>`; build then generates no prompt or upload zips for it.
 - Seam 2 evals: `claude plugin eval . --trust-plugin --no-publish --scaffold --allow-tools Write Edit`. It runs full Claude sessions, so it costs tokens. `--scaffold` runs each case's `scaffold.sh` to build its fixture workspace, and `Write Edit` let the tutor record Attempts; graders can't run commands, so they check the written files directly. Leave Bash ungranted: it needs a sandbox that native Windows lacks. The Notion cases stand in for Notion with fixed mocks in their own `mocks/notion/` (with `_tools.json`): each loads `plugins: ["../..", notion-stub]`, a case-local plugin that only declares the `notion` server the mocks answer, so no real Notion is reached. Keep the mocks case-local: a suite-wide `evals/mocks/notion/` gives every case Notion tools, and a mock's `{{file:}}` can't reach outside its own folder. Graders read the calls with `target: mock_calls`.
+- Choosing evals: every case's `prompt.md` frontmatter has `tags`, and repeated `--tag` runs the cases with any of them. Add `--ablation none` always (the default also runs a no-plugin baseline, doubling the cost) except when adding a case, to show it needs the skill. Run evals at three levels:
+  - A small skill-text edit: the tags below, `--runs 1 -j 4 --max-cost-usd 3`.
+  - A large change, or a new or changed grader: those tags with `--runs 3 -j 6`, so a pass isn't luck.
+  - Before a release: every case, `--runs 1 -j 8`.
+
+  | When you change | Tags to run (one `--tag` each) |
+  | --- | --- |
+  | `leetcode-tutor` SKILL.md, `first-response.md`, `teaching-flow.md` | `first-response language` |
+  | `modes.md` | `recap` |
+  | `need-review.md` | `need-review` |
+  | `practice-log.md`, `practice-workspace.md` | `practice-log practice-workspace` |
+  | `review-sheet.md`, `review_sheet.py` | `review-sheet` |
+  | `chat-platforms.md` | `chat-platform` |
+  | `practice-log-import` | `import` |
+  | `practice-log-mirror`, `mirror.py` | `mirror` |
+  | other CLI code | none; Seam 1 covers it |
+
+  Give a new case the tags of every area it exercises, and add a row here for a new area.
 - CI (`.github/workflows/ci.yml`) runs the Seam 1 tests and `build --check` on Ubuntu and Windows, plus `claude plugin validate .`, on every push to `main` and every PR. Evals are not in CI: they cost tokens and need an API key, so run them by hand when `skills/` or `evals/` change.
 - Release: add the version's entry to `CHANGELOG.md`, run `build` and the evals, merge to `main`, then tag `v<version>` and publish a GitHub release with the `dist/` upload zips attached (the README links to the latest release for them). The plugin has no `version` in its manifest yet (#37), so Claude Code users get every commit to `main`.
