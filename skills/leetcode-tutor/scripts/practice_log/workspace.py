@@ -44,7 +44,7 @@ GITATTRIBUTES = """\
 
 # What a fresh `git init`, a project-scope plugin install or opening the folder in an editor
 # leaves behind; a folder holding only these still counts as empty.
-EMPTY_FOLDER_ENTRIES = {".git", ".claude", ".obsidian", ".vscode"}
+EMPTY_FOLDER_ENTRIES = {".git", ".agents", ".claude", ".cursor", ".obsidian", ".vscode"}
 
 FILES = {
     CONFIG_FILE: CONFIG,

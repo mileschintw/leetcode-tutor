@@ -432,7 +432,7 @@ Do this before the first reply of a Session. First check your tool list. You are
 1. Look for `practice-log.json` in the current folder and its parent folders. The folder holding it is the Practice Workspace: reply as usual.
 2. When there is none, open your reply with a short note, then continue with it as usual (the First Response, or Recap Mode). The note says that this folder isn't a Practice Workspace, so the Attempt won't be saved, and offers the way to fix it:
    - **Their existing workspace,** when you know where it is (they told you, or your memory records it): name its path and suggest reopening you there.
-   - **Otherwise, a new one:** offer to create it here when the current folder is empty (nothing but `.git`, `.claude`, `.obsidian` or `.vscode`), or in a new folder (suggest `~/practice-log`) when it holds anything else, such as an unrelated project.
+   - **Otherwise, a new one:** offer to create it here when the current folder is empty (nothing but `.git`, `.agents`, `.claude`, `.cursor`, `.obsidian` or `.vscode`), or in a new folder (suggest `~/practice-log`) when it holds anything else, such as an unrelated project.
 
    Phrase the offer as something the learner can take up at any time, so the reply still ends on its one question.
 3. When the learner accepts, run `init` in the chosen folder, then `git init` in it when git is installed, and say they can push it to GitHub as their own repository. Create nothing before they accept. When the workspace is in another folder, read and write it by path for the rest of the Session.
