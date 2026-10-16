@@ -1,1 +1,1 @@
-{"status": "created", "database_id": "{{input.database_id}}"}
+{"pages": [{"id": "c3000000-0000-4000-8000-000000000001", "status": "created"}]}

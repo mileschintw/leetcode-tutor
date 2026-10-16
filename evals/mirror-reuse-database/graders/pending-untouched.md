@@ -1,8 +1,8 @@
 ---
 type: regex
 target: mock_calls
-pattern: b2000000-0000-4000-8000-0000000000ff
+pattern: '"tool":\s*"notion-(update-page|move-pages|delete-pages)".*b2000000-?0000-?4000-?8000-?0000000000ff'
 match: not_contains
 ---
 
-The pending page (an Attempt from a chat app waiting for Import) is left alone.
+The pending page (a chat-app Attempt for Two Sum, waiting for Import) is never updated, moved or trashed, although its Problem ID is in the plan.

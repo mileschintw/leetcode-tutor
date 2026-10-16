@@ -1,7 +1,7 @@
 ---
 type: regex
 target: mock_calls
-pattern: a1000000-0000-4000-8000-000000000001
+pattern: '"tool":\s*"notion-update-page".*a1000000-?0000-?4000-?8000-?000000000001'
 ---
 
-The existing Two Sum page is rewritten in place, matched by Problem ID.
+The existing Two Sum page is updated in place, matched by Problem ID.
