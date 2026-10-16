@@ -1,0 +1,1 @@
+{"args": ["mirror-push", "--changed", "--trash", "leetcode:removed-problem"], "exit_code": 0, "env": {"PRACTICE_LOG_NOTION_FAKE": "notion-fake.json"}}

@@ -1,8 +1,10 @@
-"""`mirror-plan`: print, as JSON, every Notion page the Mirror should hold, derived from the Practice Log.
+"""`mirror-plan`: print every Notion page the Mirror should hold, derived from the Practice Log.
 
-It never talks to Notion: the practice-log-mirror skill writes the plan through the agent's connector.
-The plan is a pure function of the workspace, so a re-run with no Practice Log change prints the same
-pages. Each page links to its Problem's folder on GitHub, from `mirror.repository` in the config.
+It never talks to Notion: the practice-log-mirror skill writes the plan through the agent's connector,
+or `mirror-push` writes it through Notion's API. The plan is a pure function of the workspace, so a re-run
+with no Practice Log change prints the same pages. Each page links to its Problem's folder on GitHub,
+from `mirror.repository` in the config. `mirror-record` keeps a hash of each page as last pushed in
+mirror-state.json, so that `--changed` can leave out the pages a push wouldn't change.
 The format is documented in skills/practice-log-mirror/references/mirror-pages.md; keep the two in step.
 """
 
@@ -15,6 +17,7 @@ from urllib.parse import quote
 from practice_log.index import items, list_names, list_spellings, text
 from practice_log.notes import read_key_takeaway
 from practice_log.problems import read_problems
+from practice_log.readme import plural
 from practice_log.validate import DIFFICULTIES, OUTCOMES, is_date
 from practice_log.workspace import CONFIG_FILE
 
@@ -67,19 +70,28 @@ GITHUB_REPOSITORY = [
 ]
 
 
+STATE_FILE = "mirror-state.json"
+
+
 class PlanError(ValueError):
     pass
 
 
-def run(root):
+def run(root, changed=False):
     try:
         plan = build_plan(root)
+        if changed:
+            plan = only_changed(plan, read_state(root))
     except PlanError as error:
-        for line in str(error).splitlines():
-            print(line, file=sys.stderr)
+        report(error)
         return 1
     sys.stdout.write(json.dumps(plan, ensure_ascii=False, indent=2) + "\n")
     return 0
+
+
+def report(error):
+    for line in str(error).splitlines():
+        print(line, file=sys.stderr)
 
 
 def build_plan(root):
@@ -240,3 +252,94 @@ def color(name):
         return FIXED_COLORS[name]
     digest = hashlib.sha256(name.lower().encode("utf-8")).digest()
     return PALETTE[digest[0] % len(PALETTE)]
+
+
+# --- Only changed pages: mirror-state.json and mirror-record ---
+
+
+def page_hash(page):
+    """A short digest of everything a push writes for the page."""
+    text = json.dumps(page, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def read_state(root, command="mirror-plan"):
+    """The hashes recorded at the last push, or None when there are none."""
+    path = root / STATE_FILE
+    if not path.is_file():
+        return None
+    try:
+        state = json.loads(path.read_text(encoding="utf-8-sig"))
+    except ValueError as error:
+        raise PlanError(f"{command}: {STATE_FILE} is not valid JSON ({error}); delete it to push every page") from None
+    pages = state.get("pages") if isinstance(state, dict) else None
+    if (
+        not isinstance(state, dict)
+        or state.get("version") != 1
+        or not isinstance(pages, dict)
+        or not all(isinstance(value, str) for value in pages.values())
+    ):
+        raise PlanError(f"{command}: {STATE_FILE} is not a Mirror state file; delete it to push every page")
+    return state
+
+
+def only_changed(plan, state):
+    """The plan with only the pages whose content differs from the last push to the same database."""
+    database_id = plan["database"]["id"]
+    if state is None or database_id is None:
+        since = "none"
+    elif state.get("notion_database_id") != database_id:
+        since = "other-database"
+    else:
+        since = "recorded"
+    recorded = state["pages"] if since == "recorded" else {}
+    pages, unchanged = [], []
+    for page in plan["pages"]:
+        problem_id = page["properties"][KEY]
+        if recorded.get(problem_id) == page_hash(page):
+            unchanged.append(problem_id)
+        else:
+            pages.append(page)
+    in_plan = {page["properties"][KEY] for page in plan["pages"]}
+    removed = sorted(problem_id for problem_id in recorded if problem_id not in in_plan)
+    return {**plan, "pages": pages, "changes": {"state": since, "unchanged": unchanged, "removed": removed}}
+
+
+def record(root, ids):
+    """`mirror-record`: note pages as pushed, so the next `mirror-plan --changed` leaves them out.
+
+    With no ids, every page in the plan. An id with no page in the plan is forgotten: its page was trashed.
+    """
+    try:
+        plan = build_plan(root)
+        state = read_state(root, "mirror-record")
+    except PlanError as error:
+        report(str(error).replace("mirror-plan:", "mirror-record:"))
+        return 1
+    database_id = plan["database"]["id"]
+    if database_id is None:
+        report(
+            f"mirror-record: {CONFIG_FILE} has no mirror.notion_database_id, so there is no Mirror to record;"
+            " store the database's id first"
+        )
+        return 1
+    pages = dict(state["pages"]) if state and state.get("notion_database_id") == database_id else {}
+    hashes = {page["properties"][KEY]: page_hash(page) for page in plan["pages"]}
+    recorded = forgotten = 0
+    for problem_id in ids or list(hashes):
+        if problem_id in hashes:
+            pages[problem_id] = hashes[problem_id]
+            recorded += 1
+        elif pages.pop(problem_id, None) is not None:
+            forgotten += 1
+    text = json.dumps(
+        {"version": 1, "notion_database_id": database_id, "pages": dict(sorted(pages.items()))},
+        ensure_ascii=False,
+        indent=2,
+    )
+    (root / STATE_FILE).write_text(text + "\n", encoding="utf-8", newline="\n")
+    summary = f"mirror-record: recorded {plural(recorded, 'page')} in {STATE_FILE}"
+    if forgotten:
+        summary += f", forgot {forgotten}"
+    print(summary)
+    return 0

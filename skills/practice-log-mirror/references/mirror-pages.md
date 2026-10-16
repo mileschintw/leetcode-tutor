@@ -9,6 +9,7 @@ The plan `mirror-plan` prints: the Mirror database's fixed schema and one page p
 - Views
 - Page properties
 - Page body
+- Only changed pages
 - Writing values through a connector
 
 ## The plan
@@ -102,6 +103,22 @@ Markdown, with a blank line between blocks:
 ```
 
 One `###` block per Attempt, in the log's order, each leaving out the lines whose field is empty. So `Mistakes: none` means none were observed, and no Mistakes line means they aren't known. With no Attempts, the section holds `No Attempts yet.` instead.
+
+## Only changed pages
+
+`mirror-record` writes `mirror-state.json` in the workspace: the Mirror's database id and a hash of each page as last pushed. `mirror-plan --changed` then prints only the pages whose properties or body differ from that record, and adds:
+
+```json
+"changes": {"state": "recorded", "unchanged": ["<Problem ID>", ...], "removed": ["<Problem ID>", ...]}
+```
+
+- `state`: `recorded` when the record is for this database; `none` when there is no record or no database id yet, and `other-database` when the record is for another database. In both of those, every page is in `pages`.
+- `unchanged`: the pages left out. A page left out keeps any edit made in Notion until its Problem changes, so a push without `--changed` is the way to regenerate every page.
+- `removed`: Problem IDs recorded at the last push that are no longer in the Practice Log. Their pages are "not in the plan".
+
+Record each page once it is written and checked: `mirror-record --id <Problem ID>`, repeatable, or `mirror-record` alone for every page in the plan. After moving a page that is no longer in the plan to Notion's trash, `mirror-record --id <its Problem ID>` forgets it.
+
+`mirror-push` writes the same plan through Notion's API, and records each page it writes the same way.
 
 ## Writing values through a connector
 

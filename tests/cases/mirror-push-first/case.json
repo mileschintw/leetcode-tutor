@@ -1,0 +1,1 @@
+{"args": ["mirror-push", "--parent", "https://www.notion.so/learner/LeetCode-Tutor-test-3fb543232d238186ba73d998ef9cfa98"], "exit_code": 0, "env": {"PRACTICE_LOG_NOTION_FAKE": "notion-fake.json"}}

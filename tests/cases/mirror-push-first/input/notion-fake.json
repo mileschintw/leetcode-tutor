@@ -1,0 +1,110 @@
+{
+  "POST /v1/databases": {
+    "id": "new-database",
+    "data_sources": [
+      {
+        "id": "5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f"
+      }
+    ]
+  },
+  "GET /v1/views?database_id=new-database": {
+    "results": [
+      {
+        "id": "view-default"
+      }
+    ]
+  },
+  "GET /v1/views/view-default": {
+    "id": "view-default",
+    "name": "Default view",
+    "type": "table"
+  },
+  "GET /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f": {
+    "object": "data_source",
+    "id": "5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f",
+    "properties": {
+      "Problem": {
+        "id": "p00",
+        "name": "Problem",
+        "type": "title",
+        "title": {}
+      },
+      "Problem ID": {
+        "id": "p01",
+        "name": "Problem ID",
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Difficulty": {
+        "id": "p02",
+        "name": "Difficulty",
+        "type": "select",
+        "select": {}
+      },
+      "Tags": {
+        "id": "p03",
+        "name": "Tags",
+        "type": "multi_select",
+        "multi_select": {}
+      },
+      "Lists": {
+        "id": "p04",
+        "name": "Lists",
+        "type": "multi_select",
+        "multi_select": {}
+      },
+      "Need Review": {
+        "id": "p05",
+        "name": "Need Review",
+        "type": "checkbox",
+        "checkbox": {}
+      },
+      "Need Review Reason": {
+        "id": "p06",
+        "name": "Need Review Reason",
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Attempts": {
+        "id": "p07",
+        "name": "Attempts",
+        "type": "number",
+        "number": {}
+      },
+      "Last Attempt": {
+        "id": "p08",
+        "name": "Last Attempt",
+        "type": "date",
+        "date": {}
+      },
+      "Last Outcome": {
+        "id": "p09",
+        "name": "Last Outcome",
+        "type": "select",
+        "select": {}
+      },
+      "Link": {
+        "id": "p10",
+        "name": "Link",
+        "type": "url",
+        "url": {}
+      },
+      "GitHub": {
+        "id": "p11",
+        "name": "GitHub",
+        "type": "url",
+        "url": {}
+      },
+      "Pending": {
+        "id": "p12",
+        "name": "Pending",
+        "type": "checkbox",
+        "checkbox": {}
+      }
+    }
+  },
+  "POST /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f/query": {
+    "results": [],
+    "has_more": false
+  }
+}

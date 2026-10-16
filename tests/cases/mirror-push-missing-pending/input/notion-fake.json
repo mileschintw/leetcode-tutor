@@ -1,0 +1,217 @@
+{
+  "GET /v1/databases/1f2e3d4c5b6a47988a7b6c5d4e3f2a1b": {
+    "id": "1f2e3d4c5b6a47988a7b6c5d4e3f2a1b",
+    "data_sources": [
+      {
+        "id": "5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f"
+      }
+    ]
+  },
+  "GET /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f": {
+    "object": "data_source",
+    "id": "5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f",
+    "properties": {
+      "Problem": {
+        "id": "p00",
+        "name": "Problem",
+        "type": "title",
+        "title": {}
+      },
+      "Problem ID": {
+        "id": "p01",
+        "name": "Problem ID",
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Difficulty": {
+        "id": "p02",
+        "name": "Difficulty",
+        "type": "select",
+        "select": {}
+      },
+      "Tags": {
+        "id": "p03",
+        "name": "Tags",
+        "type": "multi_select",
+        "multi_select": {}
+      },
+      "Lists": {
+        "id": "p04",
+        "name": "Lists",
+        "type": "multi_select",
+        "multi_select": {}
+      },
+      "Need Review": {
+        "id": "p05",
+        "name": "Need Review",
+        "type": "checkbox",
+        "checkbox": {}
+      },
+      "Need Review Reason": {
+        "id": "p06",
+        "name": "Need Review Reason",
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Attempts": {
+        "id": "p07",
+        "name": "Attempts",
+        "type": "number",
+        "number": {}
+      },
+      "Last Attempt": {
+        "id": "p08",
+        "name": "Last Attempt",
+        "type": "date",
+        "date": {}
+      },
+      "Last Outcome": {
+        "id": "p09",
+        "name": "Last Outcome",
+        "type": "select",
+        "select": {}
+      },
+      "Link": {
+        "id": "p10",
+        "name": "Link",
+        "type": "url",
+        "url": {}
+      },
+      "GitHub": {
+        "id": "p11",
+        "name": "GitHub",
+        "type": "url",
+        "url": {}
+      }
+    }
+  },
+  "GET /v1/views?database_id=1f2e3d4c5b6a47988a7b6c5d4e3f2a1b": {
+    "results": [
+      {
+        "id": "view-1"
+      },
+      {
+        "id": "view-2"
+      }
+    ]
+  },
+  "GET /v1/views/view-1": {
+    "id": "view-1",
+    "name": "All Problems",
+    "type": "table"
+  },
+  "GET /v1/views/view-2": {
+    "id": "view-2",
+    "name": "By Date",
+    "type": "calendar"
+  },
+  "POST /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f/query": {
+    "results": [
+      {
+        "id": "page-two-sum",
+        "properties": {
+          "Problem ID": {
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "plain_text": "leetcode:two-sum"
+              }
+            ]
+          },
+          "Pending": {
+            "type": "checkbox",
+            "checkbox": false
+          }
+        }
+      },
+      {
+        "id": "page-pending",
+        "properties": {
+          "Problem ID": {
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "plain_text": "leetcode:two-sum"
+              }
+            ]
+          },
+          "Pending": {
+            "type": "checkbox",
+            "checkbox": true
+          }
+        }
+      },
+      {
+        "id": "page-old",
+        "properties": {
+          "Problem ID": {
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "plain_text": "leetcode:removed-problem"
+              }
+            ]
+          },
+          "Pending": {
+            "type": "checkbox",
+            "checkbox": false
+          }
+        }
+      },
+      {
+        "id": "page-dup-1",
+        "properties": {
+          "Problem ID": {
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "plain_text": "custom:lru-cache"
+              }
+            ]
+          },
+          "Pending": {
+            "type": "checkbox",
+            "checkbox": false
+          }
+        }
+      },
+      {
+        "id": "page-dup-2",
+        "properties": {
+          "Problem ID": {
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "plain_text": "custom:lru-cache"
+              }
+            ]
+          },
+          "Pending": {
+            "type": "checkbox",
+            "checkbox": false
+          }
+        }
+      }
+    ],
+    "has_more": false
+  },
+  "GET /v1/blocks/page-two-sum/children?page_size=100": {
+    "results": [
+      {
+        "id": "block-1"
+      },
+      {
+        "id": "block-2"
+      }
+    ],
+    "has_more": false
+  },
+  "GET /v1/blocks/page-dup-1/children?page_size=100": {
+    "results": [
+      {
+        "id": "block-3"
+      }
+    ],
+    "has_more": false
+  }
+}

@@ -1,0 +1,1 @@
+{"args": ["mirror-pending", "--trash", "b20000000000400080000000000000ff"], "exit_code": 0, "env": {"PRACTICE_LOG_NOTION_FAKE": "notion-fake.json"}}

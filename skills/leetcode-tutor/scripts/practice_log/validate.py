@@ -17,6 +17,8 @@ DIFFICULTIES = ("easy", "medium", "hard")
 MODES = ("session", "recap")
 OUTCOMES = ("solved-alone", "solved-with-hints", "saw-solution")
 BOOLEANS = ("true", "false")
+# How the Mirror is pushed: through a Notion connector, Notion's API (`mirror-push`), or a connector when there is one.
+MIRROR_VIAS = ("connector", "api", "auto")
 LIST_FIELDS = ("tags", "lists")
 ATTEMPT_REQUIRED = ("date", "mode", "outcome", "approach", "language", "code")
 
@@ -86,6 +88,10 @@ def check_config(config):
     # bool is an int subclass and 1.0 == 1, so `true` and `1.0` would otherwise pass.
     if type(version) is not int or version != 1:
         return [f"{CONFIG_FILE}: expected an object with \"version\": 1"]
+    mirror = data.get("mirror")
+    via = mirror.get("via") if isinstance(mirror, dict) else None
+    if via is not None and via not in MIRROR_VIAS:
+        return [f"{CONFIG_FILE}: mirror.via '{via}' must be one of {', '.join(MIRROR_VIAS)}"]
     return []
 
 

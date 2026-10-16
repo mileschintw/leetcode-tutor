@@ -94,7 +94,7 @@ To bring in your Legacy Records, the practice history you kept before, ask to im
 
 ### The Notion Mirror
 
-To browse your Practice Log in Notion, ask to push it there. The `practice-log-mirror` skill publishes a one-way Mirror through your Notion connector: on first use it creates its own database, and every push regenerates one page per Problem, each linking to the Problem's folder on GitHub. It never touches your old Notion database. Your Practice Workspace has to be on GitHub first. Edits made in Notion are overwritten by the next push, so change your notes in the workspace. Once the Mirror is set up, the tutor asks after each Session and Review Sheet whether to push.
+To browse your Practice Log in Notion, ask to push it there. The `practice-log-mirror` skill publishes a one-way Mirror through your Notion connector, or, without one, through Notion's API with an integration token you create and set yourself (`NOTION_TOKEN`). Later pushes can rewrite only the pages that changed since the last push, which `mirror-state.json` in your workspace records. On first use it creates its own database, and every push regenerates one page per Problem, each linking to the Problem's folder on GitHub. It never touches your old Notion database. Your Practice Workspace has to be on GitHub first. Edits made in Notion are overwritten when the page is next pushed, so change your notes in the workspace. Once the Mirror is set up, the tutor asks after each Session and Review Sheet whether to push.
 
 You can rename or move the Mirror database: pushes find it by its id, not its name. Don't rename or delete its properties: a push stops when `Problem ID` or `Pending` is missing, since without them it can't match pages or keep your pending Attempts safe.
 

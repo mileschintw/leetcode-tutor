@@ -4,7 +4,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from practice_log import build, index, mirror, review_sheet, validate, workspace
+from practice_log import build, index, mirror, mirror_push, review_sheet, validate, workspace
 
 
 def main(argv=None):
@@ -37,6 +37,43 @@ def main(argv=None):
         "mirror-plan", help="print, as JSON, every Notion page the Mirror should hold (it never talks to Notion)"
     )
     mirror_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+    mirror_parser.add_argument(
+        "--changed", action="store_true",
+        help="only the pages that differ from the last push recorded in mirror-state.json",
+    )
+
+    push_parser = subcommands.add_parser(
+        "mirror-push",
+        help="write the Mirror plan to Notion through its API, with the token in NOTION_TOKEN",
+    )
+    push_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+    push_parser.add_argument(
+        "--changed", action="store_true", help="only the pages that differ from the last push recorded in mirror-state.json"
+    )
+    push_parser.add_argument("--parent", help="first push only: the Notion page to create the Mirror in (link or id)")
+    push_parser.add_argument(
+        "--trash", action="append", default=[], metavar="ID",
+        help="move the page with this Problem ID to Notion's trash, when it is no longer in the plan (repeatable)",
+    )
+
+    pending_parser = subcommands.add_parser(
+        "mirror-pending", help="print the Mirror's pending pages as Markdown through Notion's API, or trash them"
+    )
+    pending_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+    pending_parser.add_argument(
+        "--trash", action="append", default=[], metavar="PAGE",
+        help="move this pending page (its id) to Notion's trash, once Import has written it (repeatable)",
+    )
+
+    record_parser = subcommands.add_parser(
+        "mirror-record", help="note Mirror pages as pushed in mirror-state.json, for `mirror-plan --changed`"
+    )
+    record_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+    record_parser.add_argument(
+        "--id", dest="ids", action="append", default=[], metavar="ID",
+        help="a Problem ID whose page was pushed, or trashed when it is no longer in the plan"
+        " (repeatable; default: every page in the plan)",
+    )
 
     sheet_parser = subcommands.add_parser(
         "review-sheet",
@@ -66,6 +103,12 @@ def main(argv=None):
     if args.command == "index":
         return index.run(args.root)
     if args.command == "mirror-plan":
-        return mirror.run(args.root)
+        return mirror.run(args.root, args.changed)
+    if args.command == "mirror-push":
+        return mirror_push.run(args.root, args.changed, args.parent, args.trash)
+    if args.command == "mirror-pending":
+        return mirror_push.pending(args.root, args.trash)
+    if args.command == "mirror-record":
+        return mirror.record(args.root, args.ids)
     if args.command == "review-sheet":
         return review_sheet.run(args.root, args.ids, args.tags, args.lists, args.title, args.output)

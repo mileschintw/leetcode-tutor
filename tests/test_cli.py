@@ -2,7 +2,7 @@
 
 Each directory under tests/cases/ is one case:
 
-- case.json: {"args": [...], "exit_code": N}
+- case.json: {"args": [...], "exit_code": N}, and optionally "env": {...} for the CLI's environment
 - input/: the fixture tree, copied to a temporary directory that becomes the working directory
 - expected/: the golden tree the working directory must match afterwards
 - stdout.txt, stderr.txt: golden output (an absent file means empty output)
@@ -27,10 +27,12 @@ CASES_DIR = Path(__file__).resolve().parent / "cases"
 UPDATE_GOLDEN = os.environ.get("UPDATE_GOLDEN") == "1"
 
 
-def run_cli(args, cwd):
+def run_cli(args, cwd, extra_env=None):
     """The single place that invokes the CLI."""
     env = dict(os.environ, PYTHONPATH=str(REPO_ROOT / "skills" / "leetcode-tutor" / "scripts"))
     env.pop("PYTHONUTF8", None)  # the CLI must write UTF-8 on its own, whatever the console codepage
+    env.pop("NOTION_TOKEN", None)  # no case ever reaches the real Notion
+    env.update(extra_env or {})
     result = subprocess.run(
         [sys.executable, "-m", "practice_log", *args],
         cwd=cwd,
@@ -94,7 +96,7 @@ class CliGoldenTest(unittest.TestCase):
                 shutil.copytree(case / "input", work)
             else:
                 work.mkdir()
-            result = run_cli(case_config["args"], work)
+            result = run_cli(case_config["args"], work, case_config.get("env"))
             self.assertEqual(result.returncode, case_config["exit_code"], f"exit code\nstderr:\n{result.stderr}")
 
             if UPDATE_GOLDEN:

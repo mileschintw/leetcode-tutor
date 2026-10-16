@@ -15,7 +15,12 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
 ## Steps
 
 1. **Find the Practice Workspace.** Look for `practice-log.json` in the current folder and its parent folders. If there is none, tell the learner the Mirror is published from a Practice Workspace and ask where theirs is.
-2. **Check for Notion.** You need a Notion connector (MCP tools) that can create databases and pages. Without one, tell the learner to connect Notion to this app and ask again, and stop.
+2. **Choose the way.** A push goes through a Notion connector (MCP tools that can create databases and pages) or through Notion's API with the `mirror-push` command, which needs a shell and an integration token in the `NOTION_TOKEN` environment variable. Read `mirror.via` in `practice-log.json`:
+   - `connector` or `api`: push that way. When it isn't available now but the other is, say so and ask whether to use the other way this time.
+   - `auto`: the connector when there is one, otherwise the API.
+   - Missing: use the way you have. When you have both, ask the learner once which to use by default (`connector`, `api`, or `auto` for the connector first), and write the answer to `mirror.via`, keeping the rest of the file as it is.
+
+   With neither, offer both: connecting Notion to this app, or the API, set up once as "Setting up the API" below says. Never ask for the token, type it, print it or store it in a file: the learner sets it themselves. Then stop until they have. Through the API, follow "Pushing through the API" below instead of steps 5 and 6.
 3. **GitHub repository.** Every page links to the workspace on GitHub, so the Mirror needs `"repository"` under `"mirror"` in `practice-log.json`.
    - When it is missing, read the workspace's `origin` remote: `git remote get-url origin` with a shell, otherwise the `url` under `[remote "origin"]` in `.git/config`. When it is a GitHub repository, write it to `mirror.repository` as `https://github.com/<owner>/<repo>`, keeping the rest of the file as it is.
    - With no GitHub remote, explain that the Mirror's pages link to the workspace on GitHub, so it has to be pushed to a GitHub repository first: create an empty repository on GitHub, then `git remote add origin <its URL>` and `git push -u origin HEAD` in the workspace. Push nothing to Notion until it is there.
@@ -31,11 +36,36 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
    - **`Pending` checked:** an Attempt written to the Mirror from a chat platform, waiting for the next Import to bring it home. Set these pages aside first. A push never updates, moves or trashes a pending page, even when its Problem ID is in the plan, and never counts it as a duplicate. Mention how many there are, and offer to bring them into the Practice Log with the `practice-log-import` skill.
    - **In the plan:** match each remaining page to the plan by `Problem ID`. Update it in place: set every property to the plan's value and replace the page's whole content with the plan's body. A page already identical to the plan may be left as it is. Create a page only for a Problem ID that has no page yet.
    - **Not in the plan:** a Problem no longer in the Practice Log, or a second page for the same Problem ID. List them and ask before moving them to Notion's trash.
-7. **Report.** Say how many pages were created and updated, link the database, and end with this warning in the learner's language: the Mirror is regenerated from the Practice Log on every push, so edits made in Notion are overwritten; change the notes in the Practice Workspace instead.
+
+   With a shell, once the pages are written, run `mirror-record`, and `mirror-record --id <Problem ID>` for each page moved to the trash, so the next `mirror-plan --changed` knows what the Mirror holds.
+7. **Report.** Say how many pages were created and updated (and how many were left out as unchanged), link the database, and end with this warning in the learner's language: the Mirror is regenerated from the Practice Log, so edits made in Notion are overwritten (on a push that leaves unchanged pages out, the next time their Problem changes); change the notes in the Practice Workspace instead.
+
+## Setting up the API
+
+Walk the learner through these steps, one at a time, in their language:
+
+1. At https://www.notion.so/profile/integrations, create a new integration of type **Internal** (its secret is called an API key). Not OAuth, which is for integrations other workspaces install, and not a personal access token, which acts as the learner with access to everything they can see; an internal integration sees only the pages shared with it. Give it Read content, Update content and Insert content, and no user information.
+2. Share the page the Mirror lives in (before the first push, the page it should be created in) with the integration: the page's `•••` menu, Connections, then the integration's name. Pages inside it are shared too.
+3. Copy the integration's secret and set it as the `NOTION_TOKEN` environment variable in their own terminal, never in this conversation:
+   - Windows: `setx NOTION_TOKEN "<secret>"` in PowerShell, then fully quit and reopen the app running you (and any terminal), since only programs started afterwards see it.
+   - macOS and Linux: add `export NOTION_TOKEN="<secret>"` to their shell profile (`~/.zshrc`, `~/.bashrc`), then open a new terminal and restart the app running you from it.
+4. Check it without showing it: `test -n "$NOTION_TOKEN" && echo set` (PowerShell: `if ($env:NOTION_TOKEN) { "set" }`). When it isn't set, the app was started before the variable; ask the learner to restart it.
+
+## Pushing through the API
+
+With `NOTION_TOKEN` set and a shell, after steps 1 to 4:
+
+- **First push:** tell the learner what step 5 says about a new Mirror, ask which page to create it in (one shared with the integration), and run `mirror-push --parent <that page's link>`. It creates the database with its properties, coloured options and views, stores its id in `practice-log.json`, and writes every page.
+- **Later pushes:** `mirror-push --changed`, which writes only the pages that changed since the last push; `mirror-push` alone rewrites every page. It stops and writes nothing when `Problem ID` or `Pending` is missing, as step 5 says.
+
+It leaves pending pages alone and records each page it writes in `mirror-state.json`. It lists the pages that aren't in the plan: ask the learner, then run `mirror-push --changed --trash <Problem ID>` for each one they agree to. When it fails, show its message; a 401 or 404 usually means the token is wrong or the database isn't shared with the integration.
 
 ## The practice-log CLI
 
 The CLI ships with the `leetcode-tutor` skill as `../leetcode-tutor/scripts/practice_log`, relative to the folder holding this file. Run it with Python 3, giving the full path to that folder: `python3 <tutor skill folder>/scripts/practice_log <command>` (`python` on Windows).
 
 - `validate [--root folder]`: check a workspace against the schema; it prints each error and exits non-zero on failure.
-- `mirror-plan [--root folder]`: print the plan as JSON. It reads only the workspace and never talks to Notion.
+- `mirror-plan [--root folder] [--changed]`: print the plan as JSON; `--changed` keeps only the pages that differ from the last push recorded in `mirror-state.json`. It reads only the workspace and never talks to Notion.
+- `mirror-push [--root folder] [--changed] [--parent page] [--trash ID ...]`: write the plan to Notion through its API, with the token in `NOTION_TOKEN`.
+- `mirror-pending [--root folder] [--trash page ...]`: print the Mirror's pending pages as Markdown through the API, or move the named ones to Notion's trash.
+- `mirror-record [--root folder] [--id ID ...]`: note pages as pushed in `mirror-state.json` (every page in the plan when no `--id` is given); an `--id` no longer in the plan is forgotten.

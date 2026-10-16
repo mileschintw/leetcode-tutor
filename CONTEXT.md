@@ -73,7 +73,7 @@ An Attempt written to the Mirror from a chat platform, on a Mirror page with Pen
 _Avoid_: Draft, unsynced Attempt
 
 **Mirror**:
-A read-only copy of the Practice Log published to another tool (e.g. Notion) for browsing. Changes flow from the Practice Log to the Mirror, never back; the one exception is an Attempt written to it as pending from a chat platform, which only Import brings back (and then moves to Notion's trash).
+A read-only copy of the Practice Log published to another tool (e.g. Notion) for browsing. Changes flow from the Practice Log to the Mirror, never back (a push may skip pages whose Problem hasn't changed since the last push); the one exception is an Attempt written to it as pending from a chat platform, which only Import brings back (and then moves to Notion's trash).
 _Avoid_: Sync, backup, backend
 
 **Legacy Record**:

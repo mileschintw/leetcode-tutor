@@ -1,0 +1,1 @@
+mirror-push: the Mirror database has no 'Problem ID' property of the right type (Problem ID is text, Pending a checkbox), so nothing was pushed; rename or change it back in Notion, then push again
