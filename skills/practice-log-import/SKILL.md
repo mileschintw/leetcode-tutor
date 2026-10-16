@@ -34,6 +34,6 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
 
 The CLI ships with the `leetcode-tutor` skill as `../leetcode-tutor/scripts/practice_log`, relative to the folder holding this file. Run it with Python 3, giving the full path to that folder: `python3 <tutor skill folder>/scripts/practice_log <command>` (`python` on Windows).
 
-- `init [folder]`: create a Practice Workspace in a new or empty folder.
+- `init [folder]`: create a Practice Workspace in a new or empty folder (one holding nothing but `.git`, `.claude`, `.obsidian` or `.vscode`).
 - `validate [--root folder]`: check a workspace against the schema; it prints each error and exits non-zero on failure.
 - `index [--root folder]`: regenerate the workspace's README.md from the Practice Log.

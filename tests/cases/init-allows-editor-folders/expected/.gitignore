@@ -1,0 +1,18 @@
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Obsidian: keep shared settings, skip per-device layout
+.obsidian/workspace*.json
+.trash/
+
+# Code from local runs
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+*.class
+*.o
+*.out

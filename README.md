@@ -19,13 +19,22 @@ v3.0 is the current version (see the [CHANGELOG](./CHANGELOG.md)). It succeeds t
 
 ### Claude Code
 
-In Claude Code (2.1.275 or later), run:
+**For a Practice Workspace (recommended):** install the plugin into the workspace's folder only, so the skills load there and add nothing to your other projects. In a shell, create the folder and install with project scope (Claude Code 2.1.292 or later; on older versions, run `claude plugin marketplace add mileschintw/leetcode-tutor` first and install `leetcode-tutor@leetcode-tutor`):
+
+```
+mkdir practice-log && cd practice-log && git init
+claude plugin install leetcode-tutor --marketplace mileschintw/leetcode-tutor --scope project
+```
+
+Then start `claude` in that folder and say "set up my practice workspace". Project scope enables the plugin in `.claude/settings.json`, which you commit with the workspace; on another machine, run the same install command once in the clone. Use `--scope local` instead to keep it uncommitted. Either way the tutor is unavailable outside the workspace. Inside a session, `/plugin install leetcode-tutor --marketplace mileschintw/leetcode-tutor` does the same when you pick the project or local scope.
+
+**For the tutor anywhere:** in Claude Code (2.1.275 or later), run:
 
 ```
 /plugin install leetcode-tutor --marketplace mileschintw/leetcode-tutor
 ```
 
-On older versions, add the marketplace first:
+and pick the user scope. On older versions, add the marketplace first:
 
 ```
 /plugin marketplace add mileschintw/leetcode-tutor
