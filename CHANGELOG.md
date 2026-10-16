@@ -18,7 +18,7 @@ v2 was a system prompt pasted into a chat, so every chat started from zero: the 
 - **Generated index README** listing Problems by Problem List and topic, readable on GitHub from any device. The workspace also opens as an Obsidian vault.
 - **Import of Legacy Records** from Notion, LeetHub or anything else, merged by Problem ID with a preview before anything is written. Re-running an import adds nothing new.
 - **One-way Notion Mirror** in its own database, one page per Problem linking to its folder on GitHub.
-- **Chat-platform fallback.** On claude.ai, the Gemini app or ChatGPT the tutor teaches the same way, then hands you an Attempt summary, or writes a pending Attempt to the Mirror for the next Import to bring home.
+- **Chat-platform fallback.** On claude.ai, the Gemini app or ChatGPT the tutor teaches the same way, then prints an Attempt block for you to keep, or writes a pending Attempt to the Mirror for the next Import to bring home.
 - **Multi-platform packaging** from one build: manifests for Codex, Cursor and Antigravity, upload zips for claude.ai and the Gemini app / Perplexity, and the copy-paste prompt in [prompts/leetcode-tutor.md](./prompts/leetcode-tutor.md).
 - **`practice-log` CLI** (Python standard library only) behind the skills: `init`, `validate`, `index`, `review-sheet`, `mirror-plan` and the maintainer's `build`.
 

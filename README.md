@@ -38,7 +38,7 @@ You also need Python 3 (the skills use a small `practice-log` tool built on its 
 
 - **Codex:** `codex plugin marketplace add mileschintw/leetcode-tutor`, then install `leetcode-tutor` from the Plugins Directory.
 - **Antigravity:** `agy plugin install https://github.com/mileschintw/leetcode-tutor`.
-- **Cursor:** add this repo as a plugin (team admins: Dashboard → Plugins & MCPs → Import from Repo), or unzip `leetcode-tutor-agents-skills.zip` from the [latest release](https://github.com/mileschintw/leetcode-tutor/releases/latest) into your project or home directory.
+- **Cursor:** add this repo as a plugin (team admins: Dashboard → Plugins & MCPs → Import from Repo), or unzip `leetcode-tutor-agents-skills.zip` from the [latest release](https://github.com/mileschintw/leetcode-tutor/releases/latest) into your project or home directory (the zip holds the tutor skill only; Import and the Mirror need the plugin).
 
 These need Python 3 and git too.
 
@@ -48,7 +48,7 @@ Download a zip from the [latest release](https://github.com/mileschintw/leetcode
 
 ### ChatGPT, Perplexity and anything else
 
-Paste [prompts/leetcode-tutor.md](./prompts/leetcode-tutor.md) into a Project's instructions or your first message.
+Attach [prompts/leetcode-tutor.md](./prompts/leetcode-tutor.md) to a Project as a file, or paste it as your first message. It is too long for most Project instruction fields.
 
 ### Updating
 
@@ -60,7 +60,7 @@ Paste [prompts/leetcode-tutor.md](./prompts/leetcode-tutor.md) into a Project's 
 Name a Problem, for example "Let's do LeetCode 1. Two Sum". The tutor starts with a structured overview (the First Response), then guides you with questions instead of answers, from understanding the Problem through strategy and implementation to testing. It doesn't write your solution unless you ask. You write and run your code on LeetCode or NeetCode. For a paywalled or self-authored Problem, the tutor writes and runs local tests, using the Problem's own test harness if it has one. Write in any language: the tutor replies in the language you use.
 
 - **Recap Mode:** say you already know a Problem and you get a short overview, then a prompt to recall your Key Takeaway, instead of a full Session.
-- **Need Review:** when you saw the solution, asked for a skeleton or jumped to the conclusion, the tutor marks the Problem Need Review and tells you why. It clears the mark when you say you've got it or when you later solve the Problem on your own. You can set or clear it yourself at any time. A Recap never clears it.
+- **Need Review:** when you saw the solution, asked for a skeleton or jumped to the conclusion, the tutor marks the Problem Need Review and tells you why. It clears the mark when you say you've got it or when you later solve the Problem on your own in a full Session. You can set or clear it yourself at any time. A Recap never clears it.
 - **Review Sheets:** before an interview, name a goal ("Grind 75 graphs", "my Need Review problems", a company) and the tutor builds a Review Sheet. For each matching Problem it gives the Key Takeaway, approach and past mistakes, it flags which ones are worth redoing, and it suggests Problems you haven't done yet. You can start a Recap straight from any Problem on it.
 - **What next:** ask what to practise and the tutor suggests Problems from your Practice Log and its gaps.
 
@@ -87,6 +87,8 @@ To bring in your Legacy Records, the practice history you kept before, ask to im
 
 To browse your Practice Log in Notion, ask to push it there. The `practice-log-mirror` skill publishes a one-way Mirror through your Notion connector: on first use it creates its own database, and every push regenerates one page per Problem, each linking to the Problem's folder on GitHub. It never touches your old Notion database. Your Practice Workspace has to be on GitHub first. Edits made in Notion are overwritten by the next push, so change your notes in the workspace. Once the Mirror is set up, the tutor asks after each Session and Review Sheet whether to push.
 
+You can rename or move the Mirror database: pushes find it by its id, not its name. In a chat app, though, the tutor finds it by searching for "Practice Log", so after renaming it, give the tutor the database's link. Don't rename or delete its properties, especially `Problem ID` and `Pending`.
+
 The import and mirror skills only work with the tutor skill installed alongside them, which the plugin installs above do. They have no upload zips or prompts of their own.
 
 ## Chat apps
@@ -96,17 +98,18 @@ On claude.ai, the Gemini app, ChatGPT and other chat apps, the tutor teaches the
 - **With a Notion connector and a Mirror:** it writes the Attempt to the Mirror as a pending page.
 - **Otherwise:** it prints an Attempt block for you to keep.
 
-The next Import in your Practice Workspace brings either one home.
+The next Import in your Practice Workspace brings pending pages home. Paste an Attempt block into an Import to bring it in too.
 
 ## Your data
 
-The skills run no server and collect nothing. Your Practice Log is files in your own repository, and the `practice-log` tool only reads and writes files on your machine. Notion is reached only through your own Notion connector, and only when you ask for an Import or a Mirror push, or when the tutor saves a pending Attempt in a chat app.
+The skills run no server and collect nothing. Your Practice Log is files in your own repository, and the `practice-log` tool only reads and writes files on your machine. Notion is reached only through your own Notion connector, and only when you ask for an Import or a Mirror push, or when the tutor saves a pending Attempt in a chat app. Import moves the pending pages it brought in to Notion's trash, and a push asks before trashing pages for Problems no longer in your log.
 
 ## Known limitations
 
 - A very large first import gives an unwieldy preview ([#32](https://github.com/mileschintw/leetcode-tutor/issues/32)).
 - Import has no guidance yet for records reachable only in a signed-in browser ([#29](https://github.com/mileschintw/leetcode-tutor/issues/29)).
 - Every Mirror push sends every page through the connector, which costs tokens on a large log ([#33](https://github.com/mileschintw/leetcode-tutor/issues/33)).
+- In a chat app, the tutor doesn't check which workspace a Mirror database belongs to ([#40](https://github.com/mileschintw/leetcode-tutor/issues/40)).
 
 ## Project docs
 

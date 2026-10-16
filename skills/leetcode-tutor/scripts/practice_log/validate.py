@@ -68,12 +68,15 @@ def plural(count, noun):
 
 
 def misplaced_notes(root):
-    """notes.md files the Problem walk skips, because they aren't exactly two folders under problems/."""
+    """notes.md files above the problems/<source>/<slug>/ level, which the Problem walk skips.
+
+    One deeper down is the learner's own file in a Problem folder, and stays as it is.
+    """
     problems_dir = root / "problems"
     return [
         f"{notes.relative_to(root).as_posix()}: notes.md must be in a problems/<source>/<slug>/ folder"
         for notes in sorted(problems_dir.rglob("notes.md"), key=lambda path: path.as_posix())
-        if len(notes.relative_to(problems_dir).parts) != 3
+        if len(notes.relative_to(problems_dir).parts) < 3
     ]
 
 
