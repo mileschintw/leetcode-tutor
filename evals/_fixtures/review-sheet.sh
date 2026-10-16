@@ -244,7 +244,7 @@ Filters: tags graph, topological-sort.
 
 ## Redo
 
-### [Course Schedule](../problems/leetcode/course-schedule/)
+### [Course Schedule](../problems/leetcode/course-schedule/notes.md)
 
 `leetcode:course-schedule` · Medium
 
@@ -255,7 +255,7 @@ Filters: tags graph, topological-sort.
   - 2026-10-08: Treated a node on the current path the same as a finished node, so every revisit looked like a cycle.
 - **Tags:** breadth-first-search, depth-first-search, graph, topological-sort · **Problem Lists:** Grind 75, NeetCode 150
 
-### [Number of Islands](../problems/leetcode/number-of-islands/)
+### [Number of Islands](../problems/leetcode/number-of-islands/notes.md)
 
 `leetcode:number-of-islands` · Medium
 
@@ -268,7 +268,7 @@ Filters: tags graph, topological-sort.
 
 ## Refresh
 
-### [Clone Graph](../problems/leetcode/clone-graph/)
+### [Clone Graph](../problems/leetcode/clone-graph/notes.md)
 
 `leetcode:clone-graph` · Medium
 
