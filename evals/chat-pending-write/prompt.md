@@ -6,6 +6,9 @@ max_turns: 30
 plugins: ["../..", notion-stub]
 allowed_tools: [Read, Glob, Grep, Skill]
 disallowed_tools: [Write, Edit, NotebookEdit, Bash, PowerShell]
+# Claude Code's own system prompt describes Write, Edit and Bash even when disallowed_tools removes them;
+# a real chat app (claude.ai, Gemini, ChatGPT) never does. This environment-only line makes the fixture match one.
+append_system_prompt: "You are running in a chat app. You have no tools that create or edit files on the user's computer and no shell. Files you produce exist only in this conversation. The user has connected Notion to this chat."
 ---
 
 I'm practising LeetCode 1. Two Sum with you. Here is our Session so far, from your First Response onwards:
