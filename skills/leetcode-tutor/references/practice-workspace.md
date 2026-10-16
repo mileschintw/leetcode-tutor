@@ -41,7 +41,7 @@ Once you know the Problem ID, read `problems/<source>/<slug>/notes.md` directly 
 
 Record an Attempt once the Session ends: after Phase 4, after the Recap Mode recall, or when the learner stops early. Work through every step:
 
-1. **Key Takeaway.** Write it (see the Key Takeaway section of [teaching-flow.md](teaching-flow.md)) and ask whether the learner wants to add or change anything. Wait for the answer. Skip the question when the learner has already said there is nothing to add.
+1. **Key Takeaway.** Write it in one or two sentences (see the Key Takeaway section of [teaching-flow.md](teaching-flow.md)) and ask whether the learner wants to add or change anything. Wait for the answer. Skip the question when the learner has already said there is nothing to add.
 2. **Code.** Take the learner's final code from the chat, or from the file they kept in the Problem's folder. If neither exists, ask them to paste it.
 3. **Fields.** Fill every Attempt field from what you observed in the Session; the learner never has to reconstruct them:
    - `outcome` follows the definitions in [practice-log.md](practice-log.md): any hint, correction or pseudocode review makes it `solved-with-hints`.
@@ -54,4 +54,4 @@ Record an Attempt once the Session ends: after Phase 4, after the Recap Mode rec
    - Save the code as the Attempt's code file. Code from a file in the folder moves to that name.
 5. **Validate.** Run `validate` on the workspace and fix every error it reports. Without a shell, check the files against [practice-log.md](practice-log.md) yourself.
    With a shell, then run `index` on the workspace to regenerate its README.md, the index of the Practice Log.
-6. **Summary.** Open with "Attempt saved to" and the notes path, then show what you wrote in a few lines: the outcome, approach, mistakes, Key Takeaway and Need Review (with its reason when set). Invite the learner to correct anything.
+6. **Summary.** Open with "Attempt saved to" and the notes path, then show what you wrote in a few lines: the outcome, approach, mistakes, Key Takeaway and Need Review (with its reason when set). End by inviting the learner to correct anything in the record, not just one field.
