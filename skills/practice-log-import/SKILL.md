@@ -14,7 +14,7 @@ The Practice Log format is defined by the `leetcode-tutor` skill, which is insta
 
 ## Steps
 
-1. **Find the Practice Workspace.** Look for `practice-log.json` in the current folder and its parent folders. If there is none, ask whether to create one (the `init` command below) or where the existing one is. Create nothing before the learner answers.
+1. **Find the Practice Workspace.** Look for `practice-log.json` in the current folder and its parent folders. If there is none, ask whether to create one (the `init` command below) or where the existing one is. Create nothing before the learner answers. When they say to create one, run `init` in the chosen folder, then `git init` in it when git is installed, and tell them they can push the workspace to a GitHub repository of their own, which the Mirror needs for its links.
 2. **Check for pending Attempts.** Every Import does this, whatever the learner asked to import. When `practice-log.json` has a `mirror.notion_database_id`:
    - **With a Notion connector:** fetch that database, list its pages with `Pending` checked, and fetch each one for its content. They join this import and its preview. Read only those; every other Mirror page is generated from the Practice Log.
    - **Without one:** carry on, and say in the preview (or the reply, when there is nothing to import) that you couldn't check the Mirror for pending Attempts.
