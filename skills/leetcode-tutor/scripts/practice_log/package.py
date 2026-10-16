@@ -63,8 +63,13 @@ def committed_artefacts(root, skill_dirs):
     return artefacts
 
 
-def dist_artefacts(skill_dirs):
-    """Gitignored release files: one upload zip per platform layout, per skill."""
+def dist_artefacts(skill_dirs, dependents=None):
+    """Gitignored release files: one upload zip per platform layout, per skill.
+
+    `dependents` maps a skill's name to the skills that need it installed alongside. They sit next to
+    it in the `.agents/skills/` layout, so that zip carries them too; the other zips stay single-skill.
+    """
+    dependents = dependents or {}
     artefacts = {}
     for skill_dir in skill_dirs:
         name, files = skill_dir.name, skill_files(skill_dir)
@@ -73,7 +78,10 @@ def dist_artefacts(skill_dirs):
         # The Gemini app and Perplexity want SKILL.md itself at the zip root.
         artefacts[f"{DIST_DIR}/{name}-gemini-perplexity.zip"] = make_zip(files, "")
         # The cross-tool layout: unzip into a project or the home directory.
-        artefacts[f"{DIST_DIR}/{name}-agents-skills.zip"] = make_zip(files, f".agents/skills/{name}/")
+        members = [(f".agents/skills/{name}/{rel}", path) for rel, path in files]
+        for dependent in sorted(dependents.get(name, []), key=lambda d: d.name):
+            members += [(f".agents/skills/{dependent.name}/{rel}", path) for rel, path in skill_files(dependent)]
+        artefacts[f"{DIST_DIR}/{name}-agents-skills.zip"] = make_zip(members, "")
     return artefacts
 
 

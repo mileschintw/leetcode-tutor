@@ -74,7 +74,12 @@ def run(root, check=False):
     dist = root / package.DIST_DIR
     if dist.exists():
         shutil.rmtree(dist)
-    artefacts = {**committed, **package.dist_artefacts(skill_dirs)}
+    dependents = {}
+    for skill_file in skill_files:
+        required = requires.get(skill_file.parent.name)
+        if required is not None:
+            dependents.setdefault(required, []).append(skill_file.parent)
+    artefacts = {**committed, **package.dist_artefacts(skill_dirs, dependents)}
     for rel in sorted(artefacts):
         path = root / rel
         path.parent.mkdir(parents=True, exist_ok=True)

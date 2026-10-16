@@ -53,9 +53,22 @@ You also need Python 3 (the skills use a small `practice-log` tool built on its 
 
 ### Codex, Cursor and Antigravity
 
+**For a Practice Workspace (recommended):** put the skills in the workspace's folder only, so they load there and add nothing to your other projects. Codex, Cursor and Antigravity all read project skills from `.agents/skills/`, so the same zip serves all three. Download `leetcode-tutor-agents-skills.zip` from the [latest release](https://github.com/mileschintw/leetcode-tutor/releases/latest) (it holds all three skills, side by side as they need to be) and unzip it into the folder:
+
+```
+mkdir practice-log && cd practice-log && git init
+unzip ~/Downloads/leetcode-tutor-agents-skills.zip
+```
+
+On Windows, `tar -xf` does the same. Then start your tool in that folder and say "set up my practice workspace"; restart it if the skills don't appear. Commit `.agents/skills/` with the workspace and the tutor works on any machine you clone it to. Updating means unzipping the new release over it.
+
+**For the tutor anywhere:** install the plugin for your user:
+
 - **Codex:** `codex plugin marketplace add mileschintw/leetcode-tutor`, then install `leetcode-tutor` from the Plugins Directory.
 - **Antigravity:** `agy plugin install https://github.com/mileschintw/leetcode-tutor`.
-- **Cursor:** add this repo as a plugin (team admins: Dashboard → Plugins & MCPs → Import from Repo), or unzip `leetcode-tutor-agents-skills.zip` from the [latest release](https://github.com/mileschintw/leetcode-tutor/releases/latest) into your project or home directory (the zip holds the tutor skill only; Import and the Mirror need the plugin).
+- **Cursor:** in Customize, install the plugin and pick the user scope. Team admins can add it from Dashboard → Plugins & MCPs → Import from Repo. Or unzip the zip above in your home directory, which puts the skills in `~/.agents/skills/`.
+
+Codex and Antigravity have no project-scope plugin install: their documentation describes no scope option for `codex plugin` or `agy plugin install`, so a plugin install is global. Use the zip to keep the tutor to one workspace. Cursor's plugin installer does offer a project scope, so there you can install the plugin that way instead of using the zip. If you installed the plugin globally and want it off elsewhere, Codex's `/plugins` browser lets you switch it off.
 
 These need Python 3 and git too.
 
