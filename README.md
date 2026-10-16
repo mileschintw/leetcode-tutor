@@ -26,7 +26,7 @@ mkdir practice-log && cd practice-log && git init
 claude plugin install leetcode-tutor --marketplace mileschintw/leetcode-tutor --scope project
 ```
 
-Then start `claude` in that folder and say "set up my practice workspace". Project scope records the plugin in `.claude/settings.json`, which you commit with the workspace, so the setup travels with it to another machine. Use `--scope local` instead to keep it uncommitted. Either way the tutor is unavailable outside the workspace. Inside a session, `/plugin install leetcode-tutor --marketplace mileschintw/leetcode-tutor` does the same when you pick the project or local scope.
+Then start `claude` in that folder and say "set up my practice workspace". Project scope enables the plugin in `.claude/settings.json`, which you commit with the workspace; on another machine, run the same install command once in the clone. Use `--scope local` instead to keep it uncommitted. Either way the tutor is unavailable outside the workspace. Inside a session, `/plugin install leetcode-tutor --marketplace mileschintw/leetcode-tutor` does the same when you pick the project or local scope.
 
 **For the tutor anywhere:** in Claude Code (2.1.275 or later), run:
 
