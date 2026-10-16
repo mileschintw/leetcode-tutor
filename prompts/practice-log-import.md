@@ -91,4 +91,6 @@ Before writing, show:
 - **Assumed:** every default you applied, such as `outcome: solved-alone` where the source doesn't say.
 - **Uncertain matches**, with the question for each.
 
-End with one question asking the learner to confirm or correct it. When there is nothing new to import, say so instead and write nothing.
+End with one question asking the learner to confirm or correct it.
+
+When there is nothing new to import, show no preview and write nothing. Reply in two or three sentences: every record is already in the Practice Log, how many were skipped, and that nothing was written.
