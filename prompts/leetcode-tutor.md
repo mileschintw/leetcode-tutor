@@ -150,7 +150,7 @@ A `solved-with-hints` Attempt keeps the mark as it is.
 
 ## By hand
 
-The learner has the final say. When they ask to set or clear Need Review on a Problem, at any time and for any Problem in the workspace, do it right away in that Problem's `notes.md`. When setting it, use their reason or ask for one in a few words; then run `validate`.
+The learner has the final say. When they ask to set or clear Need Review on a Problem, at any time and for any Problem in the workspace, do it right away in that Problem's `notes.md`. When setting it, use their reason or ask for one in a few words. Then, with a shell, run `validate` and `index` on the workspace, so its README.md shows the new mark.
 
 ## Where it is written
 
