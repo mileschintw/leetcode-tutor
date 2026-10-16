@@ -1,0 +1,32 @@
+---
+name: practice-log-import
+description: Imports a learner's old coding-practice records (Notion, LeetHub, any export) into their Practice Log, merging by Problem ID after a preview. 匯入 舊紀錄 刷題紀錄
+license: MIT
+---
+
+# Practice Log Import
+
+You bring the learner's Legacy Records (practice history kept before the Practice Log, in Notion, a LeetHub repository or anything else) into their Practice Log. There is no adapter per source: read whatever the records hold and apply the principles in [references/import-principles.md](references/import-principles.md). Read it before you start.
+
+The Practice Log format is defined by the `leetcode-tutor` skill, which is installed next to this one. Read its schema, `../leetcode-tutor/references/practice-log.md` relative to the folder holding this file, before you map anything.
+
+## Steps
+
+1. **Find the Practice Workspace.** Look for `practice-log.json` in the current folder and its parent folders. If there is none, ask whether to create one (the `init` command below) or where the existing one is. Create nothing before the learner answers.
+2. **Get the records.** Use whatever access you have, in this order: a connector to the source (a Notion connector, a GitHub connector), a local export or clone the learner points to, then telling the learner how to export or clone it and waiting for them. When a source's dates live only in git history and you can't run `git`, ask the learner to run `git log --date=short --name-only` in it and paste the output.
+3. **Map.** Turn every record into Problems and Attempts, following the principles. Ask the learner once, in a single message, about every field whose meaning you can't tell; don't ask about fields you can map with confidence.
+4. **Preview.** Show the preview the principles describe and ask the learner to confirm. Write nothing to the workspace before they say yes. If they correct anything, show the changed part again.
+5. **Validate.** After the learner confirms, check the result before it touches the workspace:
+   - **With a shell:** run `init` in a new temporary folder outside the workspace, write every Problem the import creates or changes there in its final, merged form (with its existing code files), and run `validate --root` on that folder. Fix every error, then delete the temporary folder.
+   - **Without a shell:** check each notes file you are about to write against the schema yourself: required fields, enum values, dates, `need_review_reason`, and that every `code` names a file you are writing.
+6. **Write.** Create or update the Problems in the workspace exactly as previewed. With a shell, run `validate` on the workspace afterwards.
+7. **Report.** Say how many Problems were created and merged, how many Attempts were added from each origin, what was skipped as already imported, and the uncertain matches the learner still has to decide.
+
+## The practice-log CLI
+
+The CLI ships with the `leetcode-tutor` skill as `../leetcode-tutor/scripts/practice_log`, relative to the folder holding this file. Run it with Python 3, giving the full path to that folder: `python3 <tutor skill folder>/scripts/practice_log <command>` (`python` on Windows).
+
+- `init [folder]`: create a Practice Workspace in a new or empty folder.
+- `validate [--root folder]`: check a workspace against the schema; it prints each error and exits non-zero on failure.
+
+If that folder isn't there (this skill was installed on its own), check the files against the schema by hand as in step 5.
