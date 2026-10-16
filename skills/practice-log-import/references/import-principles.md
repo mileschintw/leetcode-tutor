@@ -22,7 +22,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 - **title:** as the source writes it, without a leading problem number (`1. Two Sum` → `Two Sum`).
 - **difficulty:** `easy`, `medium` or `hard`, lowercase; empty when the source has none.
 - **tags:** algorithm and data-structure tags only, lowercase and hyphenated (`Hash Table` → `hash-table`). Drop every other tag: contest names and weeks (`Weekly Contest 350`), job levels (`L4`), companies, statuses and personal labels.
-- **lists:** a collection, folder or study-plan field becomes `lists`, each value kept as the learner wrote it (`Grind169` stays `Grind169`).
+- **lists:** a collection, folder or study-plan field becomes the Problem's Problem Lists (`lists`), each value kept as the learner wrote it (`Grind169` stays `Grind169`).
 - **List style:** write `tags` and `lists` as flow lists, `[a, b]`, and an empty one as `[]`.
 - **need_review:** a review flag that is set (a checkbox, a "review" tag) becomes `need_review: true` with `need_review_reason: Marked for review in <source name> before import` (`Marked for review in Notion before import`). Otherwise `false`.
 - **Key Takeaway:** a callout, summary or "takeaway" note on the Problem becomes the Key Takeaway, word for word apart from a label such as `Key Takeaway:`. Never write one yourself: leave the section empty when no source has one.
@@ -35,7 +35,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 - **mode:** `session`.
 - **outcome:** take it from the record when it says (`saw solution`, `with hints`). When it doesn't, use `solved-alone` and say so in the preview so the learner can change it.
 - **approach:** the entry's own approach name, lowercased. When there is none, name the approach from the code in two or three words (`hash map`, `two pointers`).
-- **mistakes:** from the entry's own notes on what went wrong; leave the line out when there are none. Runtime and memory figures (`Time: 3 ms (98%)`) have no field; drop them.
+- **mistakes:** from the entry's own notes on what went wrong; leave the line out when there are none. Drop runtime and memory figures (`Time: 3 ms (98%)`) on purpose: the Practice Log doesn't store them. Only dates come from commit history.
 - **language:** from the code fence or the file extension, lowercase (`python`, `cpp`).
 - **code:** every Attempt needs its code in its own file, `<date>-<approach slug>.<ext>`, with `-2`, `-3` before the extension when the name is taken. Copy the code exactly. An entry with no code is an uncertain match.
 - **Order.** Keep the Attempt log oldest first, putting imported Attempts among the existing ones by date. The heading is `### <date> <approach>`, then the `- key: value` lines.

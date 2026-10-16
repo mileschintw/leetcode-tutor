@@ -1,0 +1,2 @@
+build: 2 skills checked, metadata ok
+build: coach-import requires coach, so it gets no prompt or upload zips

@@ -1,0 +1,2 @@
+prompts/coach-import.md: no longer generated
+build: generated files are stale, run `python skills/leetcode-tutor/scripts/practice_log build` and commit

@@ -30,12 +30,21 @@ def run(root, check=False):
         return 1
 
     problems = []
+    names = {skill_file.parent.name for skill_file in skill_files}
+    requires = {}  # skill name -> the skill it needs installed alongside it
     for skill_file in skill_files:
         label = skill_file.relative_to(root).as_posix()
+        folder = skill_file.parent.name
         try:
-            skill_problems = check_metadata(read_frontmatter(skill_file), skill_file.parent.name)
+            fields = read_frontmatter(skill_file)
         except FrontmatterError as error:
-            skill_problems = [str(error)]
+            problems.append(f"{label}: {error}")
+            continue
+        skill_problems = check_metadata(fields, folder)
+        required = required_skill(fields)
+        if required is not None:
+            requires[folder] = required
+            skill_problems += check_required(required, folder, names)
         problems += [f"{label}: {problem}" for problem in skill_problems]
     problems += check_layout(root)
     problems += [f"{package.CLAUDE_PLUGIN}: {problem}" for problem in check_claude_plugin(root)]
@@ -47,10 +56,15 @@ def run(root, check=False):
         return 1
     print(f"build: {plural(len(skill_files), 'skill')} checked, metadata ok")
 
-    skill_dirs = [skill_file.parent for skill_file in skill_files]
+    # A skill that needs another installed alongside it can't work as a pasted prompt or an upload zip.
+    skill_dirs = [skill_file.parent for skill_file in skill_files if skill_file.parent.name not in requires]
+    for name in sorted(requires):
+        print(f"build: {name} requires {requires[name]}, so it gets no prompt or upload zips")
     committed = package.committed_artefacts(root, skill_dirs)
+    obsolete = [f"{package.PROMPTS_DIR}/{name}.md" for name in sorted(requires)]
+    obsolete = [rel for rel in obsolete if (root / rel).exists()]
     if check:
-        return check_committed(root, committed)
+        return check_committed(root, committed, obsolete)
 
     dist = root / package.DIST_DIR
     if dist.exists():
@@ -61,11 +75,14 @@ def run(root, check=False):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(artefacts[rel])
         print(f"build: wrote {rel}")
+    for rel in obsolete:
+        (root / rel).unlink()
+        print(f"build: removed {rel}")
     return 0
 
 
-def check_committed(root, committed):
-    stale = []
+def check_committed(root, committed, obsolete):
+    stale = [f"{rel}: no longer generated" for rel in obsolete]
     for rel in sorted(committed):
         path = root / rel
         if not path.exists():
@@ -131,6 +148,20 @@ def check_metadata(fields, folder):
     problems += check_name(fields.get("name"), folder)
     problems += check_description(fields.get("description"))
     return problems
+
+
+def required_skill(fields):
+    """The skill named by `metadata: requires:`, which must be installed alongside this one."""
+    metadata = fields.get("metadata")
+    return metadata.get("requires") if isinstance(metadata, dict) else None
+
+
+def check_required(required, folder, names):
+    if required == folder:
+        return ["metadata 'requires' names the skill itself"]
+    if required not in names:
+        return [f"metadata 'requires' names '{required}', which is not a skill in skills/"]
+    return []
 
 
 def check_name(name, folder):

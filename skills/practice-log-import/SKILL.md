@@ -1,14 +1,16 @@
 ---
 name: practice-log-import
-description: Imports a learner's old coding-practice records (Notion, LeetHub, any export) into their Practice Log, merging by Problem ID after a preview. 匯入 舊紀錄 刷題紀錄
+description: Imports a learner's Legacy Records (old practice notes from Notion, LeetHub or any export) into their Practice Log, merging by Problem ID after a preview. 匯入 舊紀錄 刷題紀錄
 license: MIT
+metadata:
+  requires: leetcode-tutor
 ---
 
 # Practice Log Import
 
 You bring the learner's Legacy Records (practice history kept before the Practice Log, in Notion, a LeetHub repository or anything else) into their Practice Log. There is no adapter per source: read whatever the records hold and apply the principles in [references/import-principles.md](references/import-principles.md). Read it before you start.
 
-The Practice Log format is defined by the `leetcode-tutor` skill, which is installed next to this one. Read its schema, `../leetcode-tutor/references/practice-log.md` relative to the folder holding this file, before you map anything. If that file isn't there, ask the learner to install the `leetcode-tutor` skill as well, and import nothing until it is.
+The Practice Log format is defined by the `leetcode-tutor` skill, which is installed next to this one. Read its schema, `../leetcode-tutor/references/practice-log.md` relative to the folder holding this file, before you map anything. This skill needs that one: if the `leetcode-tutor` skill's folder isn't there, ask the learner to install it as well, and import nothing until they have.
 
 ## Steps
 
@@ -29,5 +31,3 @@ The CLI ships with the `leetcode-tutor` skill as `../leetcode-tutor/scripts/prac
 - `init [folder]`: create a Practice Workspace in a new or empty folder.
 - `validate [--root folder]`: check a workspace against the schema; it prints each error and exits non-zero on failure.
 - `index [--root folder]`: regenerate the workspace's README.md from the Practice Log.
-
-If that folder isn't there (this skill was installed on its own), use the without-a-shell check in step 5.
