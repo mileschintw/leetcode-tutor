@@ -1,0 +1,3 @@
+mirror-push: --trash leetcode:two-sum: no page outside the plan has that Problem ID; nothing trashed
+mirror-push: --trash custom:pending-only: no page outside the plan has that Problem ID; nothing trashed
+mirror-push: --trash leetcode:unknown: no page outside the plan has that Problem ID; nothing trashed

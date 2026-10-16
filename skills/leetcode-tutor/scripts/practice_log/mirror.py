@@ -252,6 +252,8 @@ def color(name):
         return FIXED_COLORS[name]
     digest = hashlib.sha256(name.lower().encode("utf-8")).digest()
     return PALETTE[digest[0] % len(PALETTE)]
+
+
 # --- Only changed pages: mirror-state.json and mirror-record ---
 
 
@@ -272,7 +274,8 @@ def read_state(root, command="mirror-plan"):
         raise PlanError(f"{command}: {STATE_FILE} is not valid JSON ({error}); delete it to push every page") from None
     pages = state.get("pages") if isinstance(state, dict) else None
     if (
-        state.get("version") != 1
+        not isinstance(state, dict)
+        or state.get("version") != 1
         or not isinstance(pages, dict)
         or not all(isinstance(value, str) for value in pages.values())
     ):

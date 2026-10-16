@@ -30,9 +30,9 @@ UPDATE_GOLDEN = os.environ.get("UPDATE_GOLDEN") == "1"
 def run_cli(args, cwd, extra_env=None):
     """The single place that invokes the CLI."""
     env = dict(os.environ, PYTHONPATH=str(REPO_ROOT / "skills" / "leetcode-tutor" / "scripts"))
-    env.pop("PYTHONUTF8", None)
+    env.pop("PYTHONUTF8", None)  # the CLI must write UTF-8 on its own, whatever the console codepage
     env.pop("NOTION_TOKEN", None)  # no case ever reaches the real Notion
-    env.update(extra_env or {})  # the CLI must write UTF-8 on its own, whatever the console codepage
+    env.update(extra_env or {})
     result = subprocess.run(
         [sys.executable, "-m", "practice_log", *args],
         cwd=cwd,

@@ -19,6 +19,10 @@
                 "plain_text": "leetcode:two-sum"
               }
             ]
+          },
+          "Pending": {
+            "type": "checkbox",
+            "checkbox": true
           }
         }
       }

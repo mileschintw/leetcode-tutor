@@ -1,0 +1,585 @@
+notion: fake API from PRACTICE_LOG_NOTION_FAKE; each request carries Notion-Version: 2026-03-11 and Authorization: Bearer <NOTION_TOKEN>
+
+GET /v1/databases/1f2e3d4c5b6a47988a7b6c5d4e3f2a1b
+
+GET /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f
+
+PATCH /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f
+{
+  "properties": {
+    "Difficulty": {
+      "select": {
+        "options": [
+          {
+            "name": "Easy",
+            "color": "purple"
+          },
+          {
+            "name": "Medium",
+            "color": "yellow"
+          },
+          {
+            "name": "Hard",
+            "color": "red"
+          }
+        ]
+      }
+    },
+    "Tags": {
+      "multi_select": {
+        "options": [
+          {
+            "name": "array",
+            "color": "pink"
+          },
+          {
+            "name": "design",
+            "color": "blue"
+          },
+          {
+            "name": "hash-table",
+            "color": "brown"
+          },
+          {
+            "name": "linked-list",
+            "color": "blue"
+          },
+          {
+            "name": "stack",
+            "color": "orange"
+          },
+          {
+            "name": "string",
+            "color": "red"
+          }
+        ]
+      }
+    },
+    "Lists": {
+      "multi_select": {
+        "options": [
+          {
+            "name": "Grind 75",
+            "color": "red"
+          },
+          {
+            "name": "NeetCode 150",
+            "color": "green"
+          }
+        ]
+      }
+    },
+    "Last Outcome": {
+      "select": {
+        "options": [
+          {
+            "name": "solved-alone",
+            "color": "green"
+          },
+          {
+            "name": "solved-with-hints",
+            "color": "yellow"
+          },
+          {
+            "name": "saw-solution",
+            "color": "red"
+          }
+        ]
+      }
+    }
+  }
+}
+
+GET /v1/views?database_id=1f2e3d4c5b6a47988a7b6c5d4e3f2a1b
+
+GET /v1/views/view-1
+
+GET /v1/views/view-2
+
+POST /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f/query
+{
+  "page_size": 100
+}
+
+POST /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f/query
+{
+  "page_size": 100,
+  "start_cursor": "cursor-2"
+}
+
+PATCH /v1/pages/page-two-sum
+{
+  "properties": {
+    "Problem": {
+      "title": [
+        {
+          "type": "text",
+          "text": {
+            "content": "Two Sum"
+          }
+        }
+      ]
+    },
+    "Problem ID": {
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "leetcode:two-sum"
+          }
+        }
+      ]
+    },
+    "Difficulty": {
+      "select": {
+        "name": "Easy"
+      }
+    },
+    "Tags": {
+      "multi_select": [
+        {
+          "name": "array"
+        },
+        {
+          "name": "hash-table"
+        }
+      ]
+    },
+    "Lists": {
+      "multi_select": [
+        {
+          "name": "Grind 75"
+        },
+        {
+          "name": "NeetCode 150"
+        }
+      ]
+    },
+    "Need Review": {
+      "checkbox": false
+    },
+    "Need Review Reason": {
+      "rich_text": []
+    },
+    "Attempts": {
+      "number": 3
+    },
+    "Last Attempt": {
+      "date": {
+        "start": "2026-10-15"
+      }
+    },
+    "Last Outcome": {
+      "select": {
+        "name": "solved-alone"
+      }
+    },
+    "Link": {
+      "url": "https://leetcode.com/problems/two-sum/"
+    },
+    "GitHub": {
+      "url": "https://github.com/learner/practice-log/tree/HEAD/problems/leetcode/two-sum"
+    },
+    "Pending": {
+      "checkbox": false
+    }
+  }
+}
+
+GET /v1/blocks/page-two-sum/children?page_size=100
+
+GET /v1/blocks/page-two-sum/children?page_size=100&start_cursor=cursor-b
+
+DELETE /v1/blocks/block-1
+
+DELETE /v1/blocks/block-2
+
+PATCH /v1/blocks/page-two-sum/children
+{
+  "children": [
+    {
+      "object": "block",
+      "type": "quote",
+      "quote": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Generated from "
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "this Problem's notes",
+              "link": {
+                "url": "https://github.com/learner/practice-log/tree/HEAD/problems/leetcode/two-sum"
+              }
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": " in the Practice Log. Edits made here are overwritten on the next push: change the notes in the Practice Workspace instead."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Key Takeaway"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Store each value's index in a hash map and look up "
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "target - value"
+            },
+            "annotations": {
+              "code": true
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": " before inserting."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Attempts"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_3",
+      "heading_3": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "2026-10-15 hash map"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Mode: recap"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Outcome: solved-alone"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Approach: hash map"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Language: python"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Code: "
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "2026-10-15-hash-map.py",
+              "link": {
+                "url": "https://github.com/learner/practice-log/blob/HEAD/problems/leetcode/two-sum/2026-10-15-hash-map.py"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_3",
+      "heading_3": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "2026-09-01 brute force"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Mode: session"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Outcome: saw-solution"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Approach: brute force"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Mistakes: Jumped to the answer after the nested loops timed out."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Language: python"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Code: "
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "2026-09-01-brute-force.py",
+              "link": {
+                "url": "https://github.com/learner/practice-log/blob/HEAD/problems/leetcode/two-sum/2026-09-01-brute-force.py"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_3",
+      "heading_3": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "2026-10-03 hash map two pass"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Mode: session"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Outcome: solved-with-hints"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Approach: hash map two pass"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Language: python"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Code: "
+            }
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "2026-10-03-hash-map-two-pass.py",
+              "link": {
+                "url": "https://github.com/learner/practice-log/blob/HEAD/problems/leetcode/two-sum/2026-10-03-hash-map-two-pass.py"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+mirror-push: created 0 pages, updated 1, left out 2 unchanged
+mirror-push: left 1 pending page alone; Import brings them into the Practice Log
+mirror-push: not in the plan, so left as they are; ask the learner before moving them to Notion's trash (mirror-push --trash <Problem ID>):
+- leetcode:removed-problem
+- custom:lru-cache (a second page for one Problem ID; trash it in Notion)

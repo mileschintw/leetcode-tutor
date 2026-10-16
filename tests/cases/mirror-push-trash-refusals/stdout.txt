@@ -1,0 +1,107 @@
+notion: fake API from PRACTICE_LOG_NOTION_FAKE; each request carries Notion-Version: 2026-03-11 and Authorization: Bearer <NOTION_TOKEN>
+
+GET /v1/databases/1f2e3d4c5b6a47988a7b6c5d4e3f2a1b
+
+GET /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f
+
+PATCH /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f
+{
+  "properties": {
+    "Difficulty": {
+      "select": {
+        "options": [
+          {
+            "name": "Easy",
+            "color": "purple"
+          },
+          {
+            "name": "Medium",
+            "color": "yellow"
+          },
+          {
+            "name": "Hard",
+            "color": "red"
+          }
+        ]
+      }
+    },
+    "Tags": {
+      "multi_select": {
+        "options": [
+          {
+            "name": "array",
+            "color": "pink"
+          },
+          {
+            "name": "design",
+            "color": "blue"
+          },
+          {
+            "name": "hash-table",
+            "color": "brown"
+          },
+          {
+            "name": "linked-list",
+            "color": "blue"
+          },
+          {
+            "name": "stack",
+            "color": "orange"
+          },
+          {
+            "name": "string",
+            "color": "red"
+          }
+        ]
+      }
+    },
+    "Lists": {
+      "multi_select": {
+        "options": [
+          {
+            "name": "Grind 75",
+            "color": "red"
+          },
+          {
+            "name": "NeetCode 150",
+            "color": "green"
+          }
+        ]
+      }
+    },
+    "Last Outcome": {
+      "select": {
+        "options": [
+          {
+            "name": "solved-alone",
+            "color": "green"
+          },
+          {
+            "name": "solved-with-hints",
+            "color": "yellow"
+          },
+          {
+            "name": "saw-solution",
+            "color": "red"
+          }
+        ]
+      }
+    }
+  }
+}
+
+GET /v1/views?database_id=1f2e3d4c5b6a47988a7b6c5d4e3f2a1b
+
+GET /v1/views/view-1
+
+GET /v1/views/view-2
+
+POST /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f/query
+{
+  "page_size": 100
+}
+mirror-push: created 0 pages, updated 0, left out 3 unchanged
+mirror-push: left 2 pending pages alone; Import brings them into the Practice Log
+mirror-push: not in the plan, so left as they are; ask the learner before moving them to Notion's trash (mirror-push --trash <Problem ID>):
+- leetcode:removed-problem
+- custom:lru-cache (a second page for one Problem ID; trash it in Notion)

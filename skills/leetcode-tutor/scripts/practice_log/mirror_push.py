@@ -9,6 +9,7 @@ Setting PRACTICE_LOG_NOTION_FAKE to a JSON file of canned responses replaces the
 is printed instead of sent. The Seam 1 cases use it.
 """
 
+import http.client
 import json
 import os
 import re
@@ -29,7 +30,7 @@ FAKE_VARIABLE = "PRACTICE_LOG_NOTION_FAKE"
 TEXT_MAX = 2000
 CHILDREN_MAX = 100
 # The properties a push can't do without: the key it matches pages by, and the mark that protects pending pages.
-REQUIRED = ("Problem ID", "Pending")
+REQUIRED = {"Problem ID": "rich_text", "Pending": "checkbox"}
 LANGUAGES = {
     "bash": "bash", "c": "c", "c#": "c#", "c++": "c++", "cpp": "c++", "csharp": "c#", "go": "go",
     "java": "java", "javascript": "javascript", "js": "javascript", "json": "json", "kotlin": "kotlin",
@@ -47,12 +48,23 @@ class PushError(RuntimeError):
 
 
 class NotionApi:
+    # Notion allows about three requests a second; a full push can make thousands.
+    PACE = 0.35
+    RATE_LIMIT_RETRIES = 8
+    SERVER_ERROR_RETRIES = 3
+
     def __init__(self, token):
         self.token = token
+        self.last = 0.0
 
     def call(self, method, path, body=None):
         data = None if body is None else json.dumps(body).encode("utf-8")
-        for attempt in range(5):
+        limited = failed = 0
+        while True:
+            wait = self.last + self.PACE - time.monotonic()
+            if wait > 0:
+                time.sleep(wait)
+            self.last = time.monotonic()
             request = urllib.request.Request(API + path, data=data, method=method)
             request.add_header("Authorization", "Bearer " + self.token)
             request.add_header("Notion-Version", NOTION_VERSION)
@@ -61,21 +73,50 @@ class NotionApi:
                 with urllib.request.urlopen(request, timeout=60) as response:
                     return json.loads(response.read().decode("utf-8") or "{}")
             except urllib.error.HTTPError as error:
-                if error.code in (429, 502, 503, 504) and attempt < 4:
-                    time.sleep(float(error.headers.get("Retry-After") or 2 ** attempt))
+                if error.code == 429 and limited < self.RATE_LIMIT_RETRIES:
+                    limited += 1
+                    time.sleep(retry_after(error.headers.get("Retry-After"), limited))
                     continue
-                try:
-                    message = json.loads(error.read().decode("utf-8")).get("message", "")
-                except ValueError:
-                    message = ""
-                raise PushError(f"Notion answered {error.code} to {method} {path}: {message}".rstrip(": ")) from None
+                # A 5xx can come after Notion did the work, so only requests that are safe to repeat are retried.
+                if error.code in (500, 502, 503, 504) and repeatable(method, path) and failed < self.SERVER_ERROR_RETRIES:
+                    failed += 1
+                    time.sleep(2 ** failed)
+                    continue
+                raise PushError(f"Notion answered {error.code} to {method} {path}{notion_message(error)}") from None
             except urllib.error.URLError as error:
-                raise PushError(f"could not reach Notion ({error.reason})") from None
-        raise PushError(f"Notion kept refusing {method} {path}; try again later")
+                raise PushError(f"could not reach Notion ({error.reason}) at {method} {path}") from None
+            except (OSError, http.client.HTTPException, ValueError) as error:
+                raise PushError(f"{method} {path} failed ({type(error).__name__}); nothing after it was written") from None
+
+
+def repeatable(method, path):
+    """GET, DELETE and property updates give the same result when sent twice; creating or appending doesn't."""
+    if method in ("GET", "DELETE"):
+        return True
+    return method == "PATCH" and not path.endswith("/children")
+
+
+def retry_after(value, attempt):
+    try:
+        return min(float(value), 60.0)
+    except (TypeError, ValueError):
+        return float(min(2 ** attempt, 30))
+
+
+def notion_message(error):
+    try:
+        message = json.loads(error.read().decode("utf-8")).get("message", "")
+    except (OSError, ValueError, AttributeError):
+        message = ""
+    return f": {message}" if message else ""
 
 
 class FakeApi:
-    """Canned responses keyed by "METHOD path"; a write with no canned response gets a new fake id."""
+    """Canned responses keyed by "METHOD path"; a write with no canned response gets a new fake id.
+
+    A response {"__error": 500} makes that request fail the way Notion's error would, and
+    {"__sequence": [first, second]} answers successive calls in turn (for pagination).
+    """
 
     def __init__(self, path):
         self.responses = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -91,11 +132,21 @@ class FakeApi:
             print(json.dumps(body, ensure_ascii=False, indent=2))
         key = f"{method} {path}"
         if key in self.responses:
-            return self.responses[key]
+            response = self.responses[key]
+            if isinstance(response, dict) and "__sequence" in response:
+                # Successive calls get successive responses, the last one repeating.
+                sequence = response["__sequence"]
+                response = sequence.pop(0) if len(sequence) > 1 else sequence[0]
+            if isinstance(response, dict) and "__error" in response:
+                raise PushError(f"Notion answered {response['__error']} to {method} {path}")
+            return response
         if method == "GET" or path.endswith("/query"):
             raise PushError(f"fake API: no response for {key}")
         self.count += 1
         return {"id": f"fake-{self.count:04d}"}
+
+
+TOKEN_SHAPE = re.compile(r"[A-Za-z0-9_-]+")
 
 
 def open_api():
@@ -108,6 +159,12 @@ def open_api():
             f"mirror-push: set {TOKEN_VARIABLE} to an internal integration's token (create one at"
             " https://www.notion.so/my-integrations, then share the Mirror's database, or the page above it,"
             " with that integration)"
+        )
+    if not TOKEN_SHAPE.fullmatch(token):
+        # Never repeat the value: an error message is the one place it could leak.
+        raise PushError(
+            f"mirror-push: {TOKEN_VARIABLE} holds characters an integration token never has (such as a line break"
+            " or quote); set it again to just the secret Notion shows"
         )
     return NotionApi(token)
 
@@ -263,6 +320,9 @@ def push(api, root, changed, parent, trash):
         existing = by_id.get(problem_id)
         properties = page_properties(full_plan, page)
         blocks = to_blocks(page["body"])
+        # Forget the page before touching it: when a write fails halfway, the next --changed push repairs it.
+        if recorded.pop(problem_id, None) is not None:
+            write_state(root, database_id, recorded)
         if existing:
             api.call("PATCH", f"/v1/pages/{existing}", {"properties": properties})
             replace_children(api, existing, blocks)
@@ -346,11 +406,12 @@ def check_database(api, database_id, plan):
     source_id = sources[0]["id"]
     source = api.call("GET", f"/v1/data_sources/{source_id}")
     existing = source.get("properties", {})
-    missing = [name for name in REQUIRED if name not in existing]
+    missing = [name for name, kind in REQUIRED.items() if existing.get(name, {}).get("type") != kind]
     if missing:
         raise PushError(
-            f"mirror-push: the Mirror database has no {' or '.join(repr(name) for name in missing)} property, so"
-            " nothing was pushed; rename it back in Notion, then push again"
+            f"mirror-push: the Mirror database has no {' or '.join(repr(name) for name in missing)} property of the"
+            " right type (Problem ID is text, Pending a checkbox), so nothing was pushed; rename or change it back"
+            " in Notion, then push again"
         )
     changes = {}
     for prop in plan["database"]["properties"]:
@@ -428,9 +489,9 @@ def read_pages(api, source_id):
                 duplicates.append(problem_id)
             else:
                 by_id[problem_id] = page["id"]
-        if not response.get("has_more"):
-            return pending, by_id, sorted(set(duplicates))
         cursor = response.get("next_cursor")
+        if not response.get("has_more") or not cursor:
+            return pending, by_id, sorted(set(duplicates))
 
 
 def replace_children(api, page, blocks):
@@ -438,10 +499,14 @@ def replace_children(api, page, blocks):
     while True:
         query = f"?page_size=100&start_cursor={cursor}" if cursor else "?page_size=100"
         response = api.call("GET", f"/v1/blocks/{page}/children{query}")
-        old += [child["id"] for child in response.get("results", [])]
+        # A subpage or database inside the page is the learner's own; never delete it.
+        old += [child["id"] for child in response.get("results", [])
+                if child.get("type") not in ("child_page", "child_database")]
         if not response.get("has_more"):
             break
         cursor = response.get("next_cursor")
+        if not cursor:
+            break
     for child in old:
         api.call("DELETE", f"/v1/blocks/{child}")
     append_children(api, page, blocks)
@@ -473,6 +538,8 @@ def pending(root, trash=()):
             print("mirror-pending: no Mirror yet (mirror.notion_database_id is empty), so no pending pages")
             return 0
         sources = api.call("GET", f"/v1/databases/{database_id}").get("data_sources") or []
+        if not sources:
+            raise PushError(f"mirror-pending: database {database_id} has no data source")
         source_id = sources[0]["id"]
         pages, cursor = [], None
         while True:
@@ -481,9 +548,11 @@ def pending(root, trash=()):
                 body["start_cursor"] = cursor
             response = api.call("POST", f"/v1/data_sources/{source_id}/query", body)
             pages += response.get("results", [])
-            if not response.get("has_more"):
-                break
             cursor = response.get("next_cursor")
+            if not response.get("has_more") or not cursor:
+                break
+        # Check Pending here too, not only through Notion's filter: only a pending page may be trashed.
+        pages = [page for page in pages if page.get("properties", {}).get("Pending", {}).get("checkbox") is True]
         ids = {page["id"].replace("-", ""): page for page in pages}
         if trash:
             for page in trash:
@@ -512,9 +581,9 @@ def read_children(api, page):
         query = f"?page_size=100&start_cursor={cursor}" if cursor else "?page_size=100"
         response = api.call("GET", f"/v1/blocks/{page}/children{query}")
         blocks += response.get("results", [])
-        if not response.get("has_more"):
-            return blocks
         cursor = response.get("next_cursor")
+        if not response.get("has_more") or not cursor:
+            return blocks
 
 
 def markdown_text(parts):

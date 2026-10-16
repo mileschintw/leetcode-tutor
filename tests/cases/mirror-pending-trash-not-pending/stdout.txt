@@ -1,0 +1,14 @@
+notion: fake API from PRACTICE_LOG_NOTION_FAKE; each request carries Notion-Version: 2026-03-11 and Authorization: Bearer <NOTION_TOKEN>
+
+GET /v1/databases/1f2e3d4c5b6a47988a7b6c5d4e3f2a1b
+
+POST /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f/query
+{
+  "page_size": 100,
+  "filter": {
+    "property": "Pending",
+    "checkbox": {
+      "equals": true
+    }
+  }
+}
