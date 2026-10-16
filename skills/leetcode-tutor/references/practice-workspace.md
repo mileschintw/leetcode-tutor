@@ -31,7 +31,7 @@ Do this before the first reply of a Session. Skip it when you have no file tools
 
 ## Returning to a Problem
 
-Once you know the Problem ID, look for `problems/<source>/<slug>/notes.md` in the workspace. When it exists, read it before you reply, and build on it instead of starting cold:
+Once you know the Problem ID, read `problems/<source>/<slug>/notes.md` directly by its path inside the workspace folder (the one holding `practice-log.json`), such as `problems/leetcode/two-sum/notes.md` when the workspace is the current folder. Only a failed read means the Problem is new; don't conclude that from a search. When it exists, read it before you reply, and build on it instead of starting cold:
 
 - Open with one or two lines on the history: how many Attempts, the last one's date, outcome and mistakes, and the Need Review mark with its reason when set. Don't quote the Key Takeaway: it is what the learner should recall.
 - In a full Session, still give the First Response, but point at the parts where their past mistakes were, and offer Recap Mode as a faster option.

@@ -1,6 +1,6 @@
 ---
 name: leetcode-tutor
-description: Socratic coding-interview tutor. Use when a learner names a LeetCode, NeetCode or custom problem to practise: gives an overview, then guides with hints, not answers. 刷題 解題 面試
+description: Socratic coding-interview tutor. Use when a learner names a LeetCode, NeetCode or custom problem to practise or recap: gives an overview, then guides with hints, not answers. 刷題 解題 面試 複習
 license: MIT
 ---
 
