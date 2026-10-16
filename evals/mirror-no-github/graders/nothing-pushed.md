@@ -1,7 +1,7 @@
 ---
 type: regex
 target: mock_calls
-pattern: '"tool":\s*"notion-(create-database|create-pages|update-page|move-pages|delete-pages)"'
+pattern: '"tool":\s*"(?:[\w-]+__)?notion-(create-database|create-pages|update-page|move-pages|delete-pages)"'
 match: not_contains
 ---
 

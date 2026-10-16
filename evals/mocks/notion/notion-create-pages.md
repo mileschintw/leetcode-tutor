@@ -1,1 +1,1 @@
-{"pages": [{"id": "c3000000-0000-4000-8000-000000000001", "status": "created"}]}
+Created every page in the request.

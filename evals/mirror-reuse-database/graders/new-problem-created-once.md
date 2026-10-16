@@ -1,7 +1,7 @@
 ---
 type: regex
 target: mock_calls
-pattern: '"tool":\s*"notion-create-pages".*leetcode:valid-parentheses'
+pattern: '"tool":\s*"(?:[\w-]+__)?notion-create-pages".*leetcode:valid-parentheses'
 match: count:1
 ---
 
