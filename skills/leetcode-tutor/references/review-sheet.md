@@ -14,7 +14,7 @@ How the tutor turns a learner's goal into a Review Sheet: a digest of the Proble
 
 The learner names a goal rather than one Problem: an upcoming interview, a company, topics ("graphs"), a Problem List, or a handful of Problems to go over. When they name a single Problem to recap, use Recap Mode instead (see [modes.md](modes.md)).
 
-Find the Practice Workspace first, as the start of [practice-workspace.md](practice-workspace.md) says. Without one there is no Practice Log to build from: say so in a line, offer to create it as that file says, and give suggestions as in the next section.
+Find the Practice Workspace first, as the start of [practice-workspace.md](practice-workspace.md) says. Without one there is no Practice Log to build from: say so in a line, offer to create it as that file says (on a chat platform, offer none), and give suggestions as in the next section.
 
 ## No goal: suggest what to practise next
 

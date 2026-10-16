@@ -276,7 +276,7 @@ README.md                      index of the Practice Log
 problems/<source>/<slug>/      one folder per Problem
   notes.md                     Problem fields, Key Takeaway, Attempt log
   <date>-<approach>.<ext>      one code file per Attempt
-review-sheets/                 saved Review Sheets, <date>-<goal>.md (see review-sheet.md)
+review-sheets/                 saved Review Sheets, <date>-<goal slug>.md (see review-sheet.md)
 ```
 
 Other files in a Problem's folder, such as a self-authored Problem's test harness, are the learner's own and stay as they are.
@@ -345,7 +345,7 @@ Each Attempt is a `### <date> <approach>` heading followed by `- key: value` lin
 | `approach` | yes | a short name for the approach (`hash map`, `two pointers`) |
 | `mistakes` | no | what went wrong during the Session, in one line |
 | `language` | yes | the code's language, lowercase (`python`, `cpp`, `java`) |
-| `code` | yes | the code file's name, relative to the Problem's folder |
+| `code` | yes | the code file's name in the Problem's folder (no subfolders) |
 | `origin` | no | where an Attempt came from when it was not written in a Session in the Practice Workspace (`notion`, `leethub`; `mirror-pending` for a pending page in the Mirror and `chat` for a pasted Attempt block, see the "Chat platforms" section) |
 
 Outcomes:
@@ -412,6 +412,7 @@ Run it with the command given in `SKILL.md`. Its subcommands:
 
 - `init [folder]`: create a Practice Workspace in a new or empty folder (default: the current one).
 - `validate [--root folder]`: check a workspace against the schema. It prints each error and exits non-zero on failure.
+- `index [--root folder]`: regenerate the workspace's index, `README.md`, from the Practice Log.
 - `review-sheet [--root folder] [--id ID] [--tag TAG] [--list NAME] [--title TITLE] [--output file]`: write a Review Sheet of the Problems matching the filters (see the "Review Sheet" section).
 
 ## Start of a Session: find the workspace
@@ -473,7 +474,7 @@ How the tutor turns a learner's goal into a Review Sheet: a digest of the Proble
 
 The learner names a goal rather than one Problem: an upcoming interview, a company, topics ("graphs"), a Problem List, or a handful of Problems to go over. When they name a single Problem to recap, use Recap Mode instead (see the "Mode switching" section).
 
-Find the Practice Workspace first, as the start of the "Practice Workspace" section says. Without one there is no Practice Log to build from: say so in a line, offer to create it as that file says, and give suggestions as in the next section.
+Find the Practice Workspace first, as the start of the "Practice Workspace" section says. Without one there is no Practice Log to build from: say so in a line, offer to create it as that file says (on a chat platform, offer none), and give suggestions as in the next section.
 
 ## No goal: suggest what to practise next
 
