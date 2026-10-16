@@ -1,4 +1,4 @@
-"""The walk over a Practice Workspace's Problem folders that `validate`, `index` and `mirror-plan` share.
+"""The walk over a Practice Workspace's Problem folders that `validate`, `index`, `mirror-plan` and `review-sheet` share.
 
 `read_problems(root)` yields one `ProblemFolder` per `problems/<source>/<slug>/` folder, sorted by
 POSIX path. A folder whose notes can't be read carries the error to report instead of its notes.

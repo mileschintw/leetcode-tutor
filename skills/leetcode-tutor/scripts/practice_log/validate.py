@@ -52,6 +52,7 @@ def run(root):
             else:
                 seen[problem_id] = label
         problems += [f"{label}: {problem}" for problem in file_problems]
+    problems += misplaced_notes(root)
 
     if problems:
         for problem in problems:
@@ -64,6 +65,16 @@ def run(root):
 
 def plural(count, noun):
     return f"{count} {noun}{'' if count == 1 else 's'}"
+
+
+def misplaced_notes(root):
+    """notes.md files the Problem walk skips, because they aren't exactly two folders under problems/."""
+    problems_dir = root / "problems"
+    return [
+        f"{notes.relative_to(root).as_posix()}: notes.md must be in a problems/<source>/<slug>/ folder"
+        for notes in sorted(problems_dir.rglob("notes.md"), key=lambda path: path.as_posix())
+        if len(notes.relative_to(problems_dir).parts) != 3
+    ]
 
 
 def check_config(config):

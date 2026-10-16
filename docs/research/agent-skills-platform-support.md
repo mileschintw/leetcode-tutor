@@ -1,5 +1,7 @@
 # Agent Skills (SKILL.md) platform support: research notes
 
+> A snapshot taken before v3 was built. The decisions it informed are in the spec (issue #1) and `docs/adr/`, and what shipped is in the README. Some options weighed here (a single `practice-log.md`, symlinked skill folders, a zh-TW reference file) were not taken.
+
 Research date: 2026-10-15. Every citation below was accessed on 2026-10-15 unless noted otherwise.
 Scope: whether to repackage the LeetCode Socratic-tutor system prompt as an Agent Skill (SKILL.md) and/or a Claude Code plugin.
 Method: primary sources only (vendor docs, help centers, first-party blogs, official GitHub repos). Claims that only appeared in search-result summaries or third-party pages are listed in the final section as unverified.

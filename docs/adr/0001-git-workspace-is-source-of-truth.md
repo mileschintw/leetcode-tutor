@@ -1,5 +1,7 @@
 # The Practice Workspace is the single source of truth; Notion is a one-way Mirror
 
+Status: accepted, implemented in v3.0.
+
 The tutor writes the Practice Log only as files in the learner's git-tracked Practice Workspace. Notion (and any future GUI) receives a one-way Mirror of it: edits made in Notion never flow back. We chose this because a single store keeps every feature (Review Sheet, Import, de-duplication by Problem ID) written once, and because two-way sync would force conflict resolution, the hardest part of any such system, onto a small prompt project.
 
 ## Considered Options

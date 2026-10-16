@@ -23,11 +23,11 @@ A mark on a Problem meaning the learner hit a wall on it and did not truly own t
 _Avoid_: Status, starred, weak
 
 **Attempt**:
-The outcome of one Session on a Problem. A Problem has many Attempts over time.
+The outcome of one Session on a Problem, or the same brought in by Import, marked with its origin. A Problem has many Attempts over time.
 _Avoid_: Submission, try, run
 
 **Session**:
-One tutoring conversation about one Problem, from the First Response through the Key Takeaway.
+One tutoring conversation about one Problem, from the First Response (or the Recap Mode overview) through the Key Takeaway.
 _Avoid_: Chat, lesson
 
 **First Response**:
@@ -60,8 +60,20 @@ _Avoid_: History, progress, database
 A repository the learner owns that holds their Practice Log together with their solutions and tests for each Problem.
 _Avoid_: Practice repo, LeetCode repo
 
+**Index**:
+The Practice Workspace's README, generated from the Practice Log, that lists every Problem by Problem List and topic.
+_Avoid_: Table of contents, dashboard
+
+**Attempt block**:
+An Attempt printed in the chat for the learner to keep when there is nowhere to save it: on a chat platform with no Mirror, or when the learner declines a Practice Workspace. Pasted into an Import, it joins the Practice Log.
+_Avoid_: Attempt summary
+
+**Pending Attempt**:
+An Attempt written to the Mirror from a chat platform, on a Mirror page with Pending checked, waiting for the next Import.
+_Avoid_: Draft, unsynced Attempt
+
 **Mirror**:
-A read-only copy of the Practice Log published to another tool (e.g. Notion) for browsing. Changes flow from the Practice Log to the Mirror, never back; the one exception is an Attempt written to it as pending from a chat platform, which only Import brings back.
+A read-only copy of the Practice Log published to another tool (e.g. Notion) for browsing. Changes flow from the Practice Log to the Mirror, never back; the one exception is an Attempt written to it as pending from a chat platform, which only Import brings back (and then moves to Notion's trash).
 _Avoid_: Sync, backup, backend
 
 **Legacy Record**:

@@ -8,10 +8,10 @@ from practice_log import build, index, mirror, review_sheet, validate, workspace
 
 
 def main(argv=None):
-    # Skill files hold non-ASCII text; don't let a Windows console codepage mangle it.
+    # Skill files hold non-ASCII text; don't let a Windows console codepage mangle it, or add CRs to it.
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
+            stream.reconfigure(encoding="utf-8", newline="\n")
 
     parser = argparse.ArgumentParser(prog="practice-log")
     subcommands = parser.add_subparsers(dest="command", required=True)
