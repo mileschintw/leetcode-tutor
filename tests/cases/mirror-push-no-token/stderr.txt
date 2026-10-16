@@ -1,0 +1,1 @@
+mirror-push: set NOTION_TOKEN to an internal integration's token (create one at https://www.notion.so/my-integrations, then share the Mirror's database, or the page above it, with that integration)

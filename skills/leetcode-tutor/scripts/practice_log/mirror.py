@@ -85,10 +85,7 @@ def run(root, changed=False):
     except PlanError as error:
         report(error)
         return 1
-    if format == "browser":
-        sys.stdout.write(browser(plan))
-    else:
-        sys.stdout.write(json.dumps(plan, ensure_ascii=False, indent=2) + "\n")
+    sys.stdout.write(json.dumps(plan, ensure_ascii=False, indent=2) + "\n")
     return 0
 
 

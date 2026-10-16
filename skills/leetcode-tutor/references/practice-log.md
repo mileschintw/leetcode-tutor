@@ -43,7 +43,7 @@ Other files in a Problem's folder, such as a self-authored Problem's test harnes
 - `version`: always `1`.
 - `mirror.notion_database_id`: the Notion database the Mirror created and owns; `null` until the first push (the `practice-log-mirror` skill sets it).
 - `mirror.repository`: the workspace's GitHub repository, which Mirror pages link to. Optional; `init` leaves it out, and the `practice-log-mirror` skill sets it from the `origin` remote.
-- `mirror.via`: how the Mirror is pushed: `connector` (a Notion connector), `browser` (Notion's own pages in a signed-in browser) or `auto` (a connector when there is one, otherwise a browser). Optional; `init` leaves it out, and the `practice-log-mirror` skill sets it the first time both ways are possible.
+- `mirror.via`: how the Mirror is pushed: `connector` (a Notion connector), `api` (Notion's REST API, with the `mirror-push` command and an integration token) or `auto` (a connector when there is one, otherwise the API). Optional; `init` leaves it out, and the `practice-log-mirror` skill sets it the first time both ways are possible.
 
 `mirror-state.json`, next to it, records each Mirror page as last pushed, so a push can leave out the pages it wouldn't change. Only the `mirror-record` command writes it; commit it with the workspace.
 

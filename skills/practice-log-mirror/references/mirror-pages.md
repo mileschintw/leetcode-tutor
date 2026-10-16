@@ -118,7 +118,7 @@ One `###` block per Attempt, in the log's order, each leaving out the lines whos
 
 Record each page once it is written and checked: `mirror-record --id <Problem ID>`, repeatable, or `mirror-record` alone for every page in the plan. After moving a page that is no longer in the plan to Notion's trash, `mirror-record --id <its Problem ID>` forgets it.
 
-`mirror-plan --format browser` prints the same plan, with or without `--changed`, as Markdown to reproduce in Notion's own pages: the database's title, description and properties with their types and options, then per page every property value as it is entered (`checked` or `unchecked`, `(empty)`, a multi-select's options joined by commas) and the body in a fence. [mirror-browser.md](mirror-browser.md) says how to use it.
+`mirror-push` writes the same plan through Notion's API, and records each page it writes the same way.
 
 ## Writing values through a connector
 

@@ -1,0 +1,1 @@
+mirror-push: the Mirror database has no 'Pending' property, so nothing was pushed; rename it back in Notion, then push again

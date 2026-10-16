@@ -1,0 +1,44 @@
+notion: fake API from PRACTICE_LOG_NOTION_FAKE; each request carries Notion-Version: 2026-03-11 and Authorization: Bearer <NOTION_TOKEN>
+
+GET /v1/databases/1f2e3d4c5b6a47988a7b6c5d4e3f2a1b
+
+POST /v1/data_sources/5d6e7f80-1a2b-4c3d-8e4f-9a0b1c2d3e4f/query
+{
+  "page_size": 100,
+  "filter": {
+    "property": "Pending",
+    "checkbox": {
+      "equals": true
+    }
+  }
+}
+mirror-pending: 1 pending page
+
+## Pending page b2000000-0000-4000-8000-0000000000ff (leetcode:two-sum)
+
+
+GET /v1/blocks/b2000000-0000-4000-8000-0000000000ff/children?page_size=100
+> Pending Attempt from a chat platform. The next Import in the Practice Workspace brings it into the Practice Log; until then, Mirror pushes leave this page alone.
+
+`problems/leetcode/two-sum/notes.md`
+
+```markdown
+---
+id: leetcode:two-sum
+title: Two Sum
+---
+
+## Attempts
+
+### 2026-10-14 hash map
+
+- date: 2026-10-14
+- outcome: solved-with-hints
+```
+
+`problems/leetcode/two-sum/2026-10-14-hash-map.py`
+
+```python
+class Solution:
+    pass
+```
