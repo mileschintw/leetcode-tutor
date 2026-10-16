@@ -4,6 +4,17 @@ All notable changes are documented here. Versions before v3.0 were a copy-paste 
 
 ---
 
+## [v3.0.1] — 2026-10-16
+
+### Added
+- **Project-scope install for Codex, Cursor and Antigravity.** The README now recommends keeping the skills to your Practice Workspace on every agent tool, not only Claude Code: unzip `leetcode-tutor-agents-skills.zip` into the workspace's folder, where all three tools read `.agents/skills/`.
+
+### Changed
+- `leetcode-tutor-agents-skills.zip` now carries all three skills (the tutor, Import and the Mirror) side by side, instead of the tutor alone.
+- `init` also treats a folder holding only `.agents` or `.cursor` (besides `.git`, `.claude`, `.obsidian` and `.vscode`) as empty, so a project-scope install doesn't block setting up the workspace.
+
+---
+
 ## [v3.0] — 2026-10-16
 
 ### The "Practice Log" Release
