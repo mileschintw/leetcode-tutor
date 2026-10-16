@@ -6,6 +6,7 @@ How the tutor finds or creates the learner's Practice Workspace at the start of 
 
 - The practice-log CLI
 - Start of a Session: find the workspace
+- Returning to a Problem
 - End of a Session: record the Attempt
 
 ## The practice-log CLI
@@ -28,6 +29,14 @@ Do this before the first reply of a Session. Skip it when you have no file tools
 3. When the learner accepts, run `init` in the chosen folder, then `git init` in it when git is installed, and say they can push it to GitHub as their own repository. Create nothing before they accept. When the workspace is in another folder, read and write it by path for the rest of the Session.
 4. When the Session ends without a workspace, make the offer once more. If the learner declines, show the Attempt in chat in the notes format instead of writing it.
 
+## Returning to a Problem
+
+Once you know the Problem ID, look for `problems/<source>/<slug>/notes.md` in the workspace. When it exists, read it before you reply, and build on it instead of starting cold:
+
+- Open with one or two lines on the history: how many Attempts, the last one's date, outcome and mistakes, and the Need Review mark with its reason when set. Don't quote the Key Takeaway: it is what the learner should recall.
+- In a full Session, still give the First Response, but point at the parts where their past mistakes were, and offer Recap Mode as a faster option.
+- In Recap Mode, use the stored Key Takeaway to check the learner's recall (see [modes.md](modes.md)).
+
 ## End of a Session: record the Attempt
 
 Record an Attempt once the Session ends: after Phase 4, after the Recap Mode recall, or when the learner stops early. Work through every step:
@@ -36,13 +45,13 @@ Record an Attempt once the Session ends: after Phase 4, after the Recap Mode rec
 2. **Code.** Take the learner's final code from the chat, or from the file they kept in the Problem's folder. If neither exists, ask them to paste it.
 3. **Fields.** Fill every Attempt field from what you observed in the Session; the learner never has to reconstruct them:
    - `outcome` follows the definitions in [practice-log.md](practice-log.md): any hint, correction or pseudocode review makes it `solved-with-hints`.
-   - `mode` is `recap` for Recap Mode, otherwise `session`.
+   - `mode` is `recap` for Recap Mode, otherwise `session`. A recap's `outcome` and code follow [modes.md](modes.md).
    - `mistakes` names each concrete slip you saw, in one line: wrong ideas, bugs, missed edge cases. Write `none` only when there truly were none.
 4. **Write.** In `problems/<source>/<slug>/`:
-   - Create `notes.md` when the Problem is new, with its Problem fields and `need_review: false`; otherwise keep its fields as they are.
+   - Create `notes.md` when the Problem is new, with its Problem fields; otherwise keep its fields as they are. Set or clear `need_review` and `need_review_reason` as [need-review.md](need-review.md) says.
    - Put the Key Takeaway under `## Key Takeaway`, replacing an older one only when the learner's new wording is sharper.
    - Append the Attempt under `## Attempts`.
    - Save the code as the Attempt's code file. Code from a file in the folder moves to that name.
 5. **Validate.** Run `validate` on the workspace and fix every error it reports. Without a shell, check the files against [practice-log.md](practice-log.md) yourself.
    With a shell, then run `index` on the workspace to regenerate its README.md, the index of the Practice Log.
-6. **Summary.** Show what you wrote in a few lines: the notes path, outcome, approach, mistakes and Key Takeaway. Invite the learner to correct anything.
+6. **Summary.** Show what you wrote in a few lines: the notes path, outcome, approach, mistakes, Key Takeaway and Need Review (with its reason when set). Invite the learner to correct anything.
