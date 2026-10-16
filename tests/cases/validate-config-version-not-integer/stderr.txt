@@ -1,0 +1,2 @@
+practice-log.json: expected an object with "version": 1
+validate: failed (1 error)

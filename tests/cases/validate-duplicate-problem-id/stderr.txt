@@ -1,0 +1,3 @@
+problems/leetcode/two-sum-again/notes.md: id 'leetcode:two-sum' does not match its folder (expected 'leetcode:two-sum-again')
+problems/leetcode/two-sum-again/notes.md: duplicate id 'leetcode:two-sum' (also in problems/leetcode/two-sum/notes.md)
+validate: failed (2 errors)

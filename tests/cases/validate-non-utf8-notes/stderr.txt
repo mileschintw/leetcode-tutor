@@ -1,0 +1,2 @@
+problems/leetcode/alien-dictionary/notes.md: not valid UTF-8 (byte 58); save the file as UTF-8
+validate: failed (1 error)

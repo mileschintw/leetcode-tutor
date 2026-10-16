@@ -1,0 +1,5 @@
+problems/custom/lru-cache/notes.md: attempt 1 (2026-10-10 hash map + linked list): date '10/10/2026' must be a real date written YYYY-MM-DD
+problems/leetcode/alien-dictionary/notes.md: lists must be a list, such as [a, b]
+problems/leetcode/two-sum/notes.md: attempt 1 (2026-09-01 brute force): date '2026-02-30' must be a real date written YYYY-MM-DD
+problems/neetcode/foreign-dictionary/notes.md: title must be a single value, not a list
+validate: failed (4 errors)

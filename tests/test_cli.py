@@ -26,7 +26,7 @@ UPDATE_GOLDEN = os.environ.get("UPDATE_GOLDEN") == "1"
 
 def run_cli(args, cwd):
     """The single place that invokes the CLI."""
-    env = dict(os.environ, PYTHONPATH=str(REPO_ROOT))
+    env = dict(os.environ, PYTHONPATH=str(REPO_ROOT / "skills" / "leetcode-tutor" / "scripts"))
     env.pop("PYTHONUTF8", None)  # the CLI must write UTF-8 on its own, whatever the console codepage
     result = subprocess.run(
         [sys.executable, "-m", "practice_log", *args],
@@ -46,7 +46,7 @@ def read_tree(root):
     if not root.exists():
         return {}
     return {
-        path.relative_to(root).as_posix(): path.read_bytes().decode("utf-8").replace("\r\n", "\n")
+        path.relative_to(root).as_posix(): path.read_bytes().decode("utf-8", errors="backslashreplace").replace("\r\n", "\n")
         for path in sorted(root.rglob("*"))
         if path.is_file()
     }
