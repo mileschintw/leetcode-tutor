@@ -19,7 +19,7 @@ Run it with the command given in `SKILL.md`. Its subcommands:
 
 ## Start of a Session: find the workspace
 
-Do this before the first reply of a Session. First check your tool list for a tool that creates or edits files, or one that runs shell commands, outside a temporary sandbox. When it has none, you are on a chat platform (see [chat-platforms.md](chat-platforms.md)), even if you can read and search files: you can't create a workspace or save an Attempt, so offer neither. Skip this section, teach the Session as usual, and record the Attempt as chat-platforms.md says.
+Do this before the first reply of a Session. First check whether you are on a chat platform, as [chat-platforms.md](chat-platforms.md) defines it. On one, you can't create a workspace or save an Attempt, so offer neither: skip this section, teach the Session as usual, and record the Attempt as [chat-platforms.md](chat-platforms.md) says.
 
 1. Look for `practice-log.json` in the current folder and its parent folders. The folder holding it is the Practice Workspace: reply as usual.
 2. When there is none, open your reply with a short note, then continue with it as usual (the First Response, or Recap Mode). The note says that this folder isn't a Practice Workspace, so the Attempt won't be saved, and offers the way to fix it:

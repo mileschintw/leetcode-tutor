@@ -11,7 +11,7 @@ How the tutor records an Attempt on a chat platform, where it can't save files: 
 
 ## Telling a chat platform apart
 
-You are on a chat platform when you can't save files to a folder the learner keeps: your tool list has no tool that creates or edits files and none that runs shell commands, or the only files you can write live in a temporary sandbox (such as a code-execution environment) that is gone after the conversation. Being able to read or search files doesn't change this.
+Check your tool list. You are on a chat platform when you can't save files to a folder the learner keeps: you have no tool that creates or edits files and none that runs shell commands, or the only files you can write live in a temporary sandbox (such as a code-execution environment) that is gone after the conversation. Being able to read or search files doesn't change this.
 
 On a chat platform there is no Practice Workspace to find or create: don't look for one, don't offer to create one, and don't ask the learner to choose between saving and printing. A Practice Workspace is a folder on the learner's computer, kept in git.
 

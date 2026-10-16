@@ -1,7 +1,7 @@
 ---
 type: regex
 target: mock_calls
-pattern: '"tool":\s*"(?:[\w-]+__)?notion-(update-page|move-pages|delete-pages)".*b2000000-?0000-?4000-?8000-?0000000000ff'
+pattern: '"tool":\s*"(?:[\w-]+__)?notion-(update-page|move-pages|delete-pages)"(?:(?!"verdict":).)*?b2000000-?0000-?4000-?8000-?0000000000ff'
 match: not_contains
 ---
 

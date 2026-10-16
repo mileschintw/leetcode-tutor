@@ -48,6 +48,10 @@ _Avoid_: Cheat sheet, review plan, schedule
 
 ### Records
 
+**Chat platform**:
+Anywhere the tutor runs without a folder it can save to: a chat app such as claude.ai, the Gemini app or ChatGPT, or the tutor pasted in as a prompt. It teaches fully there, and hands each Attempt over as a pending Mirror page or a printed Attempt block for the next Import.
+_Avoid_: No-filesystem mode, chat-only mode
+
 **Practice Log**:
 The learner's own durable history of Problems they have practised, owned by the learner rather than by the tutor.
 _Avoid_: History, progress, database

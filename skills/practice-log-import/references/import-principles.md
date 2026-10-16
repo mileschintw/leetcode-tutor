@@ -45,7 +45,7 @@ How to turn Legacy Records into Problems and Attempts. They apply to every sourc
 
 Two kinds of record come from the tutor itself on a chat platform; their format is in the `leetcode-tutor` skill's `references/chat-platforms.md`. Both hold an Attempt block, the Problem's notes in the Practice Log format with one Attempt and its code, so map it field for field, not by the rules above.
 
-- **A pending page** in the Mirror database: a page with `Pending` checked. Its content is the Attempt block; the Attempt gets `origin: mirror-pending`. Once the import is written, the page goes to Notion's trash, so its Attempt can't come back on the next push or Import. Say so in the preview.
+- **A pending page** in the Mirror database: a page with `Pending` checked. Every Import looks for them, whatever the learner asked to import, and previews them together with the other records. Its content is the Attempt block; the Attempt gets `origin: mirror-pending`. Once the learner confirms and the import is written, the page goes to Notion's trash, so its Attempt can't come back on the next push or Import. Say so in the preview.
 - **A pasted Attempt block,** which the tutor printed when it had no Notion: the Attempt gets `origin: chat`.
 
 The block's `need_review` follows the merge rule below: `true` sets the mark. When it is `false` but the Problem is marked, keep the mark and say in the preview that the learner can clear it.
