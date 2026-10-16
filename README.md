@@ -1,6 +1,14 @@
 # LeetCode Tutor
 
-A Socratic coding-interview tutor, packaged as agent skills, that keeps a practice log you own.
+[![Latest release](https://img.shields.io/github/v/release/mileschintw/leetcode-tutor)](https://github.com/mileschintw/leetcode-tutor/releases/latest)
+[![CI](https://github.com/mileschintw/leetcode-tutor/actions/workflows/ci.yml/badge.svg)](https://github.com/mileschintw/leetcode-tutor/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+
+![LeetCode Tutor: the AI tutor asks a guiding question during a Two Sum session, then logs the attempt to notes.md](docs/assets/social-preview.png)
+
+**An AI LeetCode tutor for coding-interview prep that asks, not tells.** It guides you through LeetCode, NeetCode and your own problems with Socratic hints instead of handing you the solution, and it keeps a practice log you own: every attempt, mistake and key takeaway goes into your own git repository, ready for review sheets before an interview and an optional Notion sync. It installs as a Claude Code plugin and as agent skills for Codex, Cursor and Antigravity, and it also works on claude.ai, the Gemini app and ChatGPT.
+
+Asking a chatbot for the answer solves one problem once. LeetHub-style tools save the code you got accepted. LeetCode Tutor records how you got there (the approach, where you got stuck, what to remember), so the next interview starts from your own notes instead of from zero.
 
 v3.0 is the current version (see the [CHANGELOG](./CHANGELOG.md)). It succeeds the copy-paste prompt in [leetcode-tutor-prompt](https://github.com/mileschintw/leetcode-tutor-prompt) (v2), which is archived.
 
@@ -17,7 +25,7 @@ v3.0 is the current version (see the [CHANGELOG](./CHANGELOG.md)). It succeeds t
 
 ## Install
 
-### Claude Code
+### Claude Code plugin
 
 **For a Practice Workspace (recommended):** install the plugin into the workspace's folder only, so the skills load there and add nothing to your other projects. In a shell, create the folder and install with project scope (Claude Code 2.1.292 or later; on older versions, run `claude plugin marketplace add mileschintw/leetcode-tutor` first and install `leetcode-tutor@leetcode-tutor`):
 
@@ -86,7 +94,17 @@ problems/<source>/<slug>/
 review-sheets/                 saved Review Sheets
 ```
 
-Push the workspace to GitHub and the index README shows your records on any device. The folder also opens as an [Obsidian](https://obsidian.md) vault, and the index's links lead to each Problem's `notes.md`.
+Push the workspace to GitHub and the index README shows your records on any device.
+
+### Using Obsidian
+
+The Practice Workspace is also an [Obsidian](https://obsidian.md) vault, with nothing to install.
+
+- **Open it:** in Obsidian, choose "Open folder as vault" and pick the workspace folder. The index README and each Review Sheet link to every Problem's `notes.md`.
+- **See your code files:** Obsidian lists only the file types it knows, so `.py`, `.cpp` and the like are hidden at first. Turn on Settings → Files and links → "Detect all file extensions" to see them.
+- **Filter and sort:** each `notes.md` has flat frontmatter, so `difficulty`, `tags`, `lists` and `need_review` show as Properties. With the core Bases plugin (or the Dataview community plugin) you can build your own views, such as every Problem with `need_review` set, or a list's Problems by difficulty. These are suggestions to adapt, not views the tutor creates or has tested.
+- **Edit freely:** your notes in the workspace are the Practice Log, so editing `notes.md` in Obsidian is fine. Keep the frontmatter flat (one `key: value` per line, lists as `[a, b]` or `- item` lines), then ask the tutor to check and re-index the workspace. Until then the index README is out of date, and the Notion Mirror shows your edit only after the next push.
+- **Obsidian's settings in git:** the `.obsidian/` folder holds your vault settings and can be committed to share them between devices. The `.gitignore` that the tutor writes skips its per-device layout files (`.obsidian/workspace*.json`).
 
 ### Importing your old records
 
@@ -113,14 +131,13 @@ To find the Mirror, the tutor searches your Notion for "Practice Log" and checks
 
 ## Your data
 
-The skills run no server and collect nothing. Your Practice Log is files in your own repository, and the `practice-log` tool only reads and writes files on your machine. Notion is reached only through your own Notion connector, and only when you ask for an Import or a Mirror push, or when the tutor saves a pending Attempt in a chat app. Import moves the pending pages it brought in to Notion's trash, and a push asks before trashing pages for Problems no longer in your log.
+The skills run no server and collect nothing. Your Practice Log is files in your own repository, and the `practice-log` tool reads and writes files on your machine. Notion is reached only when you ask for an Import or a Mirror push, or when the tutor saves a pending Attempt in a chat app, and only through your own Notion connector or your own integration token. The token is read from the `NOTION_TOKEN` environment variable you set; the tool sends it only to Notion's API and never prints or stores it. Import moves the pending pages it brought in to Notion's trash, and a push asks before trashing pages for Problems no longer in your log.
 
 ## Known limitations
 
 - A very large first import gives an unwieldy preview ([#32](https://github.com/mileschintw/leetcode-tutor/issues/32)).
 - Import has no guidance yet for records reachable only in a signed-in browser ([#29](https://github.com/mileschintw/leetcode-tutor/issues/29)).
-- Every Mirror push sends every page through the connector, which costs tokens on a large log ([#33](https://github.com/mileschintw/leetcode-tutor/issues/33)).
-- In a chat app, the tutor doesn't check which workspace a Mirror database belongs to ([#40](https://github.com/mileschintw/leetcode-tutor/issues/40)).
+- A first or full Mirror push through the connector sends every page through it, which costs tokens on a large log; later pushes can send only the pages that changed ([#33](https://github.com/mileschintw/leetcode-tutor/issues/33)).
 
 ## Project docs
 
