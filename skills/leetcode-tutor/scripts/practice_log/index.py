@@ -7,11 +7,10 @@ Attempt log. It checks nothing `validate` checks, but writes nothing when a note
 import sys
 
 from practice_log import readme
+from practice_log.readme import README_FILE
 from practice_log.notes import NotesError, read_notes
 from practice_log.validate import is_date
 from practice_log.workspace import CONFIG_FILE
-
-README_FILE = "README.md"
 
 
 def run(root):
@@ -59,7 +58,8 @@ def to_problem(rel, fields, attempts):
         problem_id=problem_id,
         title=text(fields.get("title")) or problem_id or rel,
         difficulty=text(fields.get("difficulty")),
-        tags=items(fields.get("tags")),
+        # Tags group case-insensitively and show in lowercase, as the schema writes them.
+        tags=sorted({tag.lower() for tag in items(fields.get("tags"))}),
         lists=items(fields.get("lists")),
         need_review=fields.get("need_review") == "true",
         reason=text(fields.get("need_review_reason")),

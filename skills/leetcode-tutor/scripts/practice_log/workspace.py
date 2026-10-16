@@ -44,7 +44,7 @@ GITATTRIBUTES = """\
 
 FILES = {
     CONFIG_FILE: CONFIG,
-    "README.md": README,
+    readme.README_FILE: README,
     ".gitignore": GITIGNORE,
     ".gitattributes": GITATTRIBUTES,
     # Git keeps no empty folders.
