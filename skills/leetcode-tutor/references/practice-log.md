@@ -20,7 +20,7 @@ README.md                      index of the Practice Log
 problems/<source>/<slug>/      one folder per Problem
   notes.md                     Problem fields, Key Takeaway, Attempt log
   <date>-<approach>.<ext>      one code file per Attempt
-review-sheets/                 saved Review Sheets
+review-sheets/                 saved Review Sheets, <date>-<goal>.md (see review-sheet.md)
 ```
 
 Other files in a Problem's folder, such as a self-authored Problem's test harness, are the learner's own and stay as they are.

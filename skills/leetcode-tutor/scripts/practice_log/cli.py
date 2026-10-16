@@ -4,7 +4,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from practice_log import build, index, mirror, validate, workspace
+from practice_log import build, index, mirror, review_sheet, validate, workspace
 
 
 def main(argv=None):
@@ -38,6 +38,24 @@ def main(argv=None):
     )
     mirror_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
 
+    sheet_parser = subcommands.add_parser(
+        "review-sheet",
+        help="select Problems by filters and write a Review Sheet",
+        description="Filters of one kind match any of their values; different kinds must all match."
+        " Every filter matches regardless of case. With no filters, every Problem is selected.",
+    )
+    sheet_parser.add_argument("--root", type=Path, default=Path("."), help="workspace root (default: .)")
+    sheet_parser.add_argument("--id", dest="ids", action="append", default=[], metavar="ID", help="a Problem ID, written in lowercase in the notes (repeatable)")
+    sheet_parser.add_argument("--tag", dest="tags", action="append", default=[], metavar="TAG", help="a tag (repeatable)")
+    sheet_parser.add_argument(
+        "--list", dest="lists", action="append", default=[], metavar="NAME", help="a Problem List name (repeatable)"
+    )
+    sheet_parser.add_argument("--title", default="Review Sheet", help="the sheet's heading (default: Review Sheet)")
+    sheet_parser.add_argument(
+        "--output", type=Path, help="the file to write inside the workspace's review-sheets/ folder, relative to the workspace root,"
+        " such as review-sheets/2026-10-15-graphs.md (default: print it)"
+    )
+
     args = parser.parse_args(argv)
     if args.command == "build":
         return build.run(args.root, check=args.check)
@@ -49,3 +67,5 @@ def main(argv=None):
         return index.run(args.root)
     if args.command == "mirror-plan":
         return mirror.run(args.root)
+    if args.command == "review-sheet":
+        return review_sheet.run(args.root, args.ids, args.tags, args.lists, args.title, args.output)

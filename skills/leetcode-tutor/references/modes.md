@@ -20,7 +20,7 @@ Two situations where the tutor departs from the full four-phase flow.
 4. Confirm or correct their recall against the stored Key Takeaway (or your own, for a Problem with none), naming what they missed.
 5. Offer the optimal code skeleton, or discuss edge cases directly. In Recap Mode you may write the solution.
 6. Keep the exchange fast and focused on recall.
-7. Record a `mode: recap` Attempt (step 5 in `SKILL.md`). Judge its `outcome` by the recall, not by the code you showed:
+7. Record a `mode: recap` Attempt (the "Record the Attempt" step in `SKILL.md`). Judge its `outcome` by the recall, not by the code you showed:
    - `solved-alone`: they stated the Key Takeaway correctly without help.
    - `solved-with-hints`: they got it after a correction or a nudge.
    - `saw-solution`: they couldn't recall it and you gave it. This marks the Problem Need Review.

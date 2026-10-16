@@ -1,0 +1,2 @@
+problems/leetcode/broken/notes.md: missing frontmatter (the file must start with a '---' line)
+review-sheet: nothing written; fix the notes (`practice-log validate` lists every error)
