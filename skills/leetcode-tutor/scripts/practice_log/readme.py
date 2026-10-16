@@ -97,10 +97,10 @@ def cells(values):
 
 
 def link(p, base=""):
-    """A link to the Problem's folder; `base` leads from the linking file's folder to the workspace root."""
+    """A link to the Problem's notes.md; `base` leads from the linking file's folder to the workspace root."""
     text = escape(p.title).replace("[", "\\[").replace("]", "\\]")
-    # The trailing slash makes github.com open the folder, with notes.md and the code files.
-    return f"[{text}]({base}{p.folder}/)"
+    # Obsidian cannot link to a folder (it creates an empty note), so link the file; github.com renders it.
+    return f"[{text}]({base}{p.folder}/notes.md)"
 
 
 def difficulty(p):

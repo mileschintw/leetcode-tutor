@@ -58,7 +58,7 @@ Filters: tags graph, topological-sort.
 
 ## Redo
 
-### [Number of Islands](../problems/leetcode/number-of-islands/)
+### [Number of Islands](../problems/leetcode/number-of-islands/notes.md)
 
 `leetcode:number-of-islands` · Medium
 
@@ -77,7 +77,7 @@ Filters: tags graph, topological-sort.
 - **Selected:** every Problem matching the filters. With none, the line after the counts is `No Problems in the Practice Log match.` and there are no `## Redo` or `## Refresh` sections.
 - **Redo:** a Problem goes under `## Redo` when it is Need Review (`Need Review: <reason>`), or else when an Attempt's outcome is `saw-solution` and no later `mode: session` Attempt was `solved-alone` (`Saw the solution on <date>, not solved alone since`). Imported Attempts can be `saw-solution` without Need Review, which is why both count. Every other Problem goes under `## Refresh`.
 - **Order:** by title within each section. Attempts oldest first by date.
-- **Links:** to the Problem's folder, relative to the sheet, with a trailing slash.
+- **Links:** to the Problem's `notes.md`, relative to the sheet (Obsidian cannot link to a folder).
 - **Approaches:** every Attempt as `approach (date, mode, outcome)`, or `no Attempts yet`.
 - **Past mistakes:** each Attempt's `mistakes` other than `none`, with its date, or `none recorded`.
 
